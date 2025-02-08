@@ -13,11 +13,13 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('로그인 요청 데이터:', credentials); // 디버깅용 로그
     try {
       const response = await axios.post(
-        'https://localhost:9999/api/admin/admin_login',
+        'http://localhost:9999/api/admin/admin_login',
         credentials
       );
+      console.log('서버 응답:', response.data);
       localStorage.setItem('token', response.data.token); // 로그인 성공 시 토큰 저장
       alert(`${response.data.username}님, 로그인 성공`);
       navigate('/main'); // 메인 페이지로 이동

@@ -14,7 +14,7 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://localhost:9999/api/admin', form);
+      await axios.post('http://localhost:9999/api/admin', form);
       alert('✅ 회원가입 성공');
       navigate('/'); // 회원가입 후 로그인 페이지로 이동
     } catch (error) {
