@@ -11,7 +11,7 @@ const Manage = () => {
     <div>
       {person.map(function (a, i) {
         return (
-          <div class="personBox">
+          <div className="personBox">
             <p>냉장고 No: {person[i].ref}</p>
             <h2>고인명: {person[i].name}</h2>
             <h3>생년월일: {person[i].birth}</h3>
@@ -19,7 +19,13 @@ const Manage = () => {
             <p>출관일: {person[i].exit}</p>
             <p>대표 상주: {person[i].chiefMourner}</p>
             <p>관리번호: {person[i].id}</p>
-            <button>설정</button>
+            <button
+              onClick={() => {
+                navigate(`/setting/${i}`);
+              }}
+            >
+              설정
+            </button>
           </div>
         );
       })}

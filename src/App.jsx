@@ -8,6 +8,7 @@ import {
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import MainPage from './pages/MainPage';
+import SettingPage from './pages/SettingPage';
 
 const App = () => {
   const isAuthenticated = !!localStorage.getItem('token');
@@ -20,6 +21,7 @@ const App = () => {
       />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/main" element={<MainPage />} />
+      <Route path="/setting/:index" element={<SettingPage />}></Route>
     </Routes>
   );
 };
