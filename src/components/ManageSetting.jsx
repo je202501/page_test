@@ -7,6 +7,7 @@ const ManageSetting = () => {
   let [person, setPerson] = useState(data);
   const { index } = useParams();
   const i = parseInt(index, 10);
+  let [modal, setModal] = useState(false);
   console.log('location.state:', location.state);
 
   if (i === undefined || person[i] === undefined) {
@@ -25,10 +26,55 @@ const ManageSetting = () => {
         <p>대표 상주: {person[i].chiefMourner}</p>
         <p>설정온도: 제상:</p>
 
-        <button>저장</button>
+        <button
+          onClick={() => {
+            setModal(modal == false ? true : false);
+          }}
+        >
+          수정
+        </button>
         <button>QR 밴드 출력</button>
         <button>출관 확인</button>
+        <br />
+        {modal == true ? <Modal i={i} person={person} /> : null}
       </div>
+    </div>
+  );
+};
+
+const Modal = (props) => {
+  let [inputText, setInputText] = useState('');
+  const i = props.i;
+  let [person, setPerson] = useState(props.person);
+  return (
+    <div
+      className="modal"
+      style={{ borderBlock: '1px solid', background: 'lightblue' }}
+    >
+      <h4 style={{ marginLeft: '10px' }}>수정</h4>
+      <span>관리번호 : </span>
+      <input
+        type="text"
+        name="id"
+        placeholder={person[i].id}
+        onChange={(e) => {
+          setInputText(e.target.value);
+          console.log(inputText);
+        }}
+      />
+      <br />
+      <span>냉장고 No : </span>
+      <input type="text" name="ref" placeholder={person[i].ref} />
+      <br />
+      <span>고인명 : </span>
+      <input type="text" name="name" placeholder={person[i].name} />
+      <br />
+      <span>생년월일 : </span>
+      <input type="text" name="birth" placeholder={person[i].birth} />
+      <br />
+
+      <button>저장</button>
+      <button>취소</button>
     </div>
   );
 };
