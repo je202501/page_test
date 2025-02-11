@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import './FormStyles.css';
 
 const LoginForm = () => {
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [credentials, setCredentials] = useState({
+    admin_account: '',
+    password: '',
+  });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,15 +20,24 @@ const LoginForm = () => {
     try {
       const response = await axios.post(
         'http://localhost:9999/api/admin/admin_login',
-        credentials
+        credentials,
+        { headers: { 'Content-Type': 'application/json' } }
       );
       console.log('서버 응답:', response.data);
-      localStorage.setItem('token', response.data.token); // 로그인 성공 시 토큰 저장
-      alert(`${response.data.username}님, 로그인 성공`);
-      navigate('/main'); // 메인 페이지로 이동
+      if (
+        response.data.status === 200 &&
+        response.data.message === 'success' &&
+        response.data.data
+      ) {
+        localStorage.setItem('token', response.data.data); // 로그인 성공 시 토큰 저장
+        alert(`${response.data.username}님, 로그인 성공`);
+        navigate('/main'); // 메인 페이지로 이동
+      } else {
+        alert('❌ 로그인 실패. 이메일과 비밀번호를 확인하세요.');
+      }
     } catch (error) {
-      console.error(error);
-      alert('❌ 로그인 실패. 이메일과 비밀번호를 확인하세요.');
+      console.error(error.response ? error.response.data : error);
+      alert('❌ 로그인 실패. 서버 오류 또는 네트워크 문제');
     }
   };
 
@@ -33,10 +45,10 @@ const LoginForm = () => {
     <form className="form-container" onSubmit={handleSubmit}>
       <h2>로그인</h2>
       <input
-        type="email"
-        name="email"
-        placeholder="이메일"
-        value={credentials.email}
+        type="text"
+        name="admin_account"
+        placeholder="아이디"
+        value={credentials.admin_account}
         onChange={handleChange}
         required
       />
