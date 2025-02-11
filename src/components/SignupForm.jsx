@@ -4,7 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import './FormStyles.css';
 
 const SignupForm = () => {
-  const [form, setForm] = useState({ username: '', email: '', password: '' });
+  const [form, setForm] = useState({
+    admin_name: '',
+    admin_account: '',
+    password: '',
+    email: '',
+  });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -28,17 +33,17 @@ const SignupForm = () => {
       <h2>회원가입</h2>
       <input
         type="text"
-        name="username"
+        name="admin_name"
         placeholder="사용자 이름"
-        value={form.username}
+        value={form.admin_name}
         onChange={handleChange}
         required
       />
       <input
-        type="email"
-        name="email"
-        placeholder="이메일"
-        value={form.email}
+        type="test"
+        name="admin_account"
+        placeholder="아이디"
+        value={form.admin_account}
         onChange={handleChange}
         required
       />
@@ -47,6 +52,14 @@ const SignupForm = () => {
         name="password"
         placeholder="비밀번호"
         value={form.password}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="이메일"
+        value={form.email}
         onChange={handleChange}
         required
       />
