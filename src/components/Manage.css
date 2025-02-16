@@ -1,4 +1,5 @@
 .personBox {
+  position: block;
   border: 1px solid;
   float: left;
   width: 22%;

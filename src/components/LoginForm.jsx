@@ -30,7 +30,7 @@ const LoginForm = () => {
         response.data.data
       ) {
         localStorage.setItem('token', response.data.data); // 로그인 성공 시 토큰 저장
-        alert(`${response.data.username}님, 로그인 성공`);
+        alert(`✔ 로그인 성공`);
         navigate('/main'); // 메인 페이지로 이동
       } else {
         alert('❌ 로그인 실패. 이메일과 비밀번호를 확인하세요.');

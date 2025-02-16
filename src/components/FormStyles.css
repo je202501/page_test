@@ -1,6 +1,7 @@
 /* 전체 화면 중앙 정렬 */
 .form-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -8,6 +9,25 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
+}
+
+/* 로그인 탭 스타일 */
+.nav-tabs {
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  margin-right: 155px;
+  border-bottom: 2px solid #ddd;
+}
+.nav-tabs .nav-link {
+  font-size: 16px;
+  color: #333;
+  border-radius: 5px 5px 0 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+.nav-tabs .nav-link.active {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
 }
 /* 폼 컨테이너 스타일 */
 .form-container {
