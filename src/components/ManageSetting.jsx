@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import data from './data.js';
+import QRcode from './qrcode/QRcode';
 
 const ManageSetting = () => {
+  const [QRModal, setQRModal] = useState(false);
   let [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true);
   const { index } = useParams();
@@ -61,10 +63,19 @@ const ManageSetting = () => {
         >
           수정
         </button>
-        <button>QR 밴드 출력</button>
+        <button onClick={() => {
+          setQRModal(true);
+        }}>QR 밴드 출력</button>
         <button>출관 확인</button>
         <br />
         {modal == true ? <Modal i={i} person={person} /> : null}
+        {<QRcode
+          open={QRModal}
+          value={person[i]}
+          onClose={() => {
+            setQRModal(false)
+          }}
+        />}
       </div>
     </div>
   );
