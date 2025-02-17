@@ -21,6 +21,7 @@ const Manage = () => {
           console.log(`데이터:${res.data}`);
           const formattedData = res.data.data.map((item) => ({
             refrigerator_id: item.refrigerator_id,
+            refrigerator_number: item.refrigerator_number,
             person_name: item.person_name,
             person_birthday: item.person_birthday,
             entry_date: item.entry_date,
@@ -42,7 +43,7 @@ const Manage = () => {
       {person.map(function (a, i) {
         return (
           <div className="personBox">
-            <p>냉장고 No: {person[i].refrigerator_id}</p>
+            <p>냉장고: {person[i].refrigerator_number}</p>
             <h2>고인명: {person[i].person_name}</h2>
             <h3>생년월일: {person[i].person_birthday}</h3>
             <p>입관일: {person[i].entry_date}</p>

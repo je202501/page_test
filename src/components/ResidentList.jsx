@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function ResidentList() {
+export default resident = function ResidentList() {
   const [residents, setResidents] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,4 +32,4 @@ export default function ResidentList() {
   };
 
   return residents;
-}
+};
