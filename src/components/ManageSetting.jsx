@@ -14,17 +14,17 @@ const ManageSetting = () => {
   let [residents, setResidents] = useState([]);
 
   const handleModalresClose = () => {
-    setModalres(false); // Modal 닫기
+    setModalres(false);
   };
   const handleModalrefClose = () => {
-    setModalref(false); // Modal 닫기
+    setModalref(false);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        await Promise.all([fetchPerson(), fetchResidents()]);
+        await fetchPerson();
       } catch (err) {
         console.log('실패함');
       } finally {
@@ -33,6 +33,13 @@ const ManageSetting = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (person.length > 0 && i !== undefined && person[i] !== undefined) {
+      fetchResidents();
+    }
+  }, [person]);
+
   useEffect(() => {
     console.log('Modal 상태:', modalref);
   }, [modalref]);
@@ -59,14 +66,10 @@ const ManageSetting = () => {
       .get('http://localhost:9999/api/resident')
       .then((res) => {
         console.log(`상주:${res.data.data}`);
-        const formattedData = res.data.data.map((item) => ({
-          resident_id: item.resident_id,
-          resident_name: item.resident_name,
-          primary_resident: item.primary_resident,
-          refrigerator_id: item.refrigerator_id,
-          phone_number: item.phone_number,
-        }));
-        setResidents(formattedData);
+        const filteredData = res.data.data.filter(
+          (item) => item.refrigerator_id === person[i].refrigerator_id
+        );
+        setResidents(filteredData);
       });
   };
 
@@ -81,18 +84,11 @@ const ManageSetting = () => {
         <h3>생년월일: {person[i].person_birthday}</h3>
         <p>입관일: {person[i].entry_date}</p>
         <p>출관일: {person[i].exit_date}</p>
-        {residents.map((a, j) => {
-          return (
-            <div key={j}>
-              {residents[j].refrigerator_id == person[i].refrigerator_id ? (
-                <p>
-                  상주 {j + 1}: {residents[j].resident_name}{' '}
-                  {residents[j].phone_number}
-                </p>
-              ) : null}
-            </div>
-          );
-        })}
+        {residents.map((resident, j) => (
+          <p key={j}>
+            상주 {j + 1}: {resident.resident_name} {resident.phone_number}
+          </p>
+        ))}
         <p>설정온도: 제상:</p>
 
         <button
@@ -107,7 +103,6 @@ const ManageSetting = () => {
           onClick={() => {
             console.log('클릭');
             setModalres((prev) => !prev);
-            console.log(modalres);
           }}
         >
           상주 수정
@@ -115,17 +110,17 @@ const ManageSetting = () => {
         <button>QR 밴드 출력</button>
         <button>출관 확인</button>
         <br />
-        {modalref == true ? (
+        {modalref && (
           <Modalref i={i} person={person} onClose={handleModalrefClose} />
-        ) : null}
-        {modalres == true ? (
+        )}
+        {modalres && (
           <ModalRes
             i={i}
             person={person}
             residents={residents}
             onClose={handleModalresClose}
           />
-        ) : null}
+        )}
       </div>
     </div>
   );
