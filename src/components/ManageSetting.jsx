@@ -3,8 +3,10 @@ import axios from 'axios';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import data from './data.js';
 import ModalRes from './ModalRes.jsx';
+import QRcode from './qrcode/QRcode';
 
 const ManageSetting = () => {
+  const [QRModal, setQRModal] = useState(false);
   let [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true);
   const { index } = useParams();
@@ -107,7 +109,13 @@ const ManageSetting = () => {
         >
           상주 수정
         </button>
-        <button>QR 밴드 출력</button>
+        <button
+          onClick={() => {
+            setQRModal(true);
+          }}
+        >
+          QR 밴드 출력
+        </button>
         <button>출관 확인</button>
         <br />
         {modalref && (
@@ -121,6 +129,15 @@ const ManageSetting = () => {
             onClose={handleModalresClose}
           />
         )}
+        {
+          <QRcode
+            open={QRModal}
+            value={person[i]}
+            onClose={() => {
+              setQRModal(false);
+            }}
+          />
+        }
       </div>
     </div>
   );
