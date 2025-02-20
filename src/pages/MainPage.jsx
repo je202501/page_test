@@ -2,12 +2,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Manage from '../components/Manage';
 
-const MainPage = () => {
+const MainPage = ({ setAuth }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('token'); // 토큰 삭제
-    alert('🚪 로그아웃 되었습니다.');
+
+    setAuth(false);
     navigate('/'); // 로그인 페이지로 이동
   };
 

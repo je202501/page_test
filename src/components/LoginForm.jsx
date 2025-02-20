@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import './FormStyles.css';
 
-const LoginForm = () => {
+const LoginForm = ({ setAuth, loginType }) => {
   const [credentials, setCredentials] = useState({
     admin_account: '',
     password: '',
@@ -29,9 +30,26 @@ const LoginForm = () => {
         response.data.message === 'success' &&
         response.data.data
       ) {
-        localStorage.setItem('token', response.data.data); // 로그인 성공 시 토큰 저장
-        alert(`✔ 로그인 성공`);
-        navigate('/main'); // 메인 페이지로 이동
+        const token = response.data.data;
+        const decodedToken = jwtDecode(token); // 토큰 디코딩
+
+        console.log('디코딩된 토큰:', decodedToken);
+
+        if (loginType === 'Bistech' && decodedToken.type !== 'MANAGER') {
+          alert('❌ 접근 불가: 관리자 권한이 필요합니다.');
+          return;
+        }
+
+        // ✅ 로그인 성공 후 상태 업데이트
+        localStorage.setItem('token', token);
+        setAuth(true);
+
+        // ✅ Bistech 로그인 시 /bistechmain으로 이동, 일반 로그인은 /main으로 이동
+        if (loginType === 'Bistech') {
+          navigate('/bistechmain');
+        } else {
+          navigate('/main');
+        }
       } else {
         alert('❌ 로그인 실패. 이메일과 비밀번호를 확인하세요.');
       }
@@ -43,7 +61,7 @@ const LoginForm = () => {
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>
-      <h2>로그인</h2>
+      <h2>{loginType === 'Bistech' ? 'Bistech 로그인' : '관리자 로그인'}</h2>
       <input
         type="text"
         name="admin_account"

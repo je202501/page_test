@@ -58,6 +58,7 @@ const ManageSetting = () => {
           person_birthday: item.person_birthday,
           entry_date: item.entry_date,
           exit_date: item.exit_date,
+          management_number: item.management_number,
         }));
         setPerson(formattedData);
       });
@@ -81,6 +82,7 @@ const ManageSetting = () => {
   return (
     <div>
       <div className="personBox">
+        <p>관리번호: {person[i].management_number}</p>
         <p>냉장고: {person[i].refrigerator_number}</p>
         <h3>고인명: {person[i].person_name}</h3>
         <h3>생년월일: {person[i].person_birthday}</h3>

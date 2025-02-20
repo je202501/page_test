@@ -3,7 +3,7 @@ import LoginForm from '../components/LoginForm';
 
 import { Nav } from 'react-bootstrap';
 
-const LoginPage = () => {
+const LoginPage = ({ setAuth }) => {
   let [tap, setTap] = useState(0);
   return (
     <div className="form-wrapper">
@@ -31,8 +31,8 @@ const LoginPage = () => {
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      {tap == 0 ? <LoginForm /> : null}
-      {tap == 1 ? <LoginForm /> : null}
+      {tap == 0 ? <LoginForm setAuth={setAuth} loginType="Normal" /> : null}
+      {tap == 1 ? <LoginForm setAuth={setAuth} loginType="Bistech" /> : null}
     </div>
   );
 };

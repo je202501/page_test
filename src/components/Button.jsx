@@ -49,7 +49,7 @@ const Button = (props) => {
   return (
     <ButtonContainer
       $backgroundColor={backgroundColor}
-      onClick={handleTouchClick}
+      onTouchClick={handleTouchClick}
     >
       <IconWrapper>{icon}</IconWrapper>
       <ButtonText $color={color}>{text}</ButtonText>
