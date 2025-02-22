@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import TemperatureDashboard from '../components/Dashboard';
 
 const BistechMainPage = ({ setAuth }) => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const BistechMainPage = ({ setAuth }) => {
     <div className="main-page">
       <h1>🔹 Bistech 관리자 페이지</h1>
       <button onClick={handleLogout}>로그아웃</button>
+      <TemperatureDashboard></TemperatureDashboard>
     </div>
   );
 };

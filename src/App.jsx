@@ -54,16 +54,7 @@ const App = () => {
         path="/setting/:index"
         element={isAuthenticated ? <SettingPage /> : <Navigate to="/" />}
       ></Route>
-      <Route
-        path="/bistechmain"
-        element={
-          isAuthenticated ? (
-            <BistechMainPage setAuth={setIsAuthenticated} />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
-      />
+      <Route path="/bistechmain" element={<BistechMainPage />} />
     </Routes>
   );
 };

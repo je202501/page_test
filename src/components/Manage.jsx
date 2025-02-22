@@ -50,37 +50,56 @@ const Manage = () => {
       });
   };
 
+  // 냉장고 번호 그룹화
+  const groupedPersons = person.reduce((acc, cur) => {
+    const key = cur.refrigerator_number.split('-')[0]; // 냉장고 그룹 (No.1, No.2 등)
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(cur);
+    return acc;
+  }, {});
+
   return (
-    <div>
-      {person.map(function (a, i) {
-        return (
-          <div className="personBox" key={i}>
-            <p>냉장고: {person[i].refrigerator_number}</p>
-            <h2>고인명: {person[i].person_name}</h2>
-            <h3>생년월일: {person[i].person_birthday}</h3>
-            <p>입관일: {person[i].entry_date}</p>
-            <p>출관일: {person[i].exit_date}</p>
-            <p>관리번호: {person[i].management_number}</p>
-            {primaryResidents.map((x, j) => {
-              return (
-                <div key={j}>
-                  {primaryResidents[j].refrigerator_id ==
-                  person[i].refrigerator_id ? (
-                    <p>대표상주: {primaryResidents[j].resident_name}</p>
-                  ) : null}
-                </div>
-              );
-            })}
-            <button
-              onClick={() => {
-                navigate(`/setting/${i}`);
+    <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+      {Object.keys(groupedPersons).map((groupKey, index) => (
+        <div
+          key={index}
+          style={{
+            paddingLeft: '5px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            width: '400px',
+          }}
+        >
+          {groupedPersons[groupKey].map((personData, i) => (
+            <div
+              className="personBox"
+              key={i}
+              style={{
+                width: '380px',
+                border: '1px solid #ccc',
+                padding: '10px',
+                borderRadius: '5px',
               }}
             >
-              설정
-            </button>
-          </div>
-        );
-      })}
+              <p>냉장고: {personData.refrigerator_number}</p>
+              <h2>고인명: {personData.person_name}</h2>
+              <h3>생년월일: {personData.person_birthday}</h3>
+              <p>입관일: {personData.entry_date}</p>
+              <p>출관일: {personData.exit_date}</p>
+              <p>관리번호: {personData.management_number}</p>
+              {primaryResidents.map((resident, j) => (
+                <div key={j}>
+                  {resident.refrigerator_id === personData.refrigerator_id && (
+                    <p>대표상주: {resident.resident_name}</p>
+                  )}
+                </div>
+              ))}
+              <button onClick={() => navigate(`/setting/${i}`)}>설정</button>
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   );
 };
