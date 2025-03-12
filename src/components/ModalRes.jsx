@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const ModalRes = ({ i, person, residents: initialResidents, onClose }) => {
+const ModalRes = ({ person, residents: initialResidents, onClose }) => {
   const [residents, setResidents] = useState(
     Array.from({ length: 9 }, (_, index) => ({
       resident_id: null,
-      refrigerator_id: person[i]?.refrigerator_id || '',
+      refrigerator_id: person?.refrigerator_id || '',
       resident_name: '',
       phone_number: '',
       primary_resident: index === 0, // 첫 번째 Resident만 기본 상주

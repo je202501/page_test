@@ -34,7 +34,25 @@ const Manage = () => {
           exit_date: item.exit_date,
           management_number: item.management_number,
         }));
+
+        // refrigerator_number 기준으로 정렬
+        formattedData.sort((a, b) => {
+          // "NO.1-1" → "1-1"로 변환
+          const aNumber = a.refrigerator_number.replace('NO.', ''); // "NO.1-1" → "1-1"
+          const bNumber = b.refrigerator_number.replace('NO.', ''); // "NO.2-1" → "2-1"
+
+          // 메인 번호와 서브 번호로 분리
+          const [aMain, aSub] = aNumber.split('-').map(Number); // "1-1" → [1, 1]
+          const [bMain, bSub] = bNumber.split('-').map(Number); // "2-1" → [2, 1]
+
+          // 메인 번호로 정렬
+          if (aMain !== bMain) return aMain - bMain;
+          // 서브 번호로 정렬
+          return aSub - bSub;
+        });
+
         setPerson(formattedData);
+        console.log('정렬된 데이터:', formattedData);
       });
   };
 
@@ -95,7 +113,15 @@ const Manage = () => {
                   )}
                 </div>
               ))}
-              <button onClick={() => navigate(`/setting/${i}`)}>설정</button>
+              <button
+                onClick={() =>
+                  navigate(`/setting/${personData.refrigerator_id}`, {
+                    state: { refrigerator_id: personData.refrigerator_id },
+                  })
+                }
+              >
+                설정
+              </button>
             </div>
           ))}
         </div>

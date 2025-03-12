@@ -9,12 +9,13 @@ const ManageSetting = () => {
   const [QRModal, setQRModal] = useState(false);
   let [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { index } = useParams();
-  const i = parseInt(index, 10);
+  const location = useLocation();
+  const refrigerator_id = location.state?.refrigerator_id || null;
   let [modalref, setModalref] = useState(false);
   let [modalres, setModalres] = useState(false);
   let [residents, setResidents] = useState([]);
-
+  const navigate = useNavigate();
+  console.log(refrigerator_id);
   const handleModalresClose = () => {
     setModalres(false);
   };
@@ -37,7 +38,7 @@ const ManageSetting = () => {
   }, []);
 
   useEffect(() => {
-    if (person.length > 0 && i !== undefined && person[i] !== undefined) {
+    if (person.length > 0 && refrigerator_id !== undefined) {
       fetchResidents();
     }
   }, [person]);
@@ -70,24 +71,65 @@ const ManageSetting = () => {
       .then((res) => {
         console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(
-          (item) => item.refrigerator_id === person[i].refrigerator_id
+          (item) => item.refrigerator_id === parseInt(refrigerator_id, 10)
         );
         setResidents(filteredData);
       });
   };
 
-  if (i === undefined || person[i] === undefined) {
+  // 현재 냉장고 정보 찾기
+  const currentPerson = person.find(
+    (item) => item.refrigerator_id === parseInt(refrigerator_id, 10)
+  );
+
+  if (loading) {
+    return <p>로딩 중...</p>;
+  }
+
+  if (!currentPerson) {
     return <p>데이터를 불러올 수 없습니다.</p>;
   }
+
+  // 출관 확인 및 삭제 함수
+  const handleExitConfirm = async () => {
+    const isConfirmed = window.confirm(
+      '출관 확인을 하시겠습니까? 이 작업은 되돌릴 수 없습니다.'
+    );
+    if (isConfirmed) {
+      try {
+        await axios.delete(
+          `http://localhost:9999/api/refrigerator/${refrigerator_id}`
+        );
+        alert('출관 처리되었습니다.');
+        // 삭제 후 화면 업데이트
+        const updatedPerson = person.filter(
+          (item) => item.refrigerator_id !== parseInt(refrigerator_id, 10)
+        );
+        setPerson(updatedPerson);
+        navigate('/main'); // 관리 페이지로 이동
+      } catch (err) {
+        console.error('삭제 실패:', err);
+        alert('출관 처리에 실패했습니다.');
+      }
+    }
+  };
+
   return (
     <div>
+      <h1
+        onClick={() => {
+          navigate('/main');
+        }}
+      >
+        🏠
+      </h1>
       <div className="personBox">
-        <p>관리번호: {person[i].management_number}</p>
-        <p>냉장고: {person[i].refrigerator_number}</p>
-        <h3>고인명: {person[i].person_name}</h3>
-        <h3>생년월일: {person[i].person_birthday}</h3>
-        <p>입관일: {person[i].entry_date}</p>
-        <p>출관일: {person[i].exit_date}</p>
+        <p>관리번호: {currentPerson.management_number}</p>
+        <p>냉장고: {currentPerson.refrigerator_number}</p>
+        <h3>고인명: {currentPerson.person_name}</h3>
+        <h3>생년월일: {currentPerson.person_birthday}</h3>
+        <p>입관일: {currentPerson.entry_date}</p>
+        <p>출관일: {currentPerson.exit_date}</p>
         {residents.map((resident, j) => (
           <p key={j}>
             상주 {j + 1}: {resident.resident_name} {resident.phone_number}
@@ -118,15 +160,14 @@ const ManageSetting = () => {
         >
           QR 밴드 출력
         </button>
-        <button>출관 확인</button>
+        <button onClick={handleExitConfirm}>출관 확인</button>
         <br />
         {modalref && (
-          <Modalref i={i} person={person} onClose={handleModalrefClose} />
+          <Modalref person={currentPerson} onClose={handleModalrefClose} />
         )}
         {modalres && (
           <ModalRes
-            i={i}
-            person={person}
+            person={currentPerson}
             residents={residents}
             onClose={handleModalresClose}
           />
@@ -134,7 +175,7 @@ const ManageSetting = () => {
         {
           <QRcode
             open={QRModal}
-            value={person[i]}
+            value={currentPerson}
             onClose={() => {
               setQRModal(false);
             }}
@@ -146,13 +187,13 @@ const ManageSetting = () => {
 };
 
 //수정 모달
-const Modalref = ({ i, person, onClose }) => {
+const Modalref = ({ person, onClose }) => {
   const [updatedPerson, setUpdatedPerson] = useState({
-    refrigerator_id: person[i]?.refrigerator_id || '',
-    person_name: person[i]?.person_name || '',
-    person_birthday: person[i]?.person_birthday || '',
-    entry_date: person[i]?.entry_date || '',
-    exit_date: person[i]?.exit_date || '',
+    refrigerator_id: person?.refrigerator_id || '',
+    person_name: person?.person_name || '',
+    person_birthday: person?.person_birthday || '',
+    entry_date: person?.entry_date || '',
+    exit_date: person?.exit_date || '',
   });
 
   const handleChange = (e) => {
@@ -165,7 +206,7 @@ const Modalref = ({ i, person, onClose }) => {
   const handleSave = async () => {
     try {
       await axios.put(
-        `http://localhost:9999/api/refrigerator/${person[i].refrigerator_id}`,
+        `http://localhost:9999/api/refrigerator/${person.refrigerator_id}`,
         updatedPerson
       );
       alert('수정이 완료되었습니다.');

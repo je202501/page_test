@@ -51,7 +51,7 @@ const App = () => {
         }
       />
       <Route
-        path="/setting/:index"
+        path="/setting/:refrigerator_id"
         element={isAuthenticated ? <SettingPage /> : <Navigate to="/" />}
       ></Route>
       <Route path="/bistechmain" element={<BistechMainPage />} />
