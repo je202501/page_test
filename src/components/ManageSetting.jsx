@@ -4,6 +4,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import data from './data.js';
 import ModalRes from './ModalRes.jsx';
 import QRcode from './qrcode/QRcode';
+import ImageUpload from './ImageUpload.jsx';
 
 const ManageSetting = () => {
   const [QRModal, setQRModal] = useState(false);
@@ -49,7 +50,7 @@ const ManageSetting = () => {
 
   const fetchPerson = async () => {
     const response = await axios
-      .get('http://localhost:9999/api/refrigerator')
+      .get('process.env.SERVER_URL:9999/api/refrigerator')
       .then((res) => {
         console.log(`데이터:${res.data}`);
         const formattedData = res.data.data.map((item) => ({
@@ -67,7 +68,7 @@ const ManageSetting = () => {
 
   const fetchResidents = async () => {
     const response = await axios
-      .get('http://localhost:9999/api/resident')
+      .get('process.env.SERVER_URL:9999/api/resident')
       .then((res) => {
         console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(
@@ -98,7 +99,7 @@ const ManageSetting = () => {
     if (isConfirmed) {
       try {
         await axios.delete(
-          `http://localhost:9999/api/refrigerator/${refrigerator_id}`
+          `process.env.SERVER_URL:9999/api/refrigerator/${refrigerator_id}`
         );
         alert('출관 처리되었습니다.');
         // 삭제 후 화면 업데이트
@@ -181,6 +182,7 @@ const ManageSetting = () => {
             }}
           />
         }
+        {<ImageUpload></ImageUpload>}
       </div>
     </div>
   );
@@ -199,14 +201,14 @@ const Modalref = ({ person, onClose }) => {
   const handleChange = (e) => {
     setUpdatedPerson({
       ...updatedPerson,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.replace(/(\s*)/g, ''),
     });
   };
 
   const handleSave = async () => {
     try {
       await axios.put(
-        `http://localhost:9999/api/refrigerator/${person.refrigerator_id}`,
+        `process.env.SERVER_URL:9999/api/refrigerator/${person.refrigerator_id}`,
         updatedPerson
       );
       alert('수정이 완료되었습니다.');

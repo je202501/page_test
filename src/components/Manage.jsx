@@ -22,7 +22,7 @@ const Manage = () => {
 
   const fetchPerson = async () => {
     const response = await axios
-      .get('http://localhost:9999/api/refrigerator')
+      .get('process.env.SERVER_URL:9999/api/refrigerator')
       .then((res) => {
         console.log(`데이터:${res.data}`);
         const formattedData = res.data.data.map((item) => ({
@@ -58,7 +58,7 @@ const Manage = () => {
 
   const fetchResidents = async () => {
     const response = await axios
-      .get('http://localhost:9999/api/resident')
+      .get('process.env.SERVER_URL:9999/api/resident')
       .then((res) => {
         console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(
@@ -121,6 +121,15 @@ const Manage = () => {
                 }
               >
                 설정
+              </button>
+              <button
+                onClick={() =>
+                  navigate(`/detail/${personData.refrigerator_id}`, {
+                    state: { refrigerator_id: personData.refrigerator_id },
+                  })
+                }
+              >
+                상세정보
               </button>
             </div>
           ))}

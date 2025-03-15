@@ -46,7 +46,7 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
         .filter((resident) => resident.deleteChecked && resident.resident_id)
         .map((resident) =>
           axios.delete(
-            `http://localhost:9999/api/resident/${resident.resident_id}`
+            `process.env.SERVER_URL:9999/api/resident/${resident.resident_id}`
           )
         );
 
@@ -56,11 +56,14 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
         .map(async (resident) => {
           if (resident.resident_id) {
             return axios.put(
-              `http://localhost:9999/api/resident/${resident.resident_id}`,
+              `process.env.SERVER_URL:9999/api/resident/${resident.resident_id}`,
               resident
             );
           } else if (resident.resident_name) {
-            return axios.post('http://localhost:9999/api/resident', resident);
+            return axios.post(
+              'process.env.SERVER_URL:9999/api/resident',
+              resident
+            );
           }
           return null;
         });

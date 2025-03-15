@@ -20,7 +20,7 @@ const LoginForm = ({ setAuth, loginType }) => {
     console.log('로그인 요청 데이터:', credentials); // 디버깅용 로그
     try {
       const response = await axios.post(
-        'http://localhost:9999/api/admin/admin_login',
+        'process.env.SERVER_URL:9999/api/admin/admin_login',
         credentials,
         { headers: { 'Content-Type': 'application/json' } }
       );
@@ -40,11 +40,11 @@ const LoginForm = ({ setAuth, loginType }) => {
           return;
         }
 
-        // ✅ 로그인 성공 후 상태 업데이트
+        // 로그인 성공 후 상태 업데이트
         localStorage.setItem('token', token);
         setAuth(true);
 
-        // ✅ Bistech 로그인 시 /bistechmain으로 이동, 일반 로그인은 /main으로 이동
+        // Bistech 로그인 시 /bistechmain으로 이동, 일반 로그인은 /main으로 이동
         if (loginType === 'Bistech') {
           navigate('/bistechmain');
         } else {

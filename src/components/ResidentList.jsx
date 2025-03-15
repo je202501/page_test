@@ -12,7 +12,7 @@ export default resident = function ResidentList() {
   const fetchResidents = async () => {
     try {
       const response = await axios
-        .get('http://localhost:9999/api/resident')
+        .get('process.env.SERVER_URL:9999/api/resident')
         .then((res) => {
           console.log(`상주:${res.data.data}`);
           const formattedData = res.data.data.map((item) => ({

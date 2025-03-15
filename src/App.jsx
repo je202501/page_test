@@ -10,6 +10,7 @@ import SignupPage from './pages/SignupPage';
 import MainPage from './pages/MainPage';
 import SettingPage from './pages/SettingPage';
 import BistechMainPage from './pages/BistechMainPage';
+import DetailPage from './pages/DetailPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -53,6 +54,10 @@ const App = () => {
       <Route
         path="/setting/:refrigerator_id"
         element={isAuthenticated ? <SettingPage /> : <Navigate to="/" />}
+      ></Route>
+      <Route
+        path="/detail/:refrigerator_id"
+        element={isAuthenticated ? <DetailPage /> : <Navigate to="/" />}
       ></Route>
       <Route path="/bistechmain" element={<BistechMainPage />} />
     </Routes>
