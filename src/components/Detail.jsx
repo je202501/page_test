@@ -32,7 +32,7 @@ const Detail = () => {
 
   const fetchPerson = async () => {
     const response = await axios
-      .get('process.env.SERVER_URL:9999/api/refrigerator')
+      .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator`)
       .then((res) => {
         console.log(`데이터:${res.data}`);
         const formattedData = res.data.data.map((item) => ({
@@ -50,7 +50,7 @@ const Detail = () => {
 
   const fetchResidents = async () => {
     const response = await axios
-      .get('process.env.SERVER_URL:9999/api/resident')
+      .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
       .then((res) => {
         console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(

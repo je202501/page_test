@@ -50,7 +50,7 @@ const ManageSetting = () => {
 
   const fetchPerson = async () => {
     const response = await axios
-      .get('process.env.SERVER_URL:9999/api/refrigerator')
+      .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator`)
       .then((res) => {
         console.log(`데이터:${res.data}`);
         const formattedData = res.data.data.map((item) => ({
@@ -68,7 +68,7 @@ const ManageSetting = () => {
 
   const fetchResidents = async () => {
     const response = await axios
-      .get('process.env.SERVER_URL:9999/api/resident')
+      .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
       .then((res) => {
         console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(
@@ -99,7 +99,9 @@ const ManageSetting = () => {
     if (isConfirmed) {
       try {
         await axios.delete(
-          `process.env.SERVER_URL:9999/api/refrigerator/${refrigerator_id}`
+          `${
+            import.meta.env.VITE_SERVER_URL
+          }:9999/api/refrigerator/${refrigerator_id}`
         );
         alert('출관 처리되었습니다.');
         // 삭제 후 화면 업데이트
@@ -182,7 +184,7 @@ const ManageSetting = () => {
             }}
           />
         }
-        {<ImageUpload></ImageUpload>}
+        {<ImageUpload refrigerator_id={refrigerator_id}></ImageUpload>}
       </div>
     </div>
   );
@@ -208,7 +210,9 @@ const Modalref = ({ person, onClose }) => {
   const handleSave = async () => {
     try {
       await axios.put(
-        `process.env.SERVER_URL:9999/api/refrigerator/${person.refrigerator_id}`,
+        `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/${
+          person.refrigerator_id
+        }`,
         updatedPerson
       );
       alert('수정이 완료되었습니다.');

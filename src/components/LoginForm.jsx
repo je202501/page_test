@@ -20,7 +20,7 @@ const LoginForm = ({ setAuth, loginType }) => {
     console.log('로그인 요청 데이터:', credentials); // 디버깅용 로그
     try {
       const response = await axios.post(
-        'process.env.SERVER_URL:9999/api/admin/admin_login',
+        `${import.meta.env.VITE_SERVER_URL}:9999/api/admin/admin_login`,
         credentials,
         { headers: { 'Content-Type': 'application/json' } }
       );

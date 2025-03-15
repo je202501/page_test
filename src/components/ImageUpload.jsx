@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-const ImageUpload = () => {
+const ImageUpload = ({ refrigerator_id }) => {
   const inputRef = useRef(null);
   const handleFileClick = () => {
     inputRef.current.click();
@@ -19,10 +19,10 @@ const ImageUpload = () => {
       const formData = new FormData();
 
       formData.append('image', file);
-      formData.append('user_id', inputUser.userEmail);
+      formData.append('refrigerator_id', refrigerator_id);
       console.log('유저 이미지 교체 중');
       const response = await axios.post(
-        'process.env.SERVER_URL:9999/api/image',
+        `${import.meta.env.VITE_SERVER_URL}:9999/api/image`,
         formData,
         {
           headers: {
@@ -30,7 +30,7 @@ const ImageUpload = () => {
           },
         }
       );
-      fetchUserProfileImage(inputUser.userEmail);
+      fetchUserProfileImage(refrigerator_id);
     } catch (error) {
       console.error('Error:', error);
     }
