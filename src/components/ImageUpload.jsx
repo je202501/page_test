@@ -30,7 +30,6 @@ const ImageUpload = ({ refrigerator_id }) => {
           },
         }
       );
-      fetchUserProfileImage(refrigerator_id);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -42,6 +41,7 @@ const ImageUpload = ({ refrigerator_id }) => {
         type="file"
         accept="image/*"
         onChange={handleFileChange}
+        style={{ display: 'none' }}
         ref={inputRef}
       />
       <button className="ImageUpload" onClick={handleFileClick}>

@@ -98,11 +98,32 @@ const ManageSetting = () => {
     );
     if (isConfirmed) {
       try {
-        await axios.delete(
+        const data = {
+          person_name: '',
+          person_birthday: '',
+          entry_date: '',
+          exit_date: '',
+        };
+        await axios.put(
           `${
             import.meta.env.VITE_SERVER_URL
-          }:9999/api/refrigerator/${refrigerator_id}`
+          }:9999/api/refrigerator/${refrigerator_id}`,
+          data,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
         );
+        {
+          residents.map((a) => {
+            axios.delete(
+              `${import.meta.env.VITE_SERVER_URL}:9999/api/resident/${
+                a.resident_id
+              }`
+            );
+          });
+        }
         alert('출관 처리되었습니다.');
         // 삭제 후 화면 업데이트
         const updatedPerson = person.filter(
@@ -146,7 +167,7 @@ const ManageSetting = () => {
             setModalref((prev) => !prev);
           }}
         >
-          수정
+          고인 수정
         </button>
         <button
           onClick={() => {
@@ -156,6 +177,7 @@ const ManageSetting = () => {
         >
           상주 수정
         </button>
+
         <button
           onClick={() => {
             setQRModal(true);
@@ -163,6 +185,7 @@ const ManageSetting = () => {
         >
           QR 밴드 출력
         </button>
+        {<ImageUpload refrigerator_id={refrigerator_id}></ImageUpload>}
         <button onClick={handleExitConfirm}>출관 확인</button>
         <br />
         {modalref && (
@@ -184,7 +207,6 @@ const ManageSetting = () => {
             }}
           />
         }
-        {<ImageUpload refrigerator_id={refrigerator_id}></ImageUpload>}
       </div>
     </div>
   );
