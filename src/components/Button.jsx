@@ -40,10 +40,14 @@ const Button = (props) => {
     backgroundColor = '#fff',
     color = '#800000',
     onClick,
+    onTouchClick
   } = props;
   const handleTouchClick = () => {
     if (onClick) {
       onClick();
+    }
+    if(onTouchClick){
+      onTouchClick();
     }
   };
   return (
