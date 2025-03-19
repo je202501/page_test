@@ -5,6 +5,7 @@ import data from './data.js';
 import ModalRes from './ModalRes.jsx';
 import QRcode from './qrcode/QRcode';
 import ImageUpload from './ImageUpload.jsx';
+import Image from './Image.jsx';
 
 const ManageSetting = () => {
   const [QRModal, setQRModal] = useState(false);
@@ -15,6 +16,7 @@ const ManageSetting = () => {
   let [modalref, setModalref] = useState(false);
   let [modalres, setModalres] = useState(false);
   let [residents, setResidents] = useState([]);
+
   const navigate = useNavigate();
   console.log(refrigerator_id);
   const handleModalresClose = () => {
@@ -151,6 +153,7 @@ const ManageSetting = () => {
         <p>관리번호: {currentPerson.management_number}</p>
         <p>냉장고: {currentPerson.refrigerator_number}</p>
         <h3>고인명: {currentPerson.person_name}</h3>
+        {<Image refrigerator_id={refrigerator_id}></Image>}
         <h3>생년월일: {currentPerson.person_birthday}</h3>
         <p>입관일: {currentPerson.entry_date}</p>
         <p>출관일: {currentPerson.exit_date}</p>
