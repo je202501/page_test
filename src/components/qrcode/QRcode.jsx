@@ -18,7 +18,7 @@ const QRcode = (props) => {
           <ButtonWrap>
             <Button
               text={`확인`}
-              onClick={() => {
+              onTouchClick={() => {
                 onClose();
               }}
               backgroundColor={'#007BFF'}
