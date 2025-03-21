@@ -1,28 +1,86 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 const RefCreate = ({ onClose }) => {
-  const [newref, setNewref] = useState([]);
+  const [newref, setNewref] = useState({
+    person_name: 'ㄱㄱ',
+    person_birthday: '123',
+    entry_date: '123',
+    exit_date: '123',
+    refrigerator_number: '',
+    setting_temp_value: 0,
+    admin_id: null,
+  });
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('토큰이 없습니다.');
+    }
+    const decodedToken = jwtDecode(token);
+    setNewref((prev) => ({ ...prev, admin_id: Number(decodedToken.admin_id) }));
+  }, []);
+
+  const validateRefrigeratorNumber = (value) => {
+    const regex = /^[1-9]-([1]|[2])$/; // 앞 숫자는 1-9, 뒤 숫자는 1 또는 2만 가능
+    return regex.test(value);
+  };
+
+  const formatRefrigeratorNumber = (value) => {
+    if (validateRefrigeratorNumber(value)) {
+      return `NO.${value}`; // 자동으로 'NO.' 추가
+    }
+    return value;
+  };
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'refrigerator_number') {
+      if (!validateRefrigeratorNumber(value)) {
+        setError("냉장고 번호는 '1-1' ~ '9-2' 형식이어야 합니다.");
+      } else {
+        setError('');
+      }
+    }
     setNewref({
       ...newref,
-      [e.target.name]: e.target.value.replace(/(\s*)/g, ''),
+      [name]: value.replace(/\s*/g, ''),
     });
   };
 
-  const handleSave = async () => {
+  const handleCreate = async () => {
+    if (error) {
+      alert(error);
+      return;
+    }
     try {
-      newref.append('admin_id', admin_id);
+      const modifiedRef = {
+        ...newref,
+        refrigerator_number: formatRefrigeratorNumber(
+          newref.refrigerator_number
+        ),
+      };
+      console.log(modifiedRef);
       await axios.post(
         `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/`,
-        newref
+        modifiedRef,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
       alert('생성이 완료되었습니다.');
       window.location.reload(); // 데이터 새로고침
     } catch (error) {
-      console.error('수정 실패:', error);
-      alert('생성에 실패했습니다.');
+      console.error('생성 실패:', error);
+      alert(
+        `생성에 실패했습니다. 오류 메시지: ${
+          error.response?.data?.message || error.message
+        }`
+      );
     }
   };
 
@@ -38,18 +96,18 @@ const RefCreate = ({ onClose }) => {
         borderRadius: '8px',
       }}
     >
-      <h4 style={{ marginLeft: '10px' }}>수정</h4>
+      <h4 style={{ marginLeft: '10px' }}>냉장고 생성</h4>
       <span>냉장고 No : </span>
       <input
         type="text"
-        name="refrigerator_id"
-        value={newref.refrigerator_id}
+        name="refrigerator_number"
+        value={newref.refrigerator_number}
         onChange={handleChange}
         required
       />
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <br />
-
-      <button onClick={handleSave}>저장</button>
+      <button onClick={handleCreate}>생성</button>
       <button onClick={onClose}>닫기</button>
     </div>
   );
