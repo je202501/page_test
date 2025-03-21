@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Manage from '../components/Manage';
+import RefCreate from '../components/RefCreate';
 
 const MainPage = ({ setAuth }) => {
   const navigate = useNavigate();
+
+  const [modalCreateRef, setModalCreateRef] = useState(false);
+
+  const handleModalCreateRefClose = () => {
+    setModalres(false);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token'); // 토큰 삭제
@@ -21,6 +28,7 @@ const MainPage = ({ setAuth }) => {
       <h1>🏠</h1>
       <button onClick={goToSignup}>회원가입</button>
       <button onClick={handleLogout}>로그아웃</button>
+      {modalCreateRef && <RefCreate onClose={handleModalCreateRefClose} />}
       <Manage></Manage>
     </div>
   );

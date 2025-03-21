@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Image = ({ refrigerator_id }) => {
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -10,23 +10,28 @@ const Image = ({ refrigerator_id }) => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_URL
-          }:9999/api/image/?refrigerator_id=${refrigerator_id}`,
-          { responseType: 'blob' } // 바이너리 데이터 받기
+          }:9999/api/image/?refrigerator_id=${refrigerator_id}`
         );
+        console.log(response, ',<<<<<<');
 
-        const imageUrl = URL.createObjectURL(response.data.data); // Blob -> URL 변환
-        setImageSrc(imageUrl);
+        const imageUrl = response.data.data; // 서버에서 받은 이미지 URL
+        console.log(imageUrl);
+        if (!imageUrl) {
+          console.error('이미지 URL을 찾을 수 없습니다.');
+          return;
+        }
+
+        setImageSrc(encodeURI(imageUrl));
       } catch (error) {
         console.error('이미지 가져오기 실패:', error);
       }
     };
 
     fetchImage();
-  }, [refrigerator_id]); // refrigerator_id가 변경될 때마다 실행
+  }, [refrigerator_id]);
 
   return (
     <div>
-      <h2>이미지 출력</h2>
       {imageSrc ? (
         <img
           src={imageSrc}
