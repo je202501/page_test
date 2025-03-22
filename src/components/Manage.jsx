@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import data from './data.js';
 import './Manage.css';
 
@@ -9,6 +10,10 @@ const Manage = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [primaryResidents, setPrimaryResidents] = useState([]);
+  const token = localStorage.getItem('token');
+  const admin_id = jwtDecode(token).admin_id;
+
+  console.log('admin_id:', admin_id);
 
   useEffect(() => {
     try {
@@ -22,7 +27,11 @@ const Manage = () => {
 
   const fetchPerson = async () => {
     const response = await axios
-      .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator`)
+      .get(
+        `${
+          import.meta.env.VITE_SERVER_URL
+        }:9999/api/refrigerator/?admin_id=${admin_id}`
+      )
       .then((res) => {
         console.log(`데이터:${res.data}`);
         const formattedData = res.data.data.map((item) => ({

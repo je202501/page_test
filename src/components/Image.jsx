@@ -2,31 +2,37 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Image = ({ refrigerator_id }) => {
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_SERVER_URL
-          }:9999/api/image/?refrigerator_id=${refrigerator_id}`,
-          { responseType: 'blob' } // 바이너리 데이터 받기
+          `${import.meta.env.VITE_SERVER_URL}:9999/api/image/?refrigerator_id=${refrigerator_id}`,
+          {
+            responseType: "blob",// 리스폰 타입을 블롭으로 받을 수 있게 설정
+          }
         );
+        console.log(response, ',<<<<<<');
 
-        const imageUrl = URL.createObjectURL(response.data.data); // Blob -> URL 변환
-        setImageSrc(imageUrl);
+        const imageUrl = URL.createObjectURL(response.data);// URL로 오는 이미지를 인식할 수 있게 블롭 데이터를 URL로 바꾸는 코드
+        console.log(imageUrl);
+        if (!imageUrl) {
+          console.error('이미지 URL을 찾을 수 없습니다.');
+          return;
+        }
+
+        setImageSrc(encodeURI(imageUrl));
       } catch (error) {
         console.error('이미지 가져오기 실패:', error);
       }
     };
 
     fetchImage();
-  }, [refrigerator_id]); // refrigerator_id가 변경될 때마다 실행
+  }, [refrigerator_id]);
 
   return (
     <div>
-      <h2>이미지 출력</h2>
       {imageSrc ? (
         <img
           src={imageSrc}

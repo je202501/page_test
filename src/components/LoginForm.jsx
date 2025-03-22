@@ -34,7 +34,7 @@ const LoginForm = ({ setAuth, loginType }) => {
         const decodedToken = jwtDecode(token); // 토큰 디코딩
 
         console.log('디코딩된 토큰:', decodedToken);
-
+        console.log('admin_id:::::', decodedToken.admin_id);
         if (loginType === 'Bistech' && decodedToken.type !== 'MANAGER') {
           alert('❌ 접근 불가: 관리자 권한이 필요합니다.');
           return;
