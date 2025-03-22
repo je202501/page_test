@@ -13,7 +13,6 @@ const Image = ({ refrigerator_id }) => {
             responseType: "blob",// 리스폰 타입을 블롭으로 받을 수 있게 설정
           }
         );
-        console.log(response, ',<<<<<<');
 
         const imageUrl = URL.createObjectURL(response.data);// URL로 오는 이미지를 인식할 수 있게 블롭 데이터를 URL로 바꾸는 코드
         console.log(imageUrl);
