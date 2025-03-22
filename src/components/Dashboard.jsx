@@ -29,11 +29,26 @@ const TemperatureDashboard = () => {
   useEffect(() => {
     const fetchTemperature = async () => {
       try {
-        const response = await axios.get('/api/temperature'); // 백엔드 API 호출
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_SERVER_URL
+          }:9999/api/temperature/?refrigerator_id=2`
+        ); // 백엔드 API 호출
+        console.log('API Response:', response.data);
+        if (
+          !response.data ||
+          !response.data.data ||
+          response.data.data.length === 0
+        ) {
+          console.error('Invalid API response:', response.data);
+          return;
+        }
+
+        const latestEntry = response.data.data[response.data.data.length - 1];
         const newData = {
-          time: formatTime(response.data.Temperature_Time), // 시간 변환
-          temperature: parseFloat(response.data.Temperature_value), // 숫자로 변환
-          fridgeId: response.data.Refrigerator_id, // 냉장고 ID
+          time: new Date(latestEntry.createdAt).toLocaleString(), // 시간 변환
+          temperature: parseFloat(latestEntry.temperature_value), // 숫자로 변환
+          fridgeId: latestEntry.refrigerator_id, // 냉장고 ID
         };
 
         setData((prevData) => {
