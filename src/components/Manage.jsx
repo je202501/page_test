@@ -12,9 +12,6 @@ const Manage = () => {
   const [primaryResidents, setPrimaryResidents] = useState([]);
   const token = localStorage.getItem('token');
   const admin_id = jwtDecode(token).admin_id;
-
-  console.log('admin_id:', admin_id);
-
   useEffect(() => {
     try {
       fetchPerson(), fetchResidents();
