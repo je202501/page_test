@@ -71,7 +71,7 @@ const TelegramWaitingModal = ({ open, onClose }) => {
             };
             fetchTelegram();
         }
-    }, [token]);
+    }, [token,open]);
 
     const handleInputChange = (e) => setTelegramUserId(e.target.value);
 
