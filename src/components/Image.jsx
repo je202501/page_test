@@ -8,13 +8,14 @@ const Image = ({ refrigerator_id }) => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_SERVER_URL
-          }:9999/api/image/?refrigerator_id=${refrigerator_id}`
+          `${import.meta.env.VITE_SERVER_URL}:9999/api/image/?refrigerator_id=${refrigerator_id}`,
+          {
+            responseType: "blob", // 여기에 객체로 설정해야 함!
+          }
         );
         console.log(response, ',<<<<<<');
 
-        const imageUrl = response.data.data; // 서버에서 받은 이미지 URL
+        const imageUrl = URL.createObjectURL(response.data);
         console.log(imageUrl);
         if (!imageUrl) {
           console.error('이미지 URL을 찾을 수 없습니다.');
