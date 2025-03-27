@@ -60,6 +60,7 @@ const App = () => {
         element={isAuthenticated ? <DetailPage /> : <Navigate to="/" />}
       ></Route>
       <Route path="/bistechmain" element={<BistechMainPage />} />
+      <Route path= "/bistech/chart"/>
     </Routes>
   );
 };
