@@ -20,14 +20,10 @@ const MainPage = ({ setAuth }) => {
     navigate('/'); // 로그인 페이지로 이동
   };
 
-  const goToSignup = () => {
-    navigate('/signup'); // 회원가입 페이지로 이동
-  };
-
   return (
     <div className="main-page">
       <h1>🏠</h1>
-      <button onClick={goToSignup}>회원가입</button>
+
       <button onClick={handleLogout}>로그아웃</button>
       <button onClick={() => setModalCreateRef((prev) => !prev)}>
         냉장고 생성

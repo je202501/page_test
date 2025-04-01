@@ -4,17 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import data from './data.js';
 import './Manage.css';
+import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
 
 const Manage = () => {
   let [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [primaryResidents, setPrimaryResidents] = useState([]);
+  const [temperatureStatus, setTemperatureStatus] = useState({}); // { refrigerator_id: 'normal' | 'danger' }
   const token = localStorage.getItem('token');
   const admin_id = jwtDecode(token).admin_id;
+
   useEffect(() => {
     try {
-      fetchPerson(), fetchResidents();
+      fetchPerson();
+      fetchResidents();
     } catch (err) {
       console.log(err);
     } finally {
@@ -39,21 +43,15 @@ const Manage = () => {
           entry_date: item.entry_date,
           exit_date: item.exit_date,
           management_number: item.management_number,
+          setting_temp_value: item.setting_temp_value, // 추가: 설정 온도
         }));
 
-        // refrigerator_number 기준으로 정렬
         formattedData.sort((a, b) => {
-          // "NO.1-1" → "1-1"로 변환
-          const aNumber = a.refrigerator_number.replace('NO.', ''); // "NO.1-1" → "1-1"
-          const bNumber = b.refrigerator_number.replace('NO.', ''); // "NO.2-1" → "2-1"
-
-          // 메인 번호와 서브 번호로 분리
-          const [aMain, aSub] = aNumber.split('-').map(Number); // "1-1" → [1, 1]
-          const [bMain, bSub] = bNumber.split('-').map(Number); // "2-1" → [2, 1]
-
-          // 메인 번호로 정렬
+          const aNumber = a.refrigerator_number.replace('NO.', '');
+          const bNumber = b.refrigerator_number.replace('NO.', '');
+          const [aMain, aSub] = aNumber.split('-').map(Number);
+          const [bMain, bSub] = bNumber.split('-').map(Number);
           if (aMain !== bMain) return aMain - bMain;
-          // 서브 번호로 정렬
           return aSub - bSub;
         });
 
@@ -64,7 +62,7 @@ const Manage = () => {
 
   const fetchResidents = async () => {
     const response = await axios
-      .get('${import.meta.env.VITE_SERVER_URL}:9999/api/resident')
+      .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
       .then((res) => {
         console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(
@@ -74,13 +72,28 @@ const Manage = () => {
       });
   };
 
+  // 온도 상태 업데이트 함수
+  const handleTemperatureChange = (refrigerator_id, status) => {
+    setTemperatureStatus((prev) => ({
+      ...prev,
+      [refrigerator_id]: status,
+    }));
+  };
+
   // 냉장고 번호 그룹화
   const groupedPersons = person.reduce((acc, cur) => {
-    const key = cur.refrigerator_number.split('-')[0]; // 냉장고 그룹 (No.1, No.2 등)
+    const key = cur.refrigerator_number.split('-')[0];
     if (!acc[key]) acc[key] = [];
     acc[key].push(cur);
     return acc;
   }, {});
+
+  // 배경색 결정 함수
+  const getBackgroundColor = (refrigerator_id) => {
+    return temperatureStatus[refrigerator_id] === 'danger'
+      ? 'bg-red-200'
+      : 'bg-white';
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
@@ -97,13 +110,19 @@ const Manage = () => {
         >
           {groupedPersons[groupKey].map((personData, i) => (
             <div
-              className="personBox"
+              className={`personBox ${getBackgroundColor(
+                personData.refrigerator_id
+              )}`}
               key={i}
               style={{
                 width: '380px',
                 border: '1px solid #ccc',
                 padding: '10px',
                 borderRadius: '5px',
+                backgroundColor:
+                  temperatureStatus[personData.refrigerator_id] === 'danger'
+                    ? '#fee2e2'
+                    : 'white', // 직접 스타일 적용
               }}
             >
               <p>냉장고: {personData.refrigerator_number}</p>
@@ -112,6 +131,7 @@ const Manage = () => {
               <p>입관일: {personData.entry_date}</p>
               <p>출관일: {personData.exit_date}</p>
               <p>관리번호: {personData.management_number}</p>
+              <p>설정 온도: {personData.setting_temp_value}°C</p>
               {primaryResidents.map((resident, j) => (
                 <div key={j}>
                   {resident.refrigerator_id === personData.refrigerator_id && (
@@ -119,6 +139,13 @@ const Manage = () => {
                   )}
                 </div>
               ))}
+              <RefrigeratorTemperature
+                refrigerator_id={personData.refrigerator_id}
+                setting_temp_value={personData.setting_temp_value}
+                onTemperatureChange={(status) =>
+                  handleTemperatureChange(personData.refrigerator_id, status)
+                }
+              />
               <button
                 onClick={() =>
                   navigate(`/setting/${personData.refrigerator_id}`, {

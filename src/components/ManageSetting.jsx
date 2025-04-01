@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import data from './data.js';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ModalRes from './ModalRes.jsx';
 import QRcode from './qrcode/QRcode';
 import ImageUpload from './ImageUpload.jsx';
 import Image from './Image.jsx';
+import RefrigeratorTemperature from './RefrigeratorTemperature.jsx'; // 오타 수정
 
 const ManageSetting = () => {
   const [QRModal, setQRModal] = useState(false);
-  let [person, setPerson] = useState([]);
+  const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalref, setModalref] = useState(false);
+  const [modalres, setModalres] = useState(false);
+  const [residents, setResidents] = useState([]);
+  const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
   const location = useLocation();
-  const refrigerator_id = location.state?.refrigerator_id || null;
-  let [modalref, setModalref] = useState(false);
-  let [modalres, setModalres] = useState(false);
-  let [residents, setResidents] = useState([]);
-
   const navigate = useNavigate();
+  const refrigerator_id = location.state?.refrigerator_id || null;
+
+  // 배경색 결정 함수
+  const getBackgroundColor = () => {
+    return temperatureStatus === 'danger' ? 'bg-red-200' : 'bg-white';
+  };
+
   console.log(refrigerator_id);
   const handleModalresClose = () => {
     setModalres(false);
@@ -63,6 +69,7 @@ const ManageSetting = () => {
           entry_date: item.entry_date,
           exit_date: item.exit_date,
           management_number: item.management_number,
+          setting_temp_value: item.setting_temp_value,
         }));
         setPerson(formattedData);
       });
@@ -141,19 +148,20 @@ const ManageSetting = () => {
   };
 
   return (
-    <div>
-      <h1
-        onClick={() => {
-          navigate('/main');
+    <div className={getBackgroundColor()}>
+      {' '}
+      {/* 배경색 동적 적용 */}
+      <h1 onClick={() => navigate('/main')}>🏠</h1>
+      <div
+        className="personBox"
+        style={{
+          backgroundColor: temperatureStatus === 'danger' ? '#fee2e2' : 'white',
         }}
       >
-        🏠
-      </h1>
-      <div className="personBox">
         <p>관리번호: {currentPerson.management_number}</p>
         <p>냉장고: {currentPerson.refrigerator_number}</p>
         <h3>고인명: {currentPerson.person_name}</h3>
-        {<Image refrigerator_id={refrigerator_id}></Image>}
+        <Image refrigerator_id={refrigerator_id} />
         <h3>생년월일: {currentPerson.person_birthday}</h3>
         <p>입관일: {currentPerson.entry_date}</p>
         <p>출관일: {currentPerson.exit_date}</p>
@@ -162,35 +170,18 @@ const ManageSetting = () => {
             상주 {j + 1}: {resident.resident_name} {resident.phone_number}
           </p>
         ))}
-        <p>설정온도: 제상:</p>
-
-        <button
-          onClick={() => {
-            console.log('클릭');
-            setModalref((prev) => !prev);
-          }}
-        >
-          고인 수정
-        </button>
-        <button
-          onClick={() => {
-            console.log('클릭');
-            setModalres((prev) => !prev);
-          }}
-        >
-          상주 수정
-        </button>
-
-        <button
-          onClick={() => {
-            setQRModal(true);
-          }}
-        >
-          QR 밴드 출력
-        </button>
-        {<ImageUpload refrigerator_id={refrigerator_id}></ImageUpload>}
+        {/* RefrigeratorTemperature 컴포넌트에 설정 온도 전달 */}
+        <RefrigeratorTemperature
+          refrigerator_id={currentPerson.refrigerator_id}
+          setting_temp_value={currentPerson.setting_temp_value} // 추가
+          onTemperatureChange={setTemperatureStatus} // 추가
+        />
+        <p>설정온도: {currentPerson.setting_temp_value}°C</p> {/* 추가 */}
+        <button onClick={() => setModalref(!modalref)}>고인 수정</button>
+        <button onClick={() => setModalres(!modalres)}>상주 수정</button>
+        <button onClick={() => setQRModal(true)}>QR 밴드 출력</button>
+        <ImageUpload refrigerator_id={refrigerator_id} />
         <button onClick={handleExitConfirm}>출관 확인</button>
-        <br />
         {modalref && (
           <Modalref person={currentPerson} onClose={handleModalrefClose} />
         )}
@@ -198,18 +189,16 @@ const ManageSetting = () => {
           <ModalRes
             person={currentPerson}
             residents={residents}
-            onClose={handleModalresClose}
+            onClose={() => setModalres(false)}
           />
         )}
-        {
+        {QRModal && (
           <QRcode
             open={QRModal}
             value={currentPerson}
-            onClose={() => {
-              setQRModal(false);
-            }}
+            onClose={() => setQRModal(false)}
           />
-        }
+        )}
       </div>
     </div>
   );
