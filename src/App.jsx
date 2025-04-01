@@ -11,6 +11,7 @@ import MainPage from './pages/MainPage';
 import SettingPage from './pages/SettingPage';
 import BistechMainPage from './pages/BistechMainPage';
 import DetailPage from './pages/DetailPage';
+import BistechChartPage from './pages/BistechChartPage'
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -60,7 +61,7 @@ const App = () => {
         element={isAuthenticated ? <DetailPage /> : <Navigate to="/" />}
       ></Route>
       <Route path="/bistechmain" element={<BistechMainPage />} />
-      <Route path= "/bistech/chart"/>
+      <Route path= "/bistech/chart" element={<BistechChartPage/>}/>
     </Routes>
   );
 };

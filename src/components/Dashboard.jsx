@@ -76,7 +76,7 @@ const TemperatureDashboard = () => {
         `${import.meta.env.VITE_SERVER_URL}:9999/api/temperature/`,
         {
           params: {
-            refrigerator_id: 2,
+            refrigerator_id: 1,
             start_date: formattedStartDate,
             end_date: formattedEndDate,
           },
