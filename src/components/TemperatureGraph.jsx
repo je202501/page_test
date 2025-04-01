@@ -45,6 +45,7 @@ const TemperatureGraph = () => {
                 {
                     temperature: newTemp.temperature,  // 온도 데이터
                     time: newTemp.createAt || Date.now(), // timestamp가 없으면 현재 시간 사용
+                    refrigerator_id: newTemp.refrigerator_id,
                 }
             ]);
         });
@@ -55,7 +56,7 @@ const TemperatureGraph = () => {
         };
     }, []);
     useEffect(() => {
-        // console.log(data, "<<<data");
+        console.log(data, "<<<data");
         if (data.length > 0) {
             const temperatures = data.map((d) => d.temperature);
             const minTemp = Math.min(...temperatures);
@@ -63,34 +64,50 @@ const TemperatureGraph = () => {
             console.log(`Y축 범위: 최소 ${minTemp}, 최대 ${maxTemp}`);
         }
     }, [data]); // data가 변경될 때마다 실행
-
+    const groupedData = data.reduce((acc, curr) => {
+        const { refrigerator_id } = curr;
+        if (!acc[refrigerator_id]) {
+            acc[refrigerator_id] = [];
+        }
+        acc[refrigerator_id].push(curr);
+        return acc;
+    }, {});
+    console.log(groupedData, "<<<<groupedData")
     return (
-        <div style={{ width: "80%", height: 400, margin: "auto" }}>
+        <div style={{ width: "80%", margin: 30 }}>
             <h2>실시간 온도 그래프</h2>
-            <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data}>
-                    <XAxis
-                        dataKey="time"
-                        tickFormatter={(time) =>
-                            new Intl.DateTimeFormat("ko-KR", {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                second: "2-digit",
-                            }).format(new Date(time))
-                        }
-                    />
-                    <YAxis domain={[-20, 10]} />
-                    <Tooltip
-                        labelFormatter={(value) =>
-                            new Intl.DateTimeFormat("ko-KR", {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                second: "2-digit",
-                            }).format(new Date(value)) // 툴팁에서도 동일하게 시간 포맷
-                        }
-                    />                    <Line type="linear" dataKey="temperature" stroke="#8884d8" dot={true} />
-                </LineChart>
-            </ResponsiveContainer>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+                {Object.keys(groupedData).map((refrigerator_id) => (
+                    <div key={refrigerator_id}  style={{ width: "30%" }}>
+                        <h3>냉장고 {refrigerator_id} 온도 그래프</h3>
+                        <ResponsiveContainer width="110%" height={300}>
+                            <LineChart data={groupedData[refrigerator_id]}>
+                                <XAxis
+                                    dataKey="time"
+                                    tickFormatter={(time) =>
+                                        new Intl.DateTimeFormat("ko-KR", {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            second: "2-digit",
+                                        }).format(new Date(time))
+                                    }
+                                />
+                                <YAxis domain={[-20, 10]} />
+                                <Tooltip
+                                    labelFormatter={(value) =>
+                                        new Intl.DateTimeFormat("ko-KR", {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            second: "2-digit",
+                                        }).format(new Date(value)) // 툴팁에서도 동일하게 시간 포맷
+                                    }
+                                />
+                                <Line type="linear" dataKey="temperature" stroke="#8884d8" dot={true} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
