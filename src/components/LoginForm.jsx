@@ -17,7 +17,6 @@ const LoginForm = ({ setAuth, loginType, setUserType }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('로그인 요청 데이터:', credentials); // 디버깅용 로그
 
     // Bistech 로그인 시 manager API 사용, 기본적으로 admin API 사용
     const apiUrl =
