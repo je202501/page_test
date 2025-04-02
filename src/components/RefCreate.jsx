@@ -4,10 +4,10 @@ import { jwtDecode } from 'jwt-decode';
 
 const RefCreate = ({ onClose }) => {
   const [newref, setNewref] = useState({
-    person_name: 'ㄱㄱ',
-    person_birthday: '123',
-    entry_date: '123',
-    exit_date: '123',
+    person_name: '',
+    person_birthday: '',
+    entry_date: '',
+    exit_date: '',
     refrigerator_number: '',
     setting_temp_value: 0,
     admin_id: null,

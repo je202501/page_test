@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import './FormStyles.css';
 
-const LoginForm = ({ setAuth, loginType }) => {
+const LoginForm = ({ setAuth, loginType, setUserType }) => {
   const [credentials, setCredentials] = useState({
     admin_account: '',
     password: '',
@@ -17,13 +17,27 @@ const LoginForm = ({ setAuth, loginType }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('로그인 요청 데이터:', credentials); // 디버깅용 로그
+
+    // Bistech 로그인 시 manager API 사용, 기본적으로 admin API 사용
+    const apiUrl =
+      loginType === 'Bistech'
+        ? `${import.meta.env.VITE_SERVER_URL}:9999/api/manager/manager_login`
+        : `${import.meta.env.VITE_SERVER_URL}:9999/api/admin/admin_login`;
+
+    // API에 맞게 필드명 수정
+    const requestData =
+      loginType === 'Bistech'
+        ? {
+            manager_account: credentials.admin_account,
+            password: credentials.password,
+          } // 필드명 변경
+        : credentials;
+
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/admin/admin_login`,
-        credentials,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+      const response = await axios.post(apiUrl, requestData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
       console.log('서버 응답:', response.data);
       if (
         response.data.status === 200 &&
@@ -31,14 +45,10 @@ const LoginForm = ({ setAuth, loginType }) => {
         response.data.data
       ) {
         const token = response.data.data;
-        const decodedToken = jwtDecode(token); // 토큰 디코딩
-
-        console.log('디코딩된 토큰:', decodedToken);
-        console.log('admin_id:::::', decodedToken.admin_id);
-        if (loginType === 'Bistech' && decodedToken.type !== 'MANAGER') {
-          alert('❌ 접근 불가: 관리자 권한이 필요합니다.');
-          return;
-        }
+        const decoded = jwtDecode(token);
+        const type = decoded.admin_id ? 'admin' : 'bistech';
+        setUserType(type); // App에서 전달된 setUserType 호출
+        setAuth(true); // setIsAuthenticated(true)
 
         // 로그인 성공 후 상태 업데이트
         localStorage.setItem('token', token);

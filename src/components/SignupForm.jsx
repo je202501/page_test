@@ -24,7 +24,7 @@ const SignupForm = () => {
         form
       );
       alert('✅ 회원가입 성공');
-      navigate('/'); // 회원가입 후 로그인 페이지로 이동
+      navigate('/bistechmain'); // 회원가입 후 로그인 페이지로 이동
     } catch (error) {
       console.error(error);
       alert('❌ 회원가입 실패. 다시 시도하세요.');
