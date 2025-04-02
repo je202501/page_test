@@ -105,10 +105,10 @@ const App = () => {
           )
         }
       />
-        element={isAuthenticated ? <DetailPage /> : <Navigate to="/" />}
+      <Route element={isAuthenticated ? <DetailPage /> : <Navigate to="/" />}
       ></Route>
       <Route path="/bistechmain" element={<BistechMainPage />} />
-      <Route path= "/bistech/chart" element={<BistechChartPage/>}/>
+      <Route path="/bistech/chart" element={<BistechChartPage />} />
     </Routes>
   );
 };
