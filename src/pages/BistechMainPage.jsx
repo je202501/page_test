@@ -14,12 +14,17 @@ const BistechMainPage = ({ setAuth }) => {
   const goToSignup = () => {
     navigate('/signup'); // 회원가입 페이지로 이동
   };
+  // 실시간 차트 이동 함수
+  const handleChartPage = () =>{
+    navigate('/bistech/chart')
+  }
 
   return (
     <div className="main-page">
       <h1>Bistech 관리자 페이지</h1>
       <button onClick={goToSignup}>회원가입</button>
       <button onClick={handleLogout}>로그아웃</button>
+      <button onClick={handleChartPage}>실시간 차트 보기</button>
       <TemperatureDashboard></TemperatureDashboard>
     </div>
   );
