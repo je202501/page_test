@@ -6,13 +6,15 @@ import QRcode from './qrcode/QRcode';
 import ImageUpload from './ImageUpload.jsx';
 import Image from './Image.jsx';
 import RefrigeratorTemperature from './RefrigeratorTemperature.jsx'; // 오타 수정
+import ModalRef from './ModalRef.jsx';
 
 const ManageSetting = () => {
   const [QRModal, setQRModal] = useState(false);
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [modalref, setModalref] = useState(false);
+  const [modalperson, setModalperson] = useState(false);
   const [modalres, setModalres] = useState(false);
+  const [modalref, setModalref] = useState(false);
   const [residents, setResidents] = useState([]);
   const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
   const location = useLocation();
@@ -27,6 +29,9 @@ const ManageSetting = () => {
   console.log(refrigerator_id);
   const handleModalresClose = () => {
     setModalres(false);
+  };
+  const handleModalpersonClose = () => {
+    setModalperson(false);
   };
   const handleModalrefClose = () => {
     setModalref(false);
@@ -53,8 +58,8 @@ const ManageSetting = () => {
   }, [person]);
 
   useEffect(() => {
-    console.log('Modal 상태:', modalref);
-  }, [modalref]);
+    console.log('Modal 상태:', modalperson);
+  }, [modalperson]);
 
   const fetchPerson = async () => {
     const response = await axios
@@ -170,20 +175,23 @@ const ManageSetting = () => {
             상주 {j + 1}: {resident.resident_name} {resident.phone_number}
           </p>
         ))}
-        {/* RefrigeratorTemperature 컴포넌트에 설정 온도 전달 */}
         <RefrigeratorTemperature
           refrigerator_id={currentPerson.refrigerator_id}
           setting_temp_value={currentPerson.setting_temp_value} // 추가
           onTemperatureChange={setTemperatureStatus} // 추가
         />
         <p>설정온도: {currentPerson.setting_temp_value}°C</p> {/* 추가 */}
-        <button onClick={() => setModalref(!modalref)}>고인 수정</button>
+        <button onClick={() => setModalperson(!modalperson)}>고인 수정</button>
         <button onClick={() => setModalres(!modalres)}>상주 수정</button>
+        <button onClick={() => setModalref(!modalref)}>냉장고 수정</button>
         <button onClick={() => setQRModal(true)}>QR 밴드 출력</button>
         <ImageUpload refrigerator_id={refrigerator_id} />
         <button onClick={handleExitConfirm}>출관 확인</button>
-        {modalref && (
-          <Modalref person={currentPerson} onClose={handleModalrefClose} />
+        {modalperson && (
+          <Modalperson
+            person={currentPerson}
+            onClose={handleModalpersonClose}
+          />
         )}
         {modalres && (
           <ModalRes
@@ -191,6 +199,9 @@ const ManageSetting = () => {
             residents={residents}
             onClose={() => setModalres(false)}
           />
+        )}
+        {modalref && (
+          <ModalRef person={currentPerson} onClose={handleModalrefClose} />
         )}
         {QRModal && (
           <QRcode
@@ -205,7 +216,7 @@ const ManageSetting = () => {
 };
 
 //수정 모달
-const Modalref = ({ person, onClose }) => {
+const Modalperson = ({ person, onClose }) => {
   const [updatedPerson, setUpdatedPerson] = useState({
     refrigerator_id: person?.refrigerator_id || '',
     person_name: person?.person_name || '',
@@ -239,7 +250,7 @@ const Modalref = ({ person, onClose }) => {
 
   return (
     <div
-      className="modalref"
+      className="Modalperson"
       style={{
         display: 'block',
         position: 'relative',
