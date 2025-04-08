@@ -17,18 +17,20 @@ const TemperatureDashboard = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [error, setError] = useState('');
-  const [selectedRefrigeratorId, setSelectedRefrigeratorId] = useState(null); // 추가
+  const [selectedRefrigeratorId, setSelectedRefrigeratorId] = useState(null);
 
+  // 날짜 형식 변환 함수
+  const formatDateForInput = (date) => {
+    const pad = (num) => num.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+      date.getDate()
+    )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  };
+
+  // 초기 날짜 설정
   useEffect(() => {
     const now = new Date();
     const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-
-    const formatDateForInput = (date) => {
-      const pad = (num) => num.toString().padStart(2, '0');
-      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-        date.getDate()
-      )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-    };
 
     setEndDate(formatDateForInput(now));
     setStartDate(formatDateForInput(twentyFourHoursAgo));
@@ -36,9 +38,18 @@ const TemperatureDashboard = () => {
     fetchTemperature(
       formatDateForInput(twentyFourHoursAgo),
       formatDateForInput(now),
-      selectedRefrigeratorId // 냉장고 ID 반영
+      selectedRefrigeratorId
     );
-  }, [selectedRefrigeratorId]); // 냉장고 ID 변경될 때마다 실행
+  }, [selectedRefrigeratorId]);
+
+  // 시작 날짜 변경 시 종료 날짜 자동 설정(24시간 후)
+  useEffect(() => {
+    if (startDate) {
+      const start = new Date(startDate);
+      const end = new Date(start.getTime() + 24 * 60 * 60 * 1000);
+      setEndDate(formatDateForInput(end));
+    }
+  }, [startDate]);
 
   const fetchTemperature = async (
     start = startDate,
@@ -79,7 +90,7 @@ const TemperatureDashboard = () => {
         `${import.meta.env.VITE_SERVER_URL}:9999/api/temperature/`,
         {
           params: {
-            refrigerator_id: refrigeratorId, // 선택한 냉장고 ID 반영
+            refrigerator_id: refrigeratorId,
             start_date: formattedStartDate,
             end_date: formattedEndDate,
           },
