@@ -5,7 +5,6 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "rec
 import { jwtDecode } from "jwt-decode";
 
 const SOCKET_SERVER_URL = import.meta.env.VITE_SOCKET_SERVER_URL;
-console.log(SOCKET_SERVER_URL)
 /**
  * data는 온도 데이터
  * adminInfo는 어드민 데이터
@@ -39,7 +38,6 @@ const TemperatureGraph = () => {
      * 소켓 연결시도 & 통신
      */
     useEffect(() => {
-        console.log("소켓 연결 시도:", SOCKET_SERVER_URL);
         const socket = io(SOCKET_SERVER_URL, {
             transports: ["websocket", "polling"], // WebSocket 사용 안 하고 HTTP 폴링만 사용
             reconnection: true, // 자동 재연결 활성화
@@ -48,19 +46,15 @@ const TemperatureGraph = () => {
         });
 
         socket.on("connect", () => {
-            console.log("소켓 연결 성공!");
         });
 
         socket.on("disconnect", () => {
-            console.warn("소켓 연결이 끊어졌습니다.");
         });
 
         socket.on("reconnect_attempt", (attempt) => {
-            console.log(`소켓 재연결 시도 (${attempt})`);
         });
 
         socket.on("temperatureUpdate", (newTemp) => {
-            console.log("기존 온도 데이터 수신:", newTemp);
             setData((prevData) => [
                 ...prevData,
                 { temperature: data.temperature, time: data.timestamp }
@@ -68,9 +62,7 @@ const TemperatureGraph = () => {
         });
 
         socket.on("newTemperature", (newTemp) => {
-            console.log("새 온도 데이터 수신:", newTemp);
             const prevData = data;
-            // console.log(prevData)
             setData((prevData) => [
                 ...prevData,
                 {
@@ -82,7 +74,6 @@ const TemperatureGraph = () => {
         });
 
         return () => {
-            console.log("소켓 연결 해제");
             socket.disconnect();
         };
     }, []);
@@ -108,7 +99,6 @@ const TemperatureGraph = () => {
             });
     
             setRefrigeratorInfo(refrigeratorIdMap); // refrigerator_id 기반으로 설정
-            console.log(refrigeratorIdMap, "<<r info");
         }
     }, [adminInfo]);
     
@@ -136,15 +126,16 @@ const TemperatureGraph = () => {
                 return acc;
             }, {});
 
-            console.log(groupedData, "<<<< groupedData"); // 최종 결과 확인
         }
     }, [data, refrigeratorInfo]); // data 또는 refrigeratorInfo 변경 시 실행
 
-
+    /**
+     * 참고 *
+     * useMemo는 계산이 무거울 때 사용하는 훅
+     */
     const groupedData = useMemo(() => {
         return data.reduce((acc, curr) => {
             const { refrigerator_id } = curr;
-            console.log(refrigeratorInfo,"<<rinfo")
             if (!acc[refrigerator_id]) {
                 acc[refrigerator_id] = {
                     info: refrigeratorInfo[refrigerator_id],
@@ -156,7 +147,6 @@ const TemperatureGraph = () => {
         }, {});
     }, [data, refrigeratorInfo]);
 
-    console.log(groupedData,"<<<<G data")
 
     /**
      * 그래프 그리기
