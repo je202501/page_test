@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { messageTelegram } from './service/telegramService';
+import { jwtDecode } from 'jwt-decode';
 
 const RefrigeratorTemperature = ({
   refrigerator_id,
@@ -10,6 +12,15 @@ const RefrigeratorTemperature = ({
 
   const evaluateTemperatureStatus = (currentTemp) => {
     const threshold = Number(setting_temp_value) + 5;
+    /**
+     * 비정상적 온도값일 경우 텔레그램 메시지 전송하는 로직
+     */
+    if (currentTemp >= threshold) {
+      const token = localStorage.getItem('token')
+      const decoded = jwtDecode(token)
+      const adminId = decoded.admin_id
+      messageTelegram(adminId, token)
+    }
     return currentTemp >= threshold ? 'danger' : 'normal';
   };
 
@@ -21,8 +32,7 @@ const RefrigeratorTemperature = ({
       const endTime = now;
 
       const response = await fetch(
-        `${
-          import.meta.env.VITE_SERVER_URL
+        `${import.meta.env.VITE_SERVER_URL
         }:9999/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
       );
       const data = await response.json();
