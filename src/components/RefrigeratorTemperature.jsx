@@ -8,7 +8,6 @@ const RefrigeratorTemperature = ({
   onTemperatureChange,
 }) => {
   const [temperatureData, setTemperatureData] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const evaluateTemperatureStatus = (currentTemp) => {
     const threshold = Number(setting_temp_value) + 5;
@@ -25,7 +24,6 @@ const RefrigeratorTemperature = ({
   };
 
   const fetchTemperatureData = async () => {
-    setLoading(true);
     try {
       const now = new Date();
       const startTime = new Date(now.getTime() - 60 * 60 * 1000);
@@ -49,7 +47,6 @@ const RefrigeratorTemperature = ({
       console.error('데이터 가져오기 오류:', error);
       onTemperatureChange('normal');
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -60,7 +57,6 @@ const RefrigeratorTemperature = ({
 
   return (
     <div>
-      {loading && <p>데이터 로딩 중...</p>}
       {temperatureData ? (
         <p>
           현재 온도: {Number(temperatureData.temperature_value)}°C (시간:{' '}
