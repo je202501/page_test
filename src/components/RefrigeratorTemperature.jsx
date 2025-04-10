@@ -3,24 +3,32 @@ import { messageTelegram } from './service/telegramService';
 import { jwtDecode } from 'jwt-decode';
 
 const RefrigeratorTemperature = ({
+  refrigerator_number,
   refrigerator_id,
   setting_temp_value,
   onTemperatureChange,
 }) => {
   const [temperatureData, setTemperatureData] = useState(null);
+  const [alertSent, setAlertSent] = useState(false); // 메시지 보냈는지 여부
 
   const evaluateTemperatureStatus = (currentTemp) => {
     const threshold = Number(setting_temp_value) + 5;
-    /**
-     * 비정상적 온도값일 경우 텔레그램 메시지 전송하는 로직
-     */
-    if (currentTemp >= threshold) {
-      const token = localStorage.getItem('token')
-      const decoded = jwtDecode(token)
-      const adminId = decoded.admin_id
-      messageTelegram(adminId, token)
+    const isDanger = currentTemp >= threshold;
+    if (isDanger && !alertSent) {
+      console.log('<<<<<여기로 옴 <<<<<');
+      const token = localStorage.getItem('token');
+      const decoded = jwtDecode(token);
+      const adminId = decoded.admin_id;
+      console.log('admin_id:', decoded.admin_id);
+      console.log('냉장고번호', refrigerator_number);
+      messageTelegram(adminId, token, refrigerator_number);
+      setAlertSent(true); // 메시지 보냄 표시
+    } else if (!isDanger && alertSent) {
+      // 온도가 정상으로 돌아오면 상태 초기화
+      setAlertSent(false);
     }
-    return currentTemp >= threshold ? 'danger' : 'normal';
+
+    return isDanger ? 'danger' : 'normal';
   };
 
   const fetchTemperatureData = async () => {
@@ -30,7 +38,8 @@ const RefrigeratorTemperature = ({
       const endTime = now;
 
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER_URL
+        `${
+          import.meta.env.VITE_SERVER_URL
         }:9999/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
       );
       const data = await response.json();
@@ -60,7 +69,7 @@ const RefrigeratorTemperature = ({
       {temperatureData ? (
         <p>
           현재 온도: {Number(temperatureData.temperature_value)}°C (시간:{' '}
-          {new Date(temperatureData.createdAt).toLocaleString()})
+          {new Date(temperatureData.createdAt).toLocaleString()} )
         </p>
       ) : (
         <p>온도 데이터를 불러오지 못했습니다.</p>

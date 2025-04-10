@@ -176,6 +176,7 @@ const ManageSetting = () => {
           </p>
         ))}
         <RefrigeratorTemperature
+          refrigerator_number={currentPerson.refrigerator_number}
           refrigerator_id={currentPerson.refrigerator_id}
           setting_temp_value={currentPerson.setting_temp_value} // 추가
           onTemperatureChange={setTemperatureStatus} // 추가

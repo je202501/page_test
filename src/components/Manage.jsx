@@ -140,6 +140,7 @@ const Manage = () => {
                 </div>
               ))}
               <RefrigeratorTemperature
+                refrigerator_number={personData.refrigerator_number}
                 refrigerator_id={personData.refrigerator_id}
                 setting_temp_value={personData.setting_temp_value}
                 onTemperatureChange={(status) =>
