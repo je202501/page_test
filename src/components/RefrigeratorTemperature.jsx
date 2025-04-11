@@ -5,6 +5,7 @@ const RefrigeratorTemperature = ({
   refrigerator_id,
   setting_temp_value,
   onTemperatureChange,
+  className,
 }) => {
   const [temperatureData, setTemperatureData] = useState(null);
 
@@ -49,9 +50,9 @@ const RefrigeratorTemperature = ({
   }, [refrigerator_id, setting_temp_value]);
 
   return (
-    <div>
+    <div className={`temperature-display ${className || ''}`}>
       {temperatureData ? (
-        <p>
+        <p className="current-temperature">
           현재 온도: {Number(temperatureData.temperature_value)}°C (시간:{' '}
           {new Date(temperatureData.createdAt).toLocaleString()} )
         </p>

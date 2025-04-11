@@ -1,0 +1,102 @@
+/* 전체 화면 레이아웃 */
+.fullscreen-container {
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.danger-bg {
+  background-color: #fee2e2;
+}
+
+/* 그리드 레이아웃 */
+.content-grid {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  height: 100%;
+  gap: 2rem;
+}
+
+/* 정보 섹션 스타일 */
+.info-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.refrigerator-info {
+  margin-bottom: 3rem;
+}
+
+.refrigerator-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.deceased-info {
+  margin-bottom: 2rem;
+}
+
+.deceased-name {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #111;
+  /* 아래 줄 제거 */
+  padding-bottom: 0;
+  margin-bottom: 1rem;
+}
+
+.deceased-birth {
+  font-size: 1.8rem;
+  color: #555;
+}
+
+.timeline-info p,
+.resident-info p,
+.management-info p,
+.temperature-text {
+  font-size: 1.5rem;
+  margin: 0.8rem 0;
+  color: #444;
+}
+
+/* 이미지 섹션 스타일 */
+.image-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-wrapper {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  max-width: 800px;
+  margin-right: 200px;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-section {
+    padding: 1rem;
+  }
+
+  .refrigerator-number {
+    font-size: 2rem;
+  }
+
+  .deceased-name {
+    font-size: 2.2rem;
+  }
+}

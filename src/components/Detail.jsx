@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Image from './Image.jsx';
 import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
+import './Detail.css';
 
 const Detail = () => {
   const [person, setPerson] = useState([]);
@@ -76,45 +77,65 @@ const Detail = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      {' '}
-      {/* 배경색 동적 적용 */}
-      <div
-        className=" p-6 rounded-lg shadow-md"
-        style={{
-          backgroundColor: temperatureStatus === 'danger' ? '#fee2e2' : 'white',
-        }}
-      >
-        <div className="flex items-start gap-8">
-          {/* 왼쪽 정보 영역 */}
-          <div className="flex-1 min-w-0">
-            <p>냉장고: {currentPerson.refrigerator_number}</p>
-            <h3>고인명: {currentPerson.person_name}</h3>
-            <h3>생년월일: {currentPerson.person_birthday}</h3>
-            <p>입관일: {currentPerson.entry_date}</p>
-            <p>출관일: {currentPerson.exit_date}</p>
-            {primaryResidents.map((resident, j) => (
-              <div key={j}>
-                {resident.refrigerator_id === currentPerson.refrigerator_id && (
-                  <p>대표상주: {resident.resident_name}</p>
-                )}
-              </div>
-            ))}
-            <p>관리번호: {currentPerson.management_number}</p>
-            <p>설정온도: {currentPerson.setting_temp_value}</p>
+    <div
+      className={`fullscreen-container ${
+        temperatureStatus === 'danger' ? 'danger-bg' : ''
+      }`}
+    >
+      <div className="content-grid">
+        {/* 왼쪽 정보 영역 */}
+        <div className="info-section">
+          <div className="refrigerator-info">
+            <h1 className="refrigerator-number">
+              안치냉장고 {currentPerson.refrigerator_number}
+            </h1>
+          </div>
+
+          <div className="deceased-info">
+            <h2 className="deceased-name">
+              고인명 : {currentPerson.person_name}
+            </h2>
+            <p className="deceased-birth">
+              생년월일: {currentPerson.person_birthday}
+            </p>
+          </div>
+
+          <div className="timeline-info">
+            <p className="entry-date">입관일 : {currentPerson.entry_date}</p>
+            <p className="exit-date">출관일 : {currentPerson.exit_date}</p>
+          </div>
+
+          <div className="resident-info">
+            {primaryResidents.map(
+              (resident, j) =>
+                resident.refrigerator_id === currentPerson.refrigerator_id && (
+                  <p key={j} className="primary-resident">
+                    대표 상주 : {resident.resident_name} {resident.phone_number}
+                  </p>
+                )
+            )}
+          </div>
+
+          <div className="management-info">
+            <p className="management-number">
+              관리번호 : {currentPerson.management_number}
+            </p>
+            <p className="temperature-setting">
+              설정온도 : {currentPerson.setting_temp_value}°C
+            </p>
             <RefrigeratorTemperature
               refrigerator_number={currentPerson.refrigerator_number}
               refrigerator_id={currentPerson.refrigerator_id}
               setting_temp_value={currentPerson.setting_temp_value}
               onTemperatureChange={setTemperatureStatus}
+              className="temperature-text" // 추가된 클래스
             />
           </div>
+        </div>
 
-          {/* 오른쪽 이미지 영역 */}
-          <div
-            className="flex-shrink-0"
-            style={{ width: '120px', alignSelf: 'flex-start' }}
-          >
+        {/* 오른쪽 이미지 영역 */}
+        <div className="image-section">
+          <div className="image-wrapper">
             <Image refrigerator_id={refrigerator_id} />
           </div>
         </div>

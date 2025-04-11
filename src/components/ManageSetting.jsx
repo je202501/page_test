@@ -167,7 +167,9 @@ const ManageSetting = () => {
         <p>관리번호: {currentPerson.management_number}</p>
         <p>냉장고: {currentPerson.refrigerator_number}</p>
         <h3>고인명: {currentPerson.person_name}</h3>
-        <Image refrigerator_id={refrigerator_id} />
+        <div>
+          <Image refrigerator_id={refrigerator_id} />
+        </div>
         <h3>생년월일: {currentPerson.person_birthday}</h3>
         <p>입관일: {currentPerson.entry_date}</p>
         <p>출관일: {currentPerson.exit_date}</p>

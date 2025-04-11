@@ -38,7 +38,12 @@ const Image = ({ refrigerator_id }) => {
         <img
           src={imageSrc}
           alt="냉장고 이미지"
-          style={{ width: '100px', height: 'auto', objectFit: 'contain' }}
+          style={{
+            maxWidth: '100%',
+            width: '400px',
+            height: 'auto',
+            objectFit: 'contain',
+          }}
         />
       ) : (
         <p>이미지를 불러오는 중...</p>
