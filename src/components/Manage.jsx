@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import data from './data.js';
 import './Manage.css';
-import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
+import RefTempAndMessage from './RefTempAndMessage.jsx';
 
 const Manage = () => {
   let [person, setPerson] = useState([]);
@@ -139,7 +139,7 @@ const Manage = () => {
                   )}
                 </div>
               ))}
-              <RefrigeratorTemperature
+              <RefTempAndMessage
                 refrigerator_number={personData.refrigerator_number}
                 refrigerator_id={personData.refrigerator_id}
                 setting_temp_value={personData.setting_temp_value}

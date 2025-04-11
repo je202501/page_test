@@ -5,7 +5,7 @@ import ModalRes from './ModalRes.jsx';
 import QRcode from './qrcode/QRcode';
 import ImageUpload from './ImageUpload.jsx';
 import Image from './Image.jsx';
-import RefrigeratorTemperature from './RefrigeratorTemperature.jsx'; // 오타 수정
+import RefTempAndMessage from './RefTempAndMessage.jsx';
 import ModalRef from './ModalRef.jsx';
 
 const ManageSetting = () => {
@@ -117,6 +117,7 @@ const ManageSetting = () => {
           person_birthday: '',
           entry_date: '',
           exit_date: '',
+          setting_temp_value: '',
         };
         await axios.put(
           `${
@@ -175,7 +176,7 @@ const ManageSetting = () => {
             상주 {j + 1}: {resident.resident_name} {resident.phone_number}
           </p>
         ))}
-        <RefrigeratorTemperature
+        <RefTempAndMessage
           refrigerator_number={currentPerson.refrigerator_number}
           refrigerator_id={currentPerson.refrigerator_id}
           setting_temp_value={currentPerson.setting_temp_value} // 추가

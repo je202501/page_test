@@ -1,16 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { messageTelegram } from './service/telegramService';
+import { jwtDecode } from 'jwt-decode';
 
-const RefrigeratorTemperature = ({
+const RefTempAndMessage = ({
   refrigerator_number,
   refrigerator_id,
   setting_temp_value,
   onTemperatureChange,
 }) => {
   const [temperatureData, setTemperatureData] = useState(null);
+  const alertSentRef = useRef(false); // useRef 사용
 
   const evaluateTemperatureStatus = (currentTemp) => {
     const threshold = Number(setting_temp_value) + 7;
     const isDanger = currentTemp >= threshold;
+
+    if (isDanger && !alertSentRef.current) {
+      console.log('<<<<<여기로 옴 <<<<<');
+      const token = localStorage.getItem('token');
+      const decoded = jwtDecode(token);
+      const adminId = decoded.admin_id;
+      console.log('admin_name:', decoded.admin_name);
+      console.log('냉장고번호', refrigerator_number);
+      messageTelegram(adminId, token, refrigerator_number);
+      alertSentRef.current = true;
+    } else if (!isDanger && alertSentRef.current) {
+      alertSentRef.current = false;
+    }
 
     return isDanger ? 'danger' : 'normal';
   };
@@ -62,4 +78,4 @@ const RefrigeratorTemperature = ({
   );
 };
 
-export default RefrigeratorTemperature;
+export default RefTempAndMessage;

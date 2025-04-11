@@ -33,12 +33,12 @@ const Image = ({ refrigerator_id }) => {
   }, [refrigerator_id]);
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
       {imageSrc ? (
         <img
           src={imageSrc}
           alt="냉장고 이미지"
-          style={{ width: '100px', height: 'auto' }}
+          style={{ width: '100px', height: 'auto', objectFit: 'contain' }}
         />
       ) : (
         <p>이미지를 불러오는 중...</p>
