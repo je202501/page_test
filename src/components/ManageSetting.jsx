@@ -185,9 +185,11 @@ const ManageSetting = () => {
           onTemperatureChange={setTemperatureStatus} // 추가
         />
         <p>설정온도: {currentPerson.setting_temp_value}°C</p> {/* 추가 */}
-        <button onClick={() => setModalperson(!modalperson)}>고인 수정</button>
-        <button onClick={() => setModalres(!modalres)}>상주 수정</button>
-        <button onClick={() => setModalref(!modalref)}>냉장고 수정</button>
+        <button onClick={() => setModalperson(!modalperson)}>
+          고인 정보 입력
+        </button>
+        <button onClick={() => setModalres(!modalres)}>상주 정보 입력</button>
+        <button onClick={() => setModalref(!modalref)}>온도 설정</button>
         <button onClick={() => setQRModal(true)}>QR 밴드 출력</button>
         <ImageUpload refrigerator_id={refrigerator_id} />
         <button onClick={handleExitConfirm}>출관 확인</button>
@@ -265,14 +267,7 @@ const Modalperson = ({ person, onClose }) => {
       }}
     >
       <h4 style={{ marginLeft: '10px' }}>수정</h4>
-      <span>냉장고 No : </span>
-      <input
-        type="text"
-        name="refrigerator_id"
-        value={updatedPerson.refrigerator_id}
-        disabled
-      />
-      <br />
+
       <span>고인명 : </span>
       <input
         type="text"

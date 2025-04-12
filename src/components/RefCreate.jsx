@@ -1,36 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+import DropdownSelectorAdmin from './DropdownSelectorAdmin'; // 경로는 실제 위치에 맞게 조정하세요
 
 const RefCreate = ({ onClose }) => {
   const [newref, setNewref] = useState({
-    person_name: '',
-    person_birthday: '',
-    entry_date: '',
-    exit_date: '',
     refrigerator_number: '',
     setting_temp_value: 0,
     admin_id: null,
   });
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('토큰이 없습니다.');
-    }
-    const decodedToken = jwtDecode(token);
-    setNewref((prev) => ({ ...prev, admin_id: Number(decodedToken.admin_id) }));
-  }, []);
-
   const validateRefrigeratorNumber = (value) => {
-    const regex = /^[1-9]-([1]|[2])$/; // 앞 숫자는 1-9, 뒤 숫자는 1 또는 2만 가능
+    const regex = /^[1-9]-([1]|[2])$/;
     return regex.test(value);
   };
 
   const formatRefrigeratorNumber = (value) => {
     if (validateRefrigeratorNumber(value)) {
-      return `NO.${value}`; // 자동으로 'NO.' 추가
+      return `NO.${value}`;
     }
     return value;
   };
@@ -50,9 +37,17 @@ const RefCreate = ({ onClose }) => {
     });
   };
 
+  const handleAdminSelect = (adminId) => {
+    setNewref((prev) => ({ ...prev, admin_id: adminId }));
+  };
+
   const handleCreate = async () => {
     if (error) {
       alert(error);
+      return;
+    }
+    if (!newref.admin_id) {
+      alert('업체를 선택해주세요.');
       return;
     }
     try {
@@ -73,7 +68,7 @@ const RefCreate = ({ onClose }) => {
         }
       );
       alert('생성이 완료되었습니다.');
-      window.location.reload(); // 데이터 새로고침
+      window.location.reload();
     } catch (error) {
       console.error('생성 실패:', error);
       alert(
@@ -97,6 +92,10 @@ const RefCreate = ({ onClose }) => {
       }}
     >
       <h4 style={{ marginLeft: '10px' }}>냉장고 생성</h4>
+
+      <DropdownSelectorAdmin onSelectAdmin={handleAdminSelect} />
+
+      <br />
       <span>냉장고 No : </span>
       <input
         type="text"

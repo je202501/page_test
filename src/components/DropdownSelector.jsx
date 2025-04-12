@@ -53,9 +53,9 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
 
   return (
     <div>
-      <label>관리자 선택:</label>
+      <label>업체 선택:</label>
       <select onChange={(e) => setSelectedAdminId(Number(e.target.value))}>
-        <option value="">관리자 선택</option>
+        <option value="">업체 선택</option>
         {admins.map((admin) => (
           <option key={admin.admin_id} value={admin.admin_id}>
             {admin.admin_name}

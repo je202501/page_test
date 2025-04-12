@@ -23,21 +23,21 @@ const SignupForm = () => {
         `${import.meta.env.VITE_SERVER_URL}:9999/api/admin`,
         form
       );
-      alert('✅ 관리자 생성 성공');
+      alert('✅ 업체 ID 생성 성공');
       navigate('/bistechmain'); // 회원가입 후 로그인 페이지로 이동
     } catch (error) {
       console.error(error);
-      alert('❌ 관리자 생성 실패. 다시 시도하세요.');
+      alert('❌ 업체 ID 생성 실패. 다시 시도하세요.');
     }
   };
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>
-      <h2>관리자 ID 생성</h2>
+      <h2>업체 ID 생성</h2>
       <input
         type="text"
         name="admin_name"
-        placeholder="관리자"
+        placeholder="업체"
         value={form.admin_name}
         onChange={handleChange}
         required

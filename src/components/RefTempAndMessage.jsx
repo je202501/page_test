@@ -67,10 +67,7 @@ const RefTempAndMessage = ({
   return (
     <div>
       {temperatureData ? (
-        <p>
-          현재 온도: {Number(temperatureData.temperature_value)}°C (시간:{' '}
-          {new Date(temperatureData.createdAt).toLocaleString()} )
-        </p>
+        <p>현재 온도: {Number(temperatureData.temperature_value)}°C</p>
       ) : (
         <p>온도 데이터를 불러오지 못했습니다.</p>
       )}

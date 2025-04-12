@@ -53,8 +53,7 @@ const RefrigeratorTemperature = ({
     <div className={`temperature-display ${className || ''}`}>
       {temperatureData ? (
         <p className="current-temperature">
-          현재 온도: {Number(temperatureData.temperature_value)}°C (시간:{' '}
-          {new Date(temperatureData.createdAt).toLocaleString()} )
+          현재 온도: {Number(temperatureData.temperature_value)}°C
         </p>
       ) : (
         <p>온도 데이터를 불러오지 못했습니다.</p>
