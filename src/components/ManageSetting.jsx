@@ -75,6 +75,7 @@ const ManageSetting = () => {
           exit_date: item.exit_date,
           management_number: item.management_number,
           setting_temp_value: item.setting_temp_value,
+          refrigerator_type: item.refrigerator_type,
         }));
         setPerson(formattedData);
       });
@@ -229,8 +230,9 @@ const Modalperson = ({ person, onClose }) => {
     person_birthday: person?.person_birthday || '',
     entry_date: person?.entry_date || '',
     exit_date: person?.exit_date || '',
+    refrigerator_number: person?.refrigerator_number || '',
+    refrigerator_type: person.refrigerator_type
   });
-
   const handleChange = (e) => {
     setUpdatedPerson({
       ...updatedPerson,

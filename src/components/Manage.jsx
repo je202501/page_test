@@ -44,6 +44,12 @@ const Manage = () => {
           exit_date: item.exit_date,
           management_number: item.management_number,
           setting_temp_value: item.setting_temp_value, // 추가: 설정 온도
+          check_defrost: item.check_defrost,//제상체크
+          defrost_term: item.defrost_term,//제상주기
+          defrost_time: item.defrost_time,//제상시간
+          defrost_value: item.defrost_value,//제상온도
+          refrigerator_type: item.refrigerator_type,//냉장고 타입 A = 일체형 B = 분리형
+
         }));
 
         formattedData.sort((a, b) => {
@@ -132,6 +138,7 @@ const Manage = () => {
               <p>출관일: {personData.exit_date}</p>
               <p>관리번호: {personData.management_number}</p>
               <p>설정 온도: {personData.setting_temp_value}°C</p>
+              <p>냉장고 타입 : {personData.refrigerator_type === "A" ? "일체형": "분리형"}</p>
               {primaryResidents.map((resident, j) => (
                 <div key={j}>
                   {resident.refrigerator_id === personData.refrigerator_id && (

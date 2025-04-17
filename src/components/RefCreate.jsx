@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import DropdownSelectorAdmin from './DropdownSelectorAdmin'; // 경로는 실제 위치에 맞게 조정하세요
+import TypeSelector from './TypeSelector';
 
 const RefCreate = ({ onClose }) => {
   const [newref, setNewref] = useState({
@@ -8,6 +9,7 @@ const RefCreate = ({ onClose }) => {
     setting_temp_value: 0,
     admin_id: null,
   });
+  const [selectedType, setSelectedType] = useState("")
   const [error, setError] = useState('');
 
   const validateRefrigeratorNumber = (value) => {
@@ -40,6 +42,12 @@ const RefCreate = ({ onClose }) => {
   const handleAdminSelect = (adminId) => {
     setNewref((prev) => ({ ...prev, admin_id: adminId }));
   };
+/**
+ * 냉장고 타입 결정 핸들러
+ */
+  const handleTypeSelect = (type) => {
+    setSelectedType(type);
+  };
 
   const handleCreate = async () => {
     if (error) {
@@ -56,6 +64,7 @@ const RefCreate = ({ onClose }) => {
         refrigerator_number: formatRefrigeratorNumber(
           newref.refrigerator_number
         ),
+        refrigerator_type: selectedType,
       };
       console.log(modifiedRef);
       await axios.post(
@@ -72,8 +81,7 @@ const RefCreate = ({ onClose }) => {
     } catch (error) {
       console.error('생성 실패:', error);
       alert(
-        `생성에 실패했습니다. 오류 메시지: ${
-          error.response?.data?.message || error.message
+        `생성에 실패했습니다. 오류 메시지: ${error.response?.data?.message || error.message
         }`
       );
     }
@@ -106,6 +114,9 @@ const RefCreate = ({ onClose }) => {
       />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <br />
+      
+      <TypeSelector onSelectType={handleTypeSelect} />
+
       <button onClick={handleCreate}>생성</button>
       <button onClick={onClose}>닫기</button>
     </div>
