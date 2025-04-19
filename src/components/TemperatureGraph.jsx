@@ -54,23 +54,21 @@ const TemperatureGraph = () => {
         socket.on("reconnect_attempt", (attempt) => {
         });
 
-        socket.on("temperatureUpdate", (newTemp) => {
-            setData((prevData) => [
-                ...prevData,
-                { temperature: data.temperature, time: data.timestamp }
-            ]);
-        });
-
         socket.on("newTemperature", (newTemp) => {
-            const prevData = data;
-            setData((prevData) => [
-                ...prevData,
-                {
-                    temperature: newTemp.temperature,  // 온도 데이터
-                    time: newTemp.createAt || Date.now(), // timestamp가 없으면 현재 시간 사용
-                    refrigerator_id: newTemp.refrigerator_id,
-                }
-            ]);
+            setData((prevData) => {
+                const updatedData = [
+                    ...prevData,
+                    {
+                        temperature: newTemp.temperature,  // 온도 데이터
+                        out_temperature_value: newTemp.out_temperature_value,
+                        setting_temp_value: newTemp.setting_temp_value,
+                        current_value: newTemp.current_value,
+                        time: newTemp.createAt || Date.now(), // timestamp가 없으면 현재 시간 사용
+                        refrigerator_id: newTemp.refrigerator_id,
+                    }
+                ];
+                return updatedData.slice(-16);
+            });
         });
 
         return () => {
@@ -84,9 +82,9 @@ const TemperatureGraph = () => {
     useEffect(() => {
         if (adminInfo.data) {
             const admin_data = adminInfo.data;
-    
+
             const refrigeratorIdMap = {}; // refrigerator_id로 바로 접근 가능하게 변환
-    
+
             admin_data.forEach(({ admin_name, Refrigerators }) => {
                 if (Array.isArray(Refrigerators)) {
                     Refrigerators.forEach(refrigerator => {
@@ -97,11 +95,11 @@ const TemperatureGraph = () => {
                     });
                 }
             });
-    
+
             setRefrigeratorInfo(refrigeratorIdMap); // refrigerator_id 기반으로 설정
         }
     }, [adminInfo]);
-    
+
 
     /**
      * 그래프 그룹화 시도
@@ -152,13 +150,13 @@ const TemperatureGraph = () => {
      * 그래프 그리기
      */
     return (
-        <div style={{ width: "80%", margin: 30 }}>
+        <div style={{ width: "100%", margin: 30 }}>
             <h2>실시간 온도 그래프</h2>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "80px" }}>
                 {Object.entries(groupedData).map(([refrigerator_id, group]) => (
                     <div key={refrigerator_id} style={{ width: "30%" }}>
                         <h3>{`${group.info.admin_name} ${group.info.refrigerator_number}`}</h3>
-                        <ResponsiveContainer width="110%" height={300}>
+                        <ResponsiveContainer width="150%" height={300}>
                             <LineChart data={group.data}>
                                 <XAxis
                                     dataKey="time"
@@ -170,7 +168,14 @@ const TemperatureGraph = () => {
                                         }).format(new Date(time))
                                     }
                                 />
-                                <YAxis domain={[-20, 10]} />
+                                <YAxis domain={[-20, 10]} yAxisId="left" />
+                                <YAxis
+                                    yAxisId="right"
+                                    orientation="right"
+                                    domain={[-5, 5]}
+                                    label={{ value: "전류", angle: -90, position: "insideRight" }}
+                                />
+
                                 <Tooltip
                                     labelFormatter={(value) =>
                                         new Intl.DateTimeFormat("ko-KR", {
@@ -180,7 +185,38 @@ const TemperatureGraph = () => {
                                         }).format(new Date(value)) // 툴팁에서도 동일하게 시간 포맷
                                     }
                                 />
-                                <Line type="linear" dataKey="temperature" stroke="#8884d8" dot={true} />
+                                <Line
+                                    type="linear"
+                                    dataKey="temperature"
+                                    stroke="#8884d8"
+                                    dot={true}
+                                    name="내부 온도"
+                                    yAxisId="left"
+                                />
+                                <Line
+                                    type="linear"
+                                    dataKey="out_temperature_value"
+                                    stroke="#82ca9d"
+                                    dot={true}
+                                    name="외부 온도"
+                                    yAxisId="left"
+                                />
+                                <Line
+                                    type="linear"
+                                    dataKey="current_value"
+                                    stroke="#ffc658"
+                                    dot={true}
+                                    name="전류"
+                                    yAxisId="right"
+                                />
+                                <Line
+                                    type="linear"
+                                    dataKey="setting_temp_value"
+                                    stroke="#000000"
+                                    dot={false}
+                                    name="설정온도"
+                                    yAxisId="left"
+                                />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
