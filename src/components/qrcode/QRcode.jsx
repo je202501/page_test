@@ -2,18 +2,34 @@ import Modal from '../modal/Modal';
 import { useState, useEffect } from 'react';
 import Button from '../Button';
 import styled from 'styled-components';
+import { getResident } from '../service/residentService';
 import { QRCodeCanvas } from 'qrcode.react';
 const QRcode = (props) => {
+  const [residentData, setResidentData] = useState();
   const { open, onClose, value } = props;
   if (!open) return;
-  const data = `이름 : ${value.person_name}\n생년월일 : ${value.person_birthday}`;
-  console.log(value);
+  useEffect(() => {
+    if (value) {
+      const fetchResident = async () => {
+        try {
+          const res = await getResident(value.refrigerator_id);
+          const resData = res.data.find((resident) => resident.primary_resident === true)
+          const data = `이름 : ${value.person_name}\n생년월일 : ${value.person_birthday}\n대표상주 : ${resData?.resident_name ?? "대표 상주 등록 안 됨"}\n전화번호 : ${resData?.phone_number ?? "대표 상주 등록 안 됨"}`;
+          setResidentData(data)
+        } catch (err) {
+          console.error('상주 정보 가져오기 실패:', err);
+        }
+      };
+
+      fetchResident();
+    }
+  }, [value])
   return (
     <>
       <Modal open={open} width={821}>
         <Container>
           <QRCodeWrap>
-            <QRCodeCanvas value={data} size={250} />
+            <QRCodeCanvas value={residentData} size={250} />
           </QRCodeWrap>
           <ButtonWrap>
             <Button
