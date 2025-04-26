@@ -67,7 +67,18 @@ const TemperatureGraph = () => {
                         refrigerator_id: newTemp.refrigerator_id,
                     }
                 ];
-                return updatedData.slice(-16);
+                /**
+                 * 각 냉장고별로 그룹화해서 자르는 코드
+                 */
+                const grouped = updatedData.reduce((acc, item) => {
+                    const id = item.refrigerator_id;
+                    if (!acc[id]) acc[id] = [];
+                    acc[id].push(item);
+                    return acc;
+                }, {});
+                const trimmed = Object.values(grouped).flatMap(group => group.slice(-20));
+
+                return trimmed;
             });
         });
 
@@ -168,7 +179,7 @@ const TemperatureGraph = () => {
                                         }).format(new Date(time))
                                     }
                                 />
-                                <YAxis domain={[-20, 10]} yAxisId="left" />
+                                <YAxis domain={[-5, 30]} yAxisId="left" />
                                 <YAxis
                                     yAxisId="right"
                                     orientation="right"
@@ -189,7 +200,7 @@ const TemperatureGraph = () => {
                                     type="linear"
                                     dataKey="temperature"
                                     stroke="#8884d8"
-                                    dot={true}
+                                    dot={false}
                                     name="내부 온도"
                                     yAxisId="left"
                                 />
@@ -197,7 +208,7 @@ const TemperatureGraph = () => {
                                     type="linear"
                                     dataKey="out_temperature_value"
                                     stroke="#82ca9d"
-                                    dot={true}
+                                    dot={false}
                                     name="외부 온도"
                                     yAxisId="left"
                                 />
@@ -205,7 +216,7 @@ const TemperatureGraph = () => {
                                     type="linear"
                                     dataKey="current_value"
                                     stroke="#ffc658"
-                                    dot={true}
+                                    dot={false}
                                     name="전류"
                                     yAxisId="right"
                                 />
