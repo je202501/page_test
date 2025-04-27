@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import ModalRes from "./ModalRes.jsx";
 import QRcode from "./qrcode/QRcode";
 import ImageUpload from "./ImageUpload.jsx";
@@ -21,6 +22,8 @@ const ManageSetting = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const refrigerator_id = location.state?.refrigerator_id || null;
+  const token = localStorage.getItem("token");
+  const admin_id = jwtDecode(token).admin_id;
 
   // 배경색 결정 함수
   const getBackgroundColor = () => {
@@ -64,7 +67,11 @@ const ManageSetting = () => {
 
   const fetchPerson = async () => {
     const response = await axios
-      .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator`)
+      .get(
+        `${
+          import.meta.env.VITE_SERVER_URL
+        }:9999/api/refrigerator/?admin=${admin_id}`
+      )
       .then((res) => {
         console.log(`데이터:${res.data}`);
         const formattedData = res.data.data.map((item) => ({
@@ -162,6 +169,8 @@ const ManageSetting = () => {
           refrigerator_id={refrigerator_id}
           residents={residents}
           onExitSuccess={handleExitSuccess}
+          currentPerson={currentPerson}
+          allRefrigerators={person}
         />
         {modalperson && (
           <Modalperson
