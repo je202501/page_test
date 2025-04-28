@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Image from './Image.jsx';
-import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
-import './Detail.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import Image from "./Image.jsx";
+import RefrigeratorTemperature from "./RefrigeratorTemperature.jsx";
+import "./Detail.css";
 
 const Detail = () => {
   const [person, setPerson] = useState([]);
@@ -12,11 +12,11 @@ const Detail = () => {
   const refrigerator_id = location.state?.refrigerator_id || null;
   const navigate = useNavigate();
 
-  const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
+  const [temperatureStatus, setTemperatureStatus] = useState("normal"); // 추가: 온도 상태
 
   // 배경색 결정 함수
   const getBackgroundColor = () => {
-    return temperatureStatus === 'danger' ? 'bg-red-200' : 'bg-white';
+    return temperatureStatus === "danger" ? "bg-red-200" : "bg-white";
   };
 
   const fetchPerson = async () => {
@@ -36,7 +36,7 @@ const Detail = () => {
       }));
       setPerson(formattedData);
     } catch (err) {
-      console.error('사람 정보 불러오기 실패', err);
+      console.error("사람 정보 불러오기 실패", err);
     }
   };
 
@@ -79,7 +79,7 @@ const Detail = () => {
   return (
     <div
       className={`fullscreen-container ${
-        temperatureStatus === 'danger' ? 'danger-bg' : ''
+        temperatureStatus === "danger" ? "danger-bg" : ""
       }`}
     >
       <div className="content-grid">
@@ -130,6 +130,17 @@ const Detail = () => {
               onTemperatureChange={setTemperatureStatus}
               className="temperature-text" // 추가된 클래스
             />
+            <p>
+              상태:
+              <span
+                style={{
+                  color: currentPerson.check_defrost ? "red" : "green",
+                  fontWeight: "bold",
+                }}
+              >
+                {currentPerson.check_defrost ? " 제상중" : " 냉장중"}
+              </span>
+            </p>
           </div>
         </div>
 

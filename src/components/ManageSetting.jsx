@@ -9,6 +9,7 @@ import Image from "./Image.jsx";
 import RefTempAndMessage from "./RefTempAndMessage.jsx";
 import ModalRef from "./ModalRef.jsx";
 import ExitConfirmation from "./ExitConfirmation.jsx";
+import Modalperson from "./Modalperson.jsx";
 
 const ManageSetting = () => {
   const [QRModal, setQRModal] = useState(false);
@@ -88,6 +89,8 @@ const ManageSetting = () => {
           defrost_value: item.defrost_value,
           defrost_term: item.defrost_term,
           defrost_time: item.defrost_time,
+          entry_reservation: item.entry_reservation,
+          check_defrost: item.check_defrost,
         }));
         setPerson(formattedData);
       });
@@ -144,7 +147,12 @@ const ManageSetting = () => {
           <Image refrigerator_id={refrigerator_id} />
         </div>
         <h3>생년월일: {currentPerson.person_birthday}</h3>
-        <p>입관일: {currentPerson.entry_date}</p>
+        <p>
+          입관일: {currentPerson.entry_date}
+          {currentPerson.entry_reservation && (
+            <span style={{ marginLeft: "5px", color: "green" }}>✓</span>
+          )}
+        </p>
         <p>출관일: {currentPerson.exit_date}</p>
         {residents.map((resident, j) => (
           <p key={j}>
@@ -158,6 +166,17 @@ const ManageSetting = () => {
           onTemperatureChange={setTemperatureStatus} // 추가
         />
         <p>설정온도: {currentPerson.setting_temp_value}°C</p> {/* 추가 */}
+        <p>
+          상태:
+          <span
+            style={{
+              color: currentPerson.check_defrost ? "red" : "green",
+              fontWeight: "bold",
+            }}
+          >
+            {currentPerson.check_defrost ? " 제상중" : " 냉장중"}
+          </span>
+        </p>
         <button onClick={() => setModalperson(!modalperson)}>
           고인 정보 입력
         </button>
@@ -196,93 +215,6 @@ const ManageSetting = () => {
           />
         )}
       </div>
-    </div>
-  );
-};
-
-//수정 모달
-const Modalperson = ({ person, onClose }) => {
-  const [updatedPerson, setUpdatedPerson] = useState({
-    refrigerator_id: person?.refrigerator_id || "",
-    person_name: person?.person_name || "",
-    person_birthday: person?.person_birthday || "",
-    entry_date: person?.entry_date || "",
-    exit_date: person?.exit_date || "",
-    refrigerator_number: person?.refrigerator_number || "",
-    refrigerator_type: person.refrigerator_type,
-  });
-  const handleChange = (e) => {
-    setUpdatedPerson({
-      ...updatedPerson,
-      [e.target.name]: e.target.value.replace(/(\s*)/g, ""),
-    });
-  };
-
-  const handleSave = async () => {
-    try {
-      await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/${
-          person.refrigerator_id
-        }`,
-        updatedPerson
-      );
-      alert("수정이 완료되었습니다.");
-      window.location.reload(); // 데이터 새로고침
-    } catch (error) {
-      console.error("수정 실패:", error);
-      alert("수정에 실패했습니다.");
-    }
-  };
-
-  return (
-    <div
-      className="Modalperson"
-      style={{
-        display: "block",
-        position: "relative",
-        border: "1px solid",
-        background: "lightblue",
-        padding: "20px",
-        borderRadius: "8px",
-      }}
-    >
-      <h4 style={{ marginLeft: "10px" }}>수정</h4>
-
-      <span>고인명 : </span>
-      <input
-        type="text"
-        name="person_name"
-        value={updatedPerson.person_name}
-        onChange={handleChange}
-      />
-      <br />
-      <span>생년월일 : </span>
-      <input
-        type="text"
-        name="person_birthday"
-        value={updatedPerson.person_birthday}
-        onChange={handleChange}
-      />
-      <br />
-      <span>입관일 : </span>
-      <input
-        type="datetime-local"
-        name="entry_date"
-        value={updatedPerson.entry_date}
-        onChange={handleChange}
-      />
-      <br />
-      <span>출관일 : </span>
-      <input
-        type="datetime-local"
-        name="exit_date"
-        value={updatedPerson.exit_date}
-        onChange={handleChange}
-      />
-      <br />
-
-      <button onClick={handleSave}>저장</button>
-      <button onClick={onClose}>닫기</button>
     </div>
   );
 };

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import data from './data.js';
-import './Manage.css';
-import RefTempAndMessage from './RefTempAndMessage.jsx';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import data from "./data.js";
+import "./Manage.css";
+import RefTempAndMessage from "./RefTempAndMessage.jsx";
 
 const Manage = () => {
   let [person, setPerson] = useState([]);
@@ -12,7 +12,7 @@ const Manage = () => {
   const navigate = useNavigate();
   const [primaryResidents, setPrimaryResidents] = useState([]);
   const [temperatureStatus, setTemperatureStatus] = useState({}); // { refrigerator_id: 'normal' | 'danger' }
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const admin_id = jwtDecode(token).admin_id;
 
   useEffect(() => {
@@ -44,25 +44,25 @@ const Manage = () => {
           exit_date: item.exit_date,
           management_number: item.management_number,
           setting_temp_value: item.setting_temp_value, // 추가: 설정 온도
-          check_defrost: item.check_defrost,//제상체크
-          defrost_term: item.defrost_term,//제상주기
-          defrost_time: item.defrost_time,//제상시간
-          defrost_value: item.defrost_value,//제상온도
-          refrigerator_type: item.refrigerator_type,//냉장고 타입 A = 일체형 B = 분리형
-
+          check_defrost: item.check_defrost, //제상체크
+          defrost_term: item.defrost_term, //제상주기
+          defrost_time: item.defrost_time, //제상시간
+          defrost_value: item.defrost_value, //제상온도
+          refrigerator_type: item.refrigerator_type, //냉장고 타입 A = 일체형 B = 분리형
+          entry_reservation: item.entry_reservation,
         }));
 
         formattedData.sort((a, b) => {
-          const aNumber = a.refrigerator_number.replace('NO.', '');
-          const bNumber = b.refrigerator_number.replace('NO.', '');
-          const [aMain, aSub] = aNumber.split('-').map(Number);
-          const [bMain, bSub] = bNumber.split('-').map(Number);
+          const aNumber = a.refrigerator_number.replace("NO.", "");
+          const bNumber = b.refrigerator_number.replace("NO.", "");
+          const [aMain, aSub] = aNumber.split("-").map(Number);
+          const [bMain, bSub] = bNumber.split("-").map(Number);
           if (aMain !== bMain) return aMain - bMain;
           return aSub - bSub;
         });
 
         setPerson(formattedData);
-        console.log('정렬된 데이터:', formattedData);
+        console.log("정렬된 데이터:", formattedData);
       });
   };
 
@@ -88,7 +88,7 @@ const Manage = () => {
 
   // 냉장고 번호 그룹화
   const groupedPersons = person.reduce((acc, cur) => {
-    const key = cur.refrigerator_number.split('-')[0];
+    const key = cur.refrigerator_number.split("-")[0];
     if (!acc[key]) acc[key] = [];
     acc[key].push(cur);
     return acc;
@@ -96,22 +96,22 @@ const Manage = () => {
 
   // 배경색 결정 함수
   const getBackgroundColor = (refrigerator_id) => {
-    return temperatureStatus[refrigerator_id] === 'danger'
-      ? 'bg-red-200'
-      : 'bg-white';
+    return temperatureStatus[refrigerator_id] === "danger"
+      ? "bg-red-200"
+      : "bg-white";
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+    <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
       {Object.keys(groupedPersons).map((groupKey, index) => (
         <div
           key={index}
           style={{
-            paddingLeft: '5px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-            width: '400px',
+            paddingLeft: "5px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            width: "400px",
           }}
         >
           {groupedPersons[groupKey].map((personData, i) => (
@@ -121,24 +121,32 @@ const Manage = () => {
               )}`}
               key={i}
               style={{
-                width: '380px',
-                border: '1px solid #ccc',
-                padding: '10px',
-                borderRadius: '5px',
+                width: "380px",
+                border: "1px solid #ccc",
+                padding: "10px",
+                borderRadius: "5px",
                 backgroundColor:
-                  temperatureStatus[personData.refrigerator_id] === 'danger'
-                    ? '#fee2e2'
-                    : 'white', // 직접 스타일 적용
+                  temperatureStatus[personData.refrigerator_id] === "danger"
+                    ? "#fee2e2"
+                    : "white", // 직접 스타일 적용
               }}
             >
               <p>냉장고: {personData.refrigerator_number}</p>
               <h2>고인명: {personData.person_name}</h2>
               <h3>생년월일: {personData.person_birthday}</h3>
-              <p>입관일: {personData.entry_date}</p>
+              <p>
+                입관일: {personData.entry_date}
+                {personData.entry_reservation && (
+                  <span style={{ marginLeft: "5px", color: "green" }}>✓</span>
+                )}
+              </p>
               <p>출관일: {personData.exit_date}</p>
               <p>관리번호: {personData.management_number}</p>
               <p>설정 온도: {personData.setting_temp_value}°C</p>
-              <p>냉장고 타입 : {personData.refrigerator_type === "A" ? "일체형": "분리형"}</p>
+              <p>
+                냉장고 타입 :{" "}
+                {personData.refrigerator_type === "A" ? "일체형" : "분리형"}
+              </p>
               {primaryResidents.map((resident, j) => (
                 <div key={j}>
                   {resident.refrigerator_id === personData.refrigerator_id && (
@@ -154,6 +162,17 @@ const Manage = () => {
                   handleTemperatureChange(personData.refrigerator_id, status)
                 }
               />
+              <p>
+                상태:
+                <span
+                  style={{
+                    color: personData.check_defrost ? "red" : "green",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {personData.check_defrost ? " 제상중" : " 냉장중"}
+                </span>
+              </p>
               <button
                 onClick={() =>
                   navigate(`/setting/${personData.refrigerator_id}`, {

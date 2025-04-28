@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Manage from '../components/Manage';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Manage from "../components/Manage";
 
-import TelegramWaitingModal from '../components/modal/TelegramWaitingModal';
+import TelegramWaitingModal from "../components/modal/TelegramWaitingModal";
 
 const MainPage = ({ setAuth }) => {
   const navigate = useNavigate();
@@ -10,9 +10,9 @@ const MainPage = ({ setAuth }) => {
   const [telegramModal, setTelegramModal] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setAuth(false);
-    navigate('/');
+    navigate("/");
   };
 
   return (
