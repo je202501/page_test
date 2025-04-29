@@ -130,90 +130,130 @@ const ManageSetting = () => {
   };
 
   return (
-    <div className={getBackgroundColor()}>
-      {" "}
-      {/* 배경색 동적 적용 */}
-      <div
-        className="personBox"
-        style={{
-          backgroundColor: temperatureStatus === "danger" ? "#fee2e2" : "white",
-        }}
-      >
-        <p>관리번호: {currentPerson.management_number}</p>
-        <p>냉장고: {currentPerson.refrigerator_number}</p>
-        <h3>고인명: {currentPerson.person_name}</h3>
-        <div>
-          <Image refrigerator_id={refrigerator_id} />
-        </div>
-        <h3>생년월일: {currentPerson.person_birthday}</h3>
-        <p>
-          입관일: {currentPerson.entry_date}
-          {currentPerson.entry_reservation && (
-            <span style={{ marginLeft: "5px", color: "green" }}>✓</span>
-          )}
-        </p>
-        <p>출관일: {currentPerson.exit_date}</p>
-        {residents.map((resident, j) => (
-          <p key={j}>
-            상주 {j + 1}: {resident.resident_name} {resident.phone_number}
-          </p>
-        ))}
-        <RefTempAndMessage
-          refrigerator_number={currentPerson.refrigerator_number}
-          refrigerator_id={currentPerson.refrigerator_id}
-          setting_temp_value={currentPerson.setting_temp_value} // 추가
-          onTemperatureChange={setTemperatureStatus} // 추가
-        />
-        <p>설정온도: {currentPerson.setting_temp_value}°C</p> {/* 추가 */}
-        <p>
-          상태:
-          <span
-            style={{
-              color: currentPerson.check_defrost ? "red" : "green",
-              fontWeight: "bold",
-            }}
-          >
-            {currentPerson.check_defrost ? " 제상중" : " 냉장중"}
+    <div
+      className={`refrigerator-detail ${
+        temperatureStatus === "danger" ? "danger-mode" : ""
+      }`}
+    >
+      <div className="refrigerator-card">
+        <div className="refrigerator-header">
+          <h3>{currentPerson.refrigerator_number}</h3>
+          <span className="management-number">
+            {currentPerson.management_number}
           </span>
-        </p>
-        <button onClick={() => setModalperson(!modalperson)}>
-          고인 정보 입력
-        </button>
-        <button onClick={() => setModalres(!modalres)}>상주 정보 입력</button>
-        <button onClick={() => setModalref(!modalref)}>온도 설정</button>
-        <button onClick={() => setQRModal(true)}>QR 밴드 출력</button>
-        <ImageUpload refrigerator_id={refrigerator_id} />
-        <ExitConfirmation
-          refrigerator_id={refrigerator_id}
-          residents={residents}
-          onExitSuccess={handleExitSuccess}
-          currentPerson={currentPerson}
-          allRefrigerators={person}
-        />
-        {modalperson && (
-          <Modalperson
-            person={currentPerson}
-            onClose={handleModalpersonClose}
-          />
-        )}
-        {modalres && (
-          <ModalRes
-            person={currentPerson}
+        </div>
+
+        <div className="person-info">
+          <div className="person-image">
+            <Image refrigerator_id={refrigerator_id} />
+          </div>
+          <br />
+          <div className="person-details">
+            <h2>{currentPerson.person_name}</h2>
+            <br />
+            <div className="date-info">
+              <div>
+                <span className="label">관리번호:</span>
+                <span>{currentPerson.management_number}</span>
+              </div>
+            </div>
+            <div className="date-info">
+              <div>
+                <span className="label">생년월일:</span>
+                <span>{currentPerson.person_birthday}</span>
+              </div>
+            </div>
+            <div className="date-info">
+              <div>
+                <span className="label">입관일:</span>
+                <span>
+                  {currentPerson.entry_date}
+                  {currentPerson.entry_reservation && (
+                    <span className="reservation-badge">✓</span>
+                  )}
+                </span>
+              </div>
+              <div>
+                <span className="label">출관일:</span>
+                <span>{currentPerson.exit_date}</span>
+              </div>
+            </div>
+            <div>
+              <RefTempAndMessage
+                refrigerator_number={currentPerson.refrigerator_number}
+                refrigerator_id={currentPerson.refrigerator_id}
+                setting_temp_value={currentPerson.setting_temp_value}
+                onTemperatureChange={setTemperatureStatus}
+              />
+              <span
+                className={`status ${
+                  currentPerson.check_defrost ? "defrosting" : "cooling"
+                }`}
+              >
+                {currentPerson.check_defrost ? "제상중" : "냉장중"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="residents-section">
+          <h4>상주 정보</h4>
+          {residents.map((resident, j) => (
+            <div key={j} className="resident-item">
+              <span>상주 {j + 1}:</span>
+              <span>{resident.resident_name}</span>
+              <span>{resident.phone_number}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="action-buttons">
+          <button
+            className="action-btn"
+            onClick={() => setModalperson(!modalperson)}
+          >
+            고인 정보 수정
+          </button>
+          <button className="action-btn" onClick={() => setModalres(!modalres)}>
+            상주 정보 관리
+          </button>
+          <button className="action-btn" onClick={() => setModalref(!modalref)}>
+            온도 설정
+          </button>
+          <ImageUpload refrigerator_id={refrigerator_id} />
+          <button className="action-btn" onClick={() => setQRModal(true)}>
+            QR 코드 생성
+          </button>
+          <ExitConfirmation
+            refrigerator_id={refrigerator_id}
             residents={residents}
-            onClose={() => setModalres(false)}
+            onExitSuccess={handleExitSuccess}
+            currentPerson={currentPerson}
+            allRefrigerators={person}
           />
-        )}
-        {modalref && (
-          <ModalRef person={currentPerson} onClose={handleModalrefClose} />
-        )}
-        {QRModal && (
-          <QRcode
-            open={QRModal}
-            value={currentPerson}
-            onClose={() => setQRModal(false)}
-          />
-        )}
+        </div>
       </div>
+
+      {modalperson && (
+        <Modalperson person={currentPerson} onClose={handleModalpersonClose} />
+      )}
+      {modalres && (
+        <ModalRes
+          person={currentPerson}
+          residents={residents}
+          onClose={() => setModalres(false)}
+        />
+      )}
+      {modalref && (
+        <ModalRef person={currentPerson} onClose={handleModalrefClose} />
+      )}
+      {QRModal && (
+        <QRcode
+          open={QRModal}
+          value={currentPerson}
+          onClose={() => setQRModal(false)}
+        />
+      )}
     </div>
   );
 };

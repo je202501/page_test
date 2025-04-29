@@ -119,7 +119,7 @@ const ExitConfirmation = ({
     <button
       onClick={handleExitConfirm}
       disabled={isProcessing}
-      className="exit-btn"
+      className="action-btn"
     >
       {isProcessing ? "처리 중..." : "출관 확인"}
     </button>

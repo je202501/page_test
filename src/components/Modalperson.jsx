@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-//수정 모달
 const Modalperson = ({ person, onClose }) => {
   const [updatedPerson, setUpdatedPerson] = useState({
     refrigerator_id: person?.refrigerator_id || "",
@@ -12,7 +11,7 @@ const Modalperson = ({ person, onClose }) => {
     refrigerator_number: person?.refrigerator_number || "",
     entry_reservation: person?.entry_reservation || false,
   });
-  console.log(updatedPerson.entry_reservation);
+
   const handleChange = (e) => {
     setUpdatedPerson({
       ...updatedPerson,
@@ -20,7 +19,6 @@ const Modalperson = ({ person, onClose }) => {
     });
   };
 
-  // 체크박스 변경 핸들러 추가
   const handleCheckboxChange = (e) => {
     setUpdatedPerson({
       ...updatedPerson,
@@ -37,7 +35,7 @@ const Modalperson = ({ person, onClose }) => {
         updatedPerson
       );
       alert("수정이 완료되었습니다.");
-      window.location.reload(); // 데이터 새로고침
+      window.location.reload();
     } catch (error) {
       console.error("수정 실패:", error);
       alert("수정에 실패했습니다.");
@@ -45,61 +43,77 @@ const Modalperson = ({ person, onClose }) => {
   };
 
   return (
-    <div
-      className="Modalperson"
-      style={{
-        display: "block",
-        position: "relative",
-        border: "1px solid",
-        background: "lightblue",
-        padding: "20px",
-        borderRadius: "8px",
-      }}
-    >
-      <h4 style={{ marginLeft: "10px" }}>수정</h4>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2 className="modal-title">고인 정보 수정</h2>
 
-      <span>고인명 : </span>
-      <input
-        type="text"
-        name="person_name"
-        value={updatedPerson.person_name}
-        onChange={handleChange}
-      />
-      <br />
-      <span>생년월일 : </span>
-      <input
-        type="text"
-        name="person_birthday"
-        value={updatedPerson.person_birthday}
-        onChange={handleChange}
-      />
-      <br />
-      <span>입관일 : </span>
-      <input
-        type="datetime-local"
-        name="entry_date"
-        value={updatedPerson.entry_date}
-        onChange={handleChange}
-      />
-      <span style={{ marginLeft: "10px" }}>입관예약 : </span>
-      <input
-        type="checkbox"
-        name="entry_reservation"
-        checked={updatedPerson.entry_reservation}
-        onChange={handleCheckboxChange}
-      />
-      <br />
-      <span>출관일 : </span>
-      <input
-        type="datetime-local"
-        name="exit_date"
-        value={updatedPerson.exit_date}
-        onChange={handleChange}
-      />
-      <br />
+        <div className="modal-form">
+          <div className="form-group">
+            <label>고인명</label>
+            <input
+              type="text"
+              name="person_name"
+              value={updatedPerson.person_name}
+              onChange={handleChange}
+              className="form-input"
+            />
+          </div>
 
-      <button onClick={handleSave}>저장</button>
-      <button onClick={onClose}>닫기</button>
+          <div className="form-group">
+            <label>생년월일</label>
+            <input
+              type="text"
+              name="person_birthday"
+              value={updatedPerson.person_birthday}
+              onChange={handleChange}
+              className="form-input"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>입관일</label>
+            <input
+              type="datetime-local"
+              name="entry_date"
+              value={updatedPerson.entry_date}
+              onChange={handleChange}
+              className="form-input"
+            />
+          </div>
+
+          <div className="form-group checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                name="entry_reservation"
+                checked={updatedPerson.entry_reservation}
+                onChange={handleCheckboxChange}
+              />
+              <span>입관 예약</span>
+            </label>
+          </div>
+
+          <div className="form-group">
+            <label>출관일</label>
+            <input
+              type="datetime-local"
+              name="exit_date"
+              value={updatedPerson.exit_date}
+              onChange={handleChange}
+              className="form-input"
+            />
+          </div>
+
+          <div className="modal-button-group">
+            <button type="button" className="cancel-btn" onClick={onClose}>
+              닫기
+            </button>
+            <button type="button" className="submit-btn" onClick={handleSave}>
+              저장
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-//수정 모달
 const ModalRef = ({ person, onClose }) => {
   const [updatedRef, setUpdatedRef] = useState({
     setting_temp_value: person?.setting_temp_value || "",
@@ -25,63 +24,78 @@ const ModalRef = ({ person, onClose }) => {
         }`,
         updatedRef
       );
-      alert("수정이 완료되었습니다.");
-      window.location.reload(); // 데이터 새로고침
+      alert("온도 설정이 완료되었습니다.");
+      window.location.reload();
     } catch (error) {
       console.error("수정 실패:", error);
-      alert("수정에 실패했습니다.");
+      alert("온도 설정에 실패했습니다.");
     }
   };
 
   return (
-    <div
-      className="Modalperson"
-      style={{
-        display: "block",
-        position: "relative",
-        border: "1px solid",
-        background: "lightblue",
-        padding: "20px",
-        borderRadius: "8px",
-      }}
-    >
-      <h4 style={{ marginLeft: "10px" }}>냉장 제상 설정</h4>
-      <span>냉장온도 : </span>
-      <input
-        type="text"
-        name="setting_temp_value"
-        value={updatedRef.setting_temp_value}
-        onChange={handleChange}
-      />
-      <br />
+    <div className="modal-overlay">
+      <div className="modal-content" style={{ maxWidth: "500px" }}>
+        <h2 className="modal-title">냉장/제상 설정</h2>
 
-      <span>제상온도 : </span>
-      <input
-        type="text"
-        name="defrost_value"
-        value={updatedRef.defrost_value}
-        onChange={handleChange}
-      />
-      <br />
-      <span>제상주기(시간) : </span>
-      <input
-        type="text"
-        name="defrost_term"
-        value={updatedRef.defrost_term}
-        onChange={handleChange}
-      />
-      <br />
-      <span>제상시간(분) : </span>
-      <input
-        type="text"
-        name="defrost_time"
-        value={updatedRef.defrost_time}
-        onChange={handleChange}
-      />
-      <br />
+        <div className="temperature-form">
+          <div className="form-group">
+            <label>냉장 온도 (°C)</label>
+            <input
+              type="number"
+              name="setting_temp_value"
+              value={updatedRef.setting_temp_value}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="예: -20"
+            />
+          </div>
 
-      <button onClick={handleSave}>저장</button>
-      <button onClick={onClose}>닫기</button>
+          <div className="form-group">
+            <label>제상 온도 (°C)</label>
+            <input
+              type="number"
+              name="defrost_value"
+              value={updatedRef.defrost_value}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="예: 5"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>제상 주기 (시간)</label>
+            <input
+              type="number"
+              name="defrost_term"
+              value={updatedRef.defrost_term}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="예: 24"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>제상 시간 (분)</label>
+            <input
+              type="number"
+              name="defrost_time"
+              value={updatedRef.defrost_time}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="예: 30"
+            />
+          </div>
+
+          <div className="modal-button-group">
+            <button type="button" className="cancel-btn" onClick={onClose}>
+              닫기
+            </button>
+            <button type="button" className="submit-btn" onClick={handleSave}>
+              저장
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

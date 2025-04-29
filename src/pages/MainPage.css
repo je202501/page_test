@@ -100,3 +100,384 @@
     justify-content: center;
   }
 }
+
+/* 냉장고 상세 정보 스타일 */
+.refrigerator-detail {
+  padding: 20px;
+}
+
+.refrigerator-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.refrigerator-detail.danger-mode .refrigerator-card {
+  background-color: #fee2e2;
+}
+
+.refrigerator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.refrigerator-header h3 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.management-number {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.person-info {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.person-image {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 200px;
+  max-width: 500px;
+  max-height: 500px;
+}
+
+.person-details {
+  flex: 1;
+}
+
+.person-details h2 {
+  margin: 0 0 5px 0;
+  color: var(--primary-color);
+}
+
+.birthday {
+  color: #666;
+  margin: 0 0 15px 0;
+}
+
+.date-info {
+  display: flex;
+  gap: 20px;
+}
+
+.date-info div {
+  display: flex;
+  gap: 5px;
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+}
+
+.reservation-badge {
+  color: green;
+  margin-left: 5px;
+}
+
+.temperature-section {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.status-indicator {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.status {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.status.cooling {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status.defrosting {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.residents-section {
+  margin: 20px 0;
+}
+
+.resident-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 25px;
+  justify-content: center; /* 중앙 정렬 */
+  align-items: stretch; /* 버튼 높이 통일 */
+}
+
+.action-btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  min-width: 120px; /* 최소 너비 추가 */
+  text-align: center;
+  margin: 5px 0; /* 간격 조정 */
+}
+
+.action-btn:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .person-info {
+    flex-direction: column;
+  }
+
+  .date-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px 15px; /* 패딩 증가 */
+    font-size: 0.9rem; /* 폰트 크기 고정 */
+  }
+}
+
+/* Navbar 스타일 보강 */
+.page-title {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.page-title:hover {
+  color: var(--hover-color);
+}
+
+/* 텔레그램 버튼 스타일 보강 */
+.btn-telegram {
+  background-color: var(--telegram-color);
+  color: white;
+}
+
+.btn-telegram:hover {
+  background-color: #007ab8;
+  transform: translateY(-2px);
+}
+
+/* 로그아웃 버튼 스타일 보강 */
+.btn-logout {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-logout:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+/* 모달 폼 스타일 */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.modal-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-form label {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 0.95rem;
+}
+
+.form-input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.form-input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+/* 모달 버튼 그룹 */
+.modal-button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+  .modal-form .form-group {
+    flex-direction: column;
+  }
+
+  input[type="datetime-local"] {
+    width: 100%;
+  }
+}
+/* 상주 정보 모달 스타일 */
+.residents-form {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.resident-form-group {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.resident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.primary-badge {
+  background-color: #dbeafe;
+  color: #1e40af;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.delete-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.delete-checkbox input {
+  margin: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .resident-form-group {
+    padding: 10px;
+  }
+}
+/* 온도 설정 모달 스타일 */
+.temperature-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.temperature-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.temperature-form label {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 0.95rem;
+}
+
+.temperature-form .form-input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.temperature-form .form-input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+/* 숫자 입력 필드 화살표 제거 */
+.temperature-form input[type="number"]::-webkit-inner-spin-button,
+.temperature-form input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.temperature-form input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+  .temperature-form {
+    gap: 15px;
+  }
+}
