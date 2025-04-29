@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   LineChart,
   Line,
@@ -9,19 +9,19 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
-import DropdownSelector from './DropdownSelector';
+} from "recharts";
+import DropdownSelector from "./DropdownSelector";
 
 const TemperatureDashboard = () => {
   const [data, setData] = useState([]);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [error, setError] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [error, setError] = useState("");
   const [selectedRefrigeratorId, setSelectedRefrigeratorId] = useState(null);
 
   // 날짜 형식 변환 함수
   const formatDateForInput = (date) => {
-    const pad = (num) => num.toString().padStart(2, '0');
+    const pad = (num) => num.toString().padStart(2, "0");
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
       date.getDate()
     )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
@@ -57,12 +57,12 @@ const TemperatureDashboard = () => {
     refrigeratorId = selectedRefrigeratorId
   ) => {
     if (!start || !end) {
-      setError('시작 날짜와 종료 날짜를 모두 입력해주세요.');
+      setError("시작 날짜와 종료 날짜를 모두 입력해주세요.");
       return;
     }
 
     if (!refrigeratorId) {
-      setError('냉장고를 선택해주세요.');
+      setError("냉장고를 선택해주세요.");
       return;
     }
 
@@ -71,16 +71,16 @@ const TemperatureDashboard = () => {
     const diffInHours = (endTime - startTime) / (1000 * 60 * 60);
 
     if (diffInHours > 24) {
-      setError('조회 기간은 최대 24시간까지 가능합니다.');
+      setError("조회 기간은 최대 24시간까지 가능합니다.");
       return;
     }
 
     if (startTime > endTime) {
-      setError('시작 날짜는 종료 날짜보다 빨라야 합니다.');
+      setError("시작 날짜는 종료 날짜보다 빨라야 합니다.");
       return;
     }
 
-    setError('');
+    setError("");
 
     try {
       const formattedStartDate = startTime.toISOString();
@@ -98,7 +98,7 @@ const TemperatureDashboard = () => {
       );
 
       if (!response.data?.data?.length) {
-        setError('해당 기간에 데이터가 없습니다.');
+        setError("해당 기간에 데이터가 없습니다.");
         setData([]);
         return;
       }
@@ -106,17 +106,19 @@ const TemperatureDashboard = () => {
       const sortedData = [...response.data.data].sort(
         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
       );
-
       const formattedData = sortedData.map((entry) => ({
         time: new Date(entry.createdAt).toLocaleString(),
         temperature: parseFloat(entry.temperature_value),
+        outTemperature: parseFloat(entry.out_temperature_value),
+        settingTemp: parseFloat(entry.setting_temp_value),
+        current: parseFloat(entry.current_value), // 전류 값
         fridgeId: entry.refrigerator_id,
       }));
 
       setData(formattedData);
     } catch (error) {
-      console.error('온도 데이터를 가져오는 중 오류 발생:', error);
-      setError('데이터를 가져오는 중 오류가 발생했습니다.');
+      console.error("온도 데이터를 가져오는 중 오류 발생:", error);
+      setError("데이터를 가져오는 중 오류가 발생했습니다.");
     }
   };
 
@@ -125,8 +127,8 @@ const TemperatureDashboard = () => {
   };
 
   return (
-    <div style={{ width: '80%', height: 400, margin: 'auto' }}>
-      <h2>일간 온도 그래프</h2>
+    <div style={{ width: "80%", height: 400, margin: "auto" }}>
+      <h2>일간 온도 및 전류 그래프</h2>
       <div>
         <DropdownSelector onSelectRefrigerator={setSelectedRefrigeratorId} />
         <label>시작 날짜: </label>
@@ -144,19 +146,56 @@ const TemperatureDashboard = () => {
         <button onClick={handleFetch}>조회</button>
       </div>
 
-      {error && <div style={{ color: 'red', margin: '10px 0' }}>{error}</div>}
+      {error && <div style={{ color: "red", margin: "10px 0" }}>{error}</div>}
 
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="time" />
-          <YAxis />
+          {/* 왼쪽 Y축 (온도) */}
+          <YAxis
+            yAxisId="left"
+            orientation="left"
+            label={{ value: "온도 (℃)", angle: -90, position: "insideLeft" }}
+          />
+          {/* 오른쪽 Y축 (전류) */}
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            label={{ value: "전류 (A)", angle: -90, position: "insideRight" }}
+          />
           <Tooltip />
           <Legend />
           <Line
+            yAxisId="right"
             type="monotone"
             dataKey="temperature"
             stroke="#8884d8"
+            name="내부 온도"
+            dot={{ r: 2 }}
+          />
+          <Line
+            yAxisId="right"
+            type="monotone"
+            dataKey="outTemperature"
+            stroke="#82ca9d"
+            name="외부 온도"
+            dot={{ r: 2 }}
+          />
+          <Line
+            yAxisId="right"
+            type="monotone"
+            dataKey="settingTemp"
+            stroke="#413ea0"
+            name="설정 온도"
+            dot={{ r: 2 }}
+          />
+          <Line
+            yAxisId="left"
+            type="monotone"
+            dataKey="current"
+            stroke="#ff7300"
+            name="전류 값"
             dot={{ r: 2 }}
           />
         </LineChart>
