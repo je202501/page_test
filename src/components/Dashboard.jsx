@@ -156,13 +156,13 @@ const TemperatureDashboard = () => {
           <YAxis
             yAxisId="left"
             orientation="left"
-            label={{ value: "온도 (℃)", angle: -90, position: "insideLeft" }}
+            label={{ value: "전류 (A)", angle: -90, position: "insideLeft" }}
           />
           {/* 오른쪽 Y축 (전류) */}
           <YAxis
             yAxisId="right"
             orientation="right"
-            label={{ value: "전류 (A)", angle: -90, position: "insideRight" }}
+            label={{ value: "온도 (℃)", angle: 90, position: "insideRight" }}
           />
           <Tooltip />
           <Legend />
