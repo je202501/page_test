@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './FormStyles.css';
+import React, { useState } from "react";
+import axios from "axios";
 
-const SignupForm = () => {
+const SignupForm = ({ onClose }) => {
   const [form, setForm] = useState({
-    admin_name: '',
-    admin_account: '',
-    password: '',
-    email: '',
+    admin_name: "",
+    admin_account: "",
+    password: "",
+    email: "",
   });
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,51 +20,77 @@ const SignupForm = () => {
         `${import.meta.env.VITE_SERVER_URL}:9999/api/admin`,
         form
       );
-      alert('✅ 업체 ID 생성 성공');
-      navigate('/bistechmain'); // 회원가입 후 로그인 페이지로 이동
+      alert("✅ 업체 ID 생성 성공");
+      onClose();
     } catch (error) {
       console.error(error);
-      alert('❌ 업체 ID 생성 실패. 다시 시도하세요.');
+      alert("❌ 업체 ID 생성 실패. 다시 시도하세요.");
     }
   };
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
-      <h2>업체 ID 생성</h2>
-      <input
-        type="text"
-        name="admin_name"
-        placeholder="업체"
-        value={form.admin_name}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="test"
-        name="admin_account"
-        placeholder="아이디"
-        value={form.admin_account}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="비밀번호"
-        value={form.password}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="이메일"
-        value={form.email}
-        onChange={handleChange}
-        required
-      />
-      <button type="submit">가입하기</button>
-    </form>
+    <div className="modal-form-container">
+      <h2 className="modal-title">업체 ID 생성</h2>
+
+      <form onSubmit={handleSubmit} className="signup-modal-form">
+        <div className="form-group">
+          <label>업체명</label>
+          <input
+            type="text"
+            name="admin_name"
+            placeholder="업체명을 입력하세요"
+            value={form.admin_name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>아이디</label>
+          <input
+            type="text"
+            name="admin_account"
+            placeholder="아이디를 입력하세요"
+            value={form.admin_account}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>비밀번호</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="비밀번호를 입력하세요"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>이메일</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="이메일을 입력하세요"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="modal-button-group">
+          <button type="button" className="cancel-btn" onClick={onClose}>
+            취소
+          </button>
+          <button type="submit" className="submit-btn">
+            가입하기
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

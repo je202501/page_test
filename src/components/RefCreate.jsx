@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import DropdownSelectorAdmin from "./DropdownSelectorAdmin"; // 경로는 실제 위치에 맞게 조정하세요
+import DropdownSelectorAdmin from "./DropdownSelectorAdmin";
 import TypeSelector from "./TypeSelector";
 
 const RefCreate = ({ onClose }) => {
@@ -42,9 +42,7 @@ const RefCreate = ({ onClose }) => {
   const handleAdminSelect = (adminId) => {
     setNewref((prev) => ({ ...prev, admin_id: adminId }));
   };
-  /**
-   * 냉장고 타입 결정 핸들러
-   */
+
   const handleTypeSelect = (type) => {
     setSelectedType(type);
   };
@@ -66,7 +64,6 @@ const RefCreate = ({ onClose }) => {
         ),
         refrigerator_type: selectedType,
       };
-      console.log(modifiedRef);
       await axios.post(
         `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/`,
         modifiedRef,
@@ -89,36 +86,49 @@ const RefCreate = ({ onClose }) => {
   };
 
   return (
-    <div
-      className="modalref"
-      style={{
-        display: "block",
-        position: "relative",
-        border: "1px solid",
-        background: "lightblue",
-        padding: "20px",
-        borderRadius: "8px",
-      }}
-    >
-      <h4 style={{ marginLeft: "10px" }}>냉장고 생성</h4>
+    <div className="modal-form-container">
+      <h2 className="modal-title">냉장고 생성</h2>
 
-      <DropdownSelectorAdmin onSelectAdmin={handleAdminSelect} />
+      <div className="refrigerator-form">
+        <div className="form-group">
+          <label>업체 선택</label>
+          <DropdownSelectorAdmin
+            onSelectAdmin={handleAdminSelect}
+            className="dropdown-selector"
+          />
+        </div>
 
-      <span>냉장고 No : </span>
-      <input
-        type="text"
-        name="refrigerator_number"
-        value={newref.refrigerator_number}
-        onChange={handleChange}
-        required
-      />
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <br />
+        <div className="form-group">
+          <label>냉장고 번호</label>
+          <br />
+          <input
+            type="text"
+            name="refrigerator_number"
+            placeholder="예: 1-1"
+            value={newref.refrigerator_number}
+            onChange={handleChange}
+            required
+          />
+          {error && <p className="error-message">{error}</p>}
+        </div>
 
-      <TypeSelector onSelectType={handleTypeSelect} />
+        <div className="form-group">
+          <label>냉장고 타입</label>
+          <TypeSelector
+            onSelectType={handleTypeSelect}
+            className="type-selector"
+          />
+        </div>
 
-      <button onClick={handleCreate}>생성</button>
-      <button onClick={onClose}>닫기</button>
+        <div className="modal-button-group">
+          <button type="button" className="cancel-btn" onClick={onClose}>
+            닫기
+          </button>
+          <button type="button" className="submit-btn" onClick={handleCreate}>
+            생성
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

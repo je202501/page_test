@@ -1,28 +1,18 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import TemperatureGraph from '../components/TemperatureGraph';
+import React from "react";
+import AdminNavbar from "../components/AdminNavbar";
+import TemperatureGraph from "../components/TemperatureGraph";
+import "./BistechMainPage.css";
 
 const BistechChartPage = ({ setAuth }) => {
-    const navigate = useNavigate();
+  return (
+    <div className="admin-container">
+      <AdminNavbar setAuth={setAuth} currentPage="realtime" />
 
-    const handleLogout = () => {
-        localStorage.removeItem('token'); // ✅ 토큰 삭제
-        setAuth(false); // ✅ 상태 즉시 반영
-        navigate('/'); // ✅ 로그인 페이지로 이동
-    };
-
-    const handleChart = () => {
-        navigate('/bistechmain')
-    }
-
-    return (
-        <div className="main-page">
-            <h1>🔹 Bistech 관리자 페이지</h1>
-            <button onClick={handleLogout}>로그아웃</button>
-            <button onClick={handleChart}>날짜별 온도보기</button>
-            <TemperatureGraph></TemperatureGraph>
-        </div>
-    );
+      <main className="admin-content">
+        <TemperatureGraph />
+      </main>
+    </div>
+  );
 };
 
 export default BistechChartPage;

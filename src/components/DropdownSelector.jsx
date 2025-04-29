@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const DropdownSelector = ({ onSelectRefrigerator }) => {
   const [admins, setAdmins] = useState([]);
@@ -6,17 +6,17 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
   const [selectedRefrigeratorId, setSelectedRefrigeratorId] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      console.error('No token found');
+      console.error("No token found");
       return;
     }
 
     fetch(`${import.meta.env.VITE_SERVER_URL}:9999/api/admin/`, {
-      method: 'GET',
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
@@ -25,7 +25,7 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
           setAdmins(data.data);
         }
       })
-      .catch((error) => console.error('Error fetching admins:', error));
+      .catch((error) => console.error("Error fetching admins:", error));
   }, []);
 
   const selectedAdmin = admins.find(
@@ -53,7 +53,8 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
 
   return (
     <div>
-      <label>업체 선택:</label>
+      <label>업체 </label>
+
       <select onChange={(e) => setSelectedAdminId(Number(e.target.value))}>
         <option value="">업체 선택</option>
         {admins.map((admin) => (
@@ -65,7 +66,8 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
 
       {selectedAdminId && (
         <>
-          <label>냉장고 선택:</label>
+          <label>냉장고 </label>
+
           <select onChange={handleRefrigeratorChange}>
             <option value="">냉장고 선택</option>
             {refrigerators.map((fridge) => (

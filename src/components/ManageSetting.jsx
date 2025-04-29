@@ -133,7 +133,6 @@ const ManageSetting = () => {
     <div className={getBackgroundColor()}>
       {" "}
       {/* 배경색 동적 적용 */}
-      <h1 onClick={() => navigate("/main")}>🏠</h1>
       <div
         className="personBox"
         style={{

@@ -128,7 +128,6 @@ const TemperatureDashboard = () => {
 
   return (
     <div style={{ width: "80%", height: 400, margin: "auto" }}>
-      <h2>일간 온도 및 전류 그래프</h2>
       <div>
         <DropdownSelector onSelectRefrigerator={setSelectedRefrigeratorId} />
         <label>시작 날짜: </label>

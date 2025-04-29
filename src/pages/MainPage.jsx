@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Manage from "../components/Manage";
-
 import TelegramWaitingModal from "../components/modal/TelegramWaitingModal";
+import "./MainPage.css"; // 새로 생성할 CSS 파일
 
 const MainPage = ({ setAuth }) => {
   const navigate = useNavigate();
-  const location = useLocation(); // 현재 위치 사용
   const [telegramModal, setTelegramModal] = useState(false);
 
   const handleLogout = () => {
@@ -17,16 +16,29 @@ const MainPage = ({ setAuth }) => {
 
   return (
     <div className="main-page">
-      <h1>🏠</h1>
+      <div className="main-container">
+        {/* 상단 액션 바 */}
+        <div className="action-bar">
+          <h1 className="page-title">냉장고 관리 시스템</h1>
+          <div className="button-group">
+            <button
+              className="btn btn-telegram"
+              onClick={() => setTelegramModal(true)}
+            >
+              <i className="fab fa-telegram"></i> 텔레그램 설정
+            </button>
+            <button className="btn btn-logout" onClick={handleLogout}>
+              <i className="fas fa-sign-out-alt"></i> 로그아웃
+            </button>
+          </div>
+        </div>
 
-      <button onClick={handleLogout}>로그아웃</button>
+        {/* 메인 콘텐츠 영역 */}
+        <main className="content-area">
+          <Manage />
+        </main>
 
-      <button onClick={() => setTelegramModal(true)}>텔레그램 설정</button>
-
-      <br />
-      <Manage />
-
-      <div>
+        {/* 텔레그램 설정 모달 */}
         <TelegramWaitingModal
           open={telegramModal}
           onClose={() => setTelegramModal(false)}
