@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+//상주 정보 수정, 삭제
 const ModalRes = ({ person, residents: initialResidents, onClose }) => {
   const [residents, setResidents] = useState(
     Array.from({ length: 9 }, (_, index) => ({
@@ -38,9 +39,10 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
       )
     );
   };
-
+  //수정 또는 삭제한 상주 정보 put
   const handleSave = async () => {
     try {
+      //삭제
       const deletePromises = residents
         .filter((resident) => resident.deleteChecked && resident.resident_id)
         .map((resident) =>
@@ -50,7 +52,7 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
             }`
           )
         );
-
+      //존재하던 상주의 정보를 바꾸면 수정, 존재하지 않던 상주의 정보를 추가하면 생성
       const updatePromises = residents
         .filter((resident) => !resident.deleteChecked)
         .map(async (resident) => {

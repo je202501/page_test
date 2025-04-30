@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+//출관확인
 const ExitConfirmation = ({
   refrigerator_id,
   residents,
@@ -32,6 +33,7 @@ const ExitConfirmation = ({
   };
 
   // 냉장고 초기화 (보존 필드 제어)
+  // preserveTemp, preserveDefrost가 true일 경우(A타입) setting_temp_value, defrost_value 변경하지 않음
   const resetRefrigerator = async (fridgeId, options = {}) => {
     const { preserveTemp = false, preserveDefrost = false } = options;
 
@@ -51,6 +53,7 @@ const ExitConfirmation = ({
     );
   };
 
+  //출관확인
   const handleExitConfirm = async () => {
     if (
       !window.confirm(

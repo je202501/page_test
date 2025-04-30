@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 
+//업체, 냉장고 번호 selector
 const DropdownSelector = ({ onSelectRefrigerator }) => {
   const [admins, setAdmins] = useState([]);
   const [selectedAdminId, setSelectedAdminId] = useState(null);
   const [selectedRefrigeratorId, setSelectedRefrigeratorId] = useState(null);
 
+  //업체 정보 가져오기
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -32,6 +34,7 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
     (admin) => admin.admin_id === selectedAdminId
   );
 
+  //업체를 선택했을때 냉장고 드롭다운(번호순으로 정렬)
   const refrigerators = selectedAdmin
     ? selectedAdmin.Refrigerators.sort((a, b) => {
         const getSortValue = (str) =>

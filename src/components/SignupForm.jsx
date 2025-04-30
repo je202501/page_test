@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+//업체 ID 생성
 const SignupForm = ({ onClose }) => {
   const [form, setForm] = useState({
     admin_name: "",
@@ -13,6 +14,7 @@ const SignupForm = ({ onClose }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  //업체 ID 생성
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+//냉장,제상 설정
 const ModalRef = ({ person, onClose }) => {
   const [updatedRef, setUpdatedRef] = useState({
     setting_temp_value: person?.setting_temp_value || "",

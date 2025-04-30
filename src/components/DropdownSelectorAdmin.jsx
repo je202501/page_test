@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 
+//업체 selector
 const DropdownSelectorAdmin = ({ onSelectAdmin }) => {
   const [admins, setAdmins] = useState([]);
   const [selectedAdminId, setSelectedAdminId] = useState(null);
 
+  //업체 정보 가져오기
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {

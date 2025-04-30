@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import data from "./data.js";
 import "./Manage.css";
 import RefTempAndMessage from "./RefTempAndMessage.jsx";
 
+//MainPage 냉장고 정보 보여주기
 const Manage = () => {
   let [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +26,7 @@ const Manage = () => {
     }
   }, []);
 
+  //냉장고 데이터 가져오기
   const fetchPerson = async () => {
     const response = await axios
       .get(
@@ -51,7 +52,7 @@ const Manage = () => {
           refrigerator_type: item.refrigerator_type, //냉장고 타입 A = 일체형 B = 분리형
           entry_reservation: item.entry_reservation,
         }));
-
+        //냉장고 번호 순서대로 정렬
         formattedData.sort((a, b) => {
           const aNumber = a.refrigerator_number.replace("NO.", "");
           const bNumber = b.refrigerator_number.replace("NO.", "");
@@ -66,11 +67,13 @@ const Manage = () => {
       });
   };
 
+  //상주 데이터 불러오기
   const fetchResidents = async () => {
     const response = await axios
       .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
       .then((res) => {
         console.log(`상주:${res.data.data}`);
+        //대표상주만
         const filteredData = res.data.data.filter(
           (item) => item.primary_resident == 1
         );
@@ -103,6 +106,7 @@ const Manage = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+      {/*전체 냉장고를 순회 */}
       {Object.keys(groupedPersons).map((groupKey, index) => (
         <div
           key={index}
@@ -114,6 +118,8 @@ const Manage = () => {
             width: "400px",
           }}
         >
+          {" "}
+          {/*각 냉장고를 감싸는 박스(동적 배경색) */}
           {groupedPersons[groupKey].map((personData, i) => (
             <div
               className={`personBox ${getBackgroundColor(
@@ -128,7 +134,7 @@ const Manage = () => {
                 backgroundColor:
                   temperatureStatus[personData.refrigerator_id] === "danger"
                     ? "#fee2e2"
-                    : "white", // 직접 스타일 적용
+                    : "white",
               }}
             >
               <p>냉장고: {personData.refrigerator_number}</p>
@@ -154,6 +160,7 @@ const Manage = () => {
                   )}
                 </div>
               ))}
+              {/**온도이상 발생시 메시지 */}
               <RefTempAndMessage
                 refrigerator_number={personData.refrigerator_number}
                 refrigerator_id={personData.refrigerator_id}

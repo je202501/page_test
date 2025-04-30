@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+//냉장고 타입 Selector
 const TypeSelector = ({ onSelectType }) => {
   const [type, setType] = useState("");
   const handleChange = (e) => {

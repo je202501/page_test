@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
+//이미지 변경하기
 const ImageUpload = ({ refrigerator_id }) => {
   const inputRef = useRef(null);
   const handleFileClick = () => {
@@ -14,6 +15,7 @@ const ImageUpload = ({ refrigerator_id }) => {
     }
   };
 
+  //이미지 변경하기
   const uploadFile = async (file) => {
     try {
       const formData = new FormData();

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+//MainPage SettingPage Navbar
 const MainNavbar = ({ setAuth, onTelegramClick }) => {
   const navigate = useNavigate();
-
+  //로그아웃(localStorage 토큰삭제)
   const handleLogout = () => {
     localStorage.removeItem("token");
     setAuth(false);
     navigate("/");
   };
-
+  //메인으로 이동
   const goToMain = () => navigate("/main");
 
   return (

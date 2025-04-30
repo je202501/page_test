@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+//고인 정보 수정
 const Modalperson = ({ person, onClose }) => {
   const [updatedPerson, setUpdatedPerson] = useState({
     refrigerator_id: person?.refrigerator_id || "",
@@ -26,6 +27,7 @@ const Modalperson = ({ person, onClose }) => {
     });
   };
 
+  //수정한 정보 put
   const handleSave = async () => {
     try {
       await axios.put(

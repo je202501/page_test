@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DropdownSelector from "./DropdownSelector";
 
+//냉장고 삭제
 const RefrigeratorDeleter = ({ onClose }) => {
   const [selectedRefrigeratorId, setSelectedRefrigeratorId] = useState(null);
 

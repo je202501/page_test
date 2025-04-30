@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import DropdownSelector from "./DropdownSelector";
 
+//일간조회그래프
 const TemperatureDashboard = () => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState("");
@@ -51,6 +52,7 @@ const TemperatureDashboard = () => {
     }
   }, [startDate]);
 
+  //시작 날짜와 종료 날짜 사이의 데이터 가져오기
   const fetchTemperature = async (
     start = startDate,
     end = endDate,

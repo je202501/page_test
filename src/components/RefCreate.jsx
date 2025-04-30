@@ -3,6 +3,7 @@ import axios from "axios";
 import DropdownSelectorAdmin from "./DropdownSelectorAdmin";
 import TypeSelector from "./TypeSelector";
 
+//냉장고 생성
 const RefCreate = ({ onClose }) => {
   const [newref, setNewref] = useState({
     refrigerator_number: "",
@@ -12,18 +13,19 @@ const RefCreate = ({ onClose }) => {
   const [selectedType, setSelectedType] = useState("");
   const [error, setError] = useState("");
 
+  //냉장고 번호 규칙 확인
   const validateRefrigeratorNumber = (value) => {
     const regex = /^[1-9]-([1]|[2])$/;
     return regex.test(value);
   };
-
+  //NO.접두사 처리
   const formatRefrigeratorNumber = (value) => {
     if (validateRefrigeratorNumber(value)) {
       return `NO.${value}`;
     }
     return value;
   };
-
+  //냉장고 번호가 규칙에 맞지않을 시 에러 표시
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "refrigerator_number") {
@@ -47,6 +49,7 @@ const RefCreate = ({ onClose }) => {
     setSelectedType(type);
   };
 
+  //냉장고 생성
   const handleCreate = async () => {
     if (error) {
       alert(error);

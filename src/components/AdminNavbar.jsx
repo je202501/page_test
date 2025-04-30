@@ -4,6 +4,7 @@ import RefrigeratorDeleter from "./RefrigeratorDeleter";
 import RefCreate from "./RefCreate";
 import SignupForm from "./SignupForm"; // SignupForm 컴포넌트 추가
 
+//bistech Navbar
 const AdminNavbar = ({ setAuth, currentPage }) => {
   const navigate = useNavigate();
   const [modalDeleteRef, setModalDeleteRef] = useState(false);
@@ -29,10 +30,8 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
       <nav className="admin-navbar">
         <div className="navbar-brand">Bistech 관리자</div>
         <div className="navbar-menu">
-          <button
-            className="nav-btn"
-            onClick={() => setModalSignup(true)} // 모달 열기로 변경
-          >
+          {/*버튼*/}
+          <button className="nav-btn" onClick={() => setModalSignup(true)}>
             <i className="fas fa-user-plus"></i> 업체 ID 생성
           </button>
 

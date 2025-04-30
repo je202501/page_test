@@ -11,6 +11,7 @@ import ModalRef from "./ModalRef.jsx";
 import ExitConfirmation from "./ExitConfirmation.jsx";
 import Modalperson from "./Modalperson.jsx";
 
+//설정페이지
 const ManageSetting = () => {
   const [QRModal, setQRModal] = useState(false);
   const [person, setPerson] = useState([]);
@@ -32,6 +33,7 @@ const ManageSetting = () => {
   };
 
   console.log(refrigerator_id);
+  //모달 핸들 함수
   const handleModalresClose = () => {
     setModalres(false);
   };
@@ -62,10 +64,7 @@ const ManageSetting = () => {
     }
   }, [person]);
 
-  useEffect(() => {
-    console.log("Modal 상태:", modalperson);
-  }, [modalperson]);
-
+  //냉장고 데이터 가져오기
   const fetchPerson = async () => {
     const response = await axios
       .get(
@@ -95,7 +94,7 @@ const ManageSetting = () => {
         setPerson(formattedData);
       });
   };
-
+  //냉장고 id가 같은 상주 데이터 가져오기기
   const fetchResidents = async () => {
     const response = await axios
       .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
@@ -218,7 +217,7 @@ const ManageSetting = () => {
             상주 정보 관리
           </button>
           <button className="action-btn" onClick={() => setModalref(!modalref)}>
-            온도 설정
+            냉장 제상 설정
           </button>
           <ImageUpload refrigerator_id={refrigerator_id} />
           <button className="action-btn" onClick={() => setQRModal(true)}>

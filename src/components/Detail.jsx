@@ -5,6 +5,7 @@ import Image from "./Image.jsx";
 import RefrigeratorTemperature from "./RefrigeratorTemperature.jsx";
 import "./Detail.css";
 
+//상세정보(모니터 GUI)
 const Detail = () => {
   const [person, setPerson] = useState([]);
   const [primaryResidents, setPrimaryResidents] = useState([]);
@@ -19,6 +20,7 @@ const Detail = () => {
     return temperatureStatus === "danger" ? "bg-red-200" : "bg-white";
   };
 
+  //냉장고 정보 가져오기기
   const fetchPerson = async () => {
     try {
       const res = await axios.get(
@@ -39,7 +41,7 @@ const Detail = () => {
       console.error("사람 정보 불러오기 실패", err);
     }
   };
-
+  //대표 상주 정보 가져오기기
   const fetchResidents = async () => {
     const response = await axios
       .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
@@ -68,6 +70,7 @@ const Detail = () => {
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
   }, [refrigerator_id]);
 
+  //현재 냉장고 id
   const currentPerson = person.find(
     (item) => item.refrigerator_id === parseInt(refrigerator_id, 10)
   );
@@ -128,7 +131,7 @@ const Detail = () => {
               refrigerator_id={currentPerson.refrigerator_id}
               setting_temp_value={currentPerson.setting_temp_value}
               onTemperatureChange={setTemperatureStatus}
-              className="temperature-text" // 추가된 클래스
+              className="temperature-text"
             />
             <p>
               상태:

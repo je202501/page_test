@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
+//현재 온도 표시(상세페이지 용)
 const RefrigeratorTemperature = ({
   refrigerator_number,
   refrigerator_id,
@@ -9,17 +10,19 @@ const RefrigeratorTemperature = ({
 }) => {
   const [temperatureData, setTemperatureData] = useState(null);
 
+  //현재 온도의 상태 평가(설정온도보다 7도 높으면 danger)
   const evaluateTemperatureStatus = (currentTemp) => {
     const threshold = Number(setting_temp_value) + 7;
     const isDanger = currentTemp >= threshold;
 
-    return isDanger ? 'danger' : 'normal';
+    return isDanger ? "danger" : "normal";
   };
 
+  //가장 최근 온도 가져오기
   const fetchTemperatureData = async () => {
     try {
       const now = new Date();
-      const startTime = new Date(now.getTime() - 60 * 60 * 1000);
+      const startTime = new Date(now.getTime() - 60 * 60 * 1000); //현재로부터 1시간 이전
       const endTime = now;
 
       const response = await fetch(
@@ -29,20 +32,22 @@ const RefrigeratorTemperature = ({
       );
       const data = await response.json();
 
+      //데이터가 있으면 변수에 저장, 온도의 상태 평가
       if (data.data?.length > 0) {
         const currentTemp = Number(data.data[0].temperature_value);
         setTemperatureData(data.data[0]);
         onTemperatureChange(evaluateTemperatureStatus(currentTemp));
       } else {
         setTemperatureData(null);
-        onTemperatureChange('normal');
+        onTemperatureChange("normal");
       }
     } catch (error) {
-      console.error('데이터 가져오기 오류:', error);
-      onTemperatureChange('normal');
+      console.error("데이터 가져오기 오류:", error);
+      onTemperatureChange("normal");
     }
   };
 
+  //30초마다 새로고침
   useEffect(() => {
     fetchTemperatureData();
     const interval = setInterval(fetchTemperatureData, 30000);
@@ -50,7 +55,7 @@ const RefrigeratorTemperature = ({
   }, [refrigerator_id, setting_temp_value]);
 
   return (
-    <div className={`temperature-display ${className || ''}`}>
+    <div className={`temperature-display ${className || ""}`}>
       {temperatureData ? (
         <p className="current-temperature">
           현재 온도: {Number(temperatureData.temperature_value)}°C
