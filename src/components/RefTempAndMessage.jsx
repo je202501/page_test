@@ -17,7 +17,7 @@ const RefTempAndMessage = ({
     const threshold = Number(setting_temp_value) + 7;
     const isDanger = currentTemp >= threshold;
 
-    //현재 온도의 상태가 danger이면 텔레그램 메시지 발송송
+    //현재 온도의 상태가 danger이면 텔레그램 메시지 발송
     if (isDanger && !alertSentRef.current) {
       const token = localStorage.getItem("token");
       const decoded = jwtDecode(token);
