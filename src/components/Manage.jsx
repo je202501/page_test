@@ -31,8 +31,7 @@ const Manage = () => {
   const fetchPerson = async () => {
     const response = await axios
       .get(
-        `${
-          import.meta.env.VITE_SERVER_URL
+        `${import.meta.env.VITE_SERVER_URL
         }:9999/api/refrigerator/?admin_id=${admin_id}`
       )
       .then((res) => {
@@ -110,7 +109,11 @@ const Manage = () => {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        gap: '20px',
+        flexWrap: 'wrap',
+        gap: '87px',
+        justifyContent: 'flex-start', 
+        maxWidth: '100%',
+        overflowX: 'hidden',
       }}
     >
       {/*전체 냉장고를 순회 */}
@@ -122,7 +125,7 @@ const Manage = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: '10px',
-            width: '400px',
+            width: '26%',
           }}
         >
           {' '}
@@ -134,7 +137,7 @@ const Manage = () => {
               )}`}
               key={i}
               style={{
-                width: '380px',
+                width: '430px',
                 border: '1px solid #ccc',
                 padding: '10px',
                 borderRadius: '5px',
