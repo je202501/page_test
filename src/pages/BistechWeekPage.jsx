@@ -3,7 +3,7 @@ import AdminNavbar from '../components/AdminNavbar';
 import DashboardWeekly from '../components/DashboardWeekly';
 import './BistechMainPage.css';
 
-const BistechMainPage = ({ setAuth }) => {
+const BistechWeekPage = ({ setAuth }) => {
   return (
     <div className="admin-container">
       <AdminNavbar setAuth={setAuth} currentPage="week" />
@@ -16,4 +16,4 @@ const BistechMainPage = ({ setAuth }) => {
   );
 };
 
-export default BistechMainPage;
+export default BistechWeekPage;

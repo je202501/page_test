@@ -109,7 +109,16 @@ const App = () => {
       <Route
         element={isAuthenticated ? <DetailPage /> : <Navigate to="/" />}
       ></Route>
-      <Route path="/bistechmain" element={<BistechMainPage />} />
+      <Route
+        path="/bistechmain"
+        element={
+          isAuthenticated && userType === 'bistech' ? (
+            <BistechMainPage setAuth={setIsAuthenticated} />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
+      />
       <Route
         path="/bistech/chart"
         element={
@@ -120,7 +129,16 @@ const App = () => {
           )
         }
       />
-      <Route path="/bistech/week" element={<BistechWeekPage />} />
+      <Route
+        path="/bistech/week"
+        element={
+          isAuthenticated && userType === 'bistech' ? (
+            <BistechWeekPage setAuth={setIsAuthenticated} />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
+      />
     </Routes>
   );
 };
