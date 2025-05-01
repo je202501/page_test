@@ -24,7 +24,7 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
   };
   const goToMainPage = () => navigate('/bistechmain');
   const goToRealtimeChart = () => navigate('/bistech/chart');
-  const goToWeekPage = () => navigate('/bistech/week');
+  const goToHourPage = () => navigate('/bistech/hour');
 
   return (
     <>
@@ -44,8 +44,8 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
           </button>
 
           <button
-            className={`nav-btn ${currentPage === 'week' ? 'active' : ''}`}
-            onClick={goToWeekPage}
+            className={`nav-btn ${currentPage === 'hour' ? 'active' : ''}`}
+            onClick={goToHourPage}
           >
             <i className="fas fa-chart-bar"></i> 시간 평균 차트 조회
           </button>

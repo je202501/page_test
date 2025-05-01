@@ -67,16 +67,13 @@ export const postTelgram = async (telegramUserId, adminId, token) => {
  * 텔레그램 메시지 전송 api
  * @param {telegram_user_id}
  */
-export const messageTelegram = async (adminId, token, refrigerator_number) => {
+export const messageTelegram = async (adminId, token, error_message) => {
   try {
     if (!token) throw new Error('토큰이 없습니다.');
 
     const getTelegramData = await getTelegram(adminId);
     console.log('텔레그램 유저 정보:', getTelegramData.data.telegram_user_id);
-    console.log(
-      '전송할 메시지:',
-      `${refrigerator_number}냉장고 온도가 비정상입니다.`
-    );
+    console.log('전송할 메시지:', error_message);
     const telegram_user_id = getTelegramData.data.telegram_user_id;
 
     const response = await fetch(
@@ -89,7 +86,7 @@ export const messageTelegram = async (adminId, token, refrigerator_number) => {
         },
         body: JSON.stringify({
           telegram_user_id: telegram_user_id,
-          message: `${refrigerator_number}냉장고 온도가 비정상입니다.`,
+          message: error_message,
         }),
       }
     );

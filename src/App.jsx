@@ -13,7 +13,7 @@ import BistechMainPage from './pages/BistechMainPage';
 import DetailPage from './pages/DetailPage';
 import { jwtDecode } from 'jwt-decode';
 import BistechChartPage from './pages/BistechChartPage';
-import BistechWeekPage from './pages/BistechWeekPage';
+import BistechHourPage from './pages/BistechHourPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -130,10 +130,10 @@ const App = () => {
         }
       />
       <Route
-        path="/bistech/week"
+        path="/bistech/hour"
         element={
           isAuthenticated && userType === 'bistech' ? (
-            <BistechWeekPage setAuth={setIsAuthenticated} />
+            <BistechHourPage setAuth={setIsAuthenticated} />
           ) : (
             <Navigate to="/" />
           )

@@ -106,7 +106,13 @@ const Manage = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '20px',
+      }}
+    >
       {/*전체 냉장고를 순회 */}
       {Object.keys(groupedPersons).map((groupKey, index) => (
         <div

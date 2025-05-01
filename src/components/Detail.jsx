@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
-import Image from "./Image.jsx";
-import RefrigeratorTemperature from "./RefrigeratorTemperature.jsx";
-import "./Detail.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Image from './Image.jsx';
+import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
+import './Detail.css';
+import ExitDateChecker from './ExitDateChecker.jsx';
 
 //상세정보(모니터 GUI)
 const Detail = () => {
@@ -13,11 +14,11 @@ const Detail = () => {
   const refrigerator_id = location.state?.refrigerator_id || null;
   const navigate = useNavigate();
 
-  const [temperatureStatus, setTemperatureStatus] = useState("normal"); // 추가: 온도 상태
+  const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
 
   // 배경색 결정 함수
   const getBackgroundColor = () => {
-    return temperatureStatus === "danger" ? "bg-red-200" : "bg-white";
+    return temperatureStatus === 'danger' ? 'bg-red-200' : 'bg-white';
   };
 
   //냉장고 정보 가져오기기
@@ -38,7 +39,7 @@ const Detail = () => {
       }));
       setPerson(formattedData);
     } catch (err) {
-      console.error("사람 정보 불러오기 실패", err);
+      console.error('사람 정보 불러오기 실패', err);
     }
   };
   //대표 상주 정보 가져오기기
@@ -46,7 +47,6 @@ const Detail = () => {
     const response = await axios
       .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
       .then((res) => {
-        console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(
           (item) => item.primary_resident == 1
         );
@@ -82,7 +82,7 @@ const Detail = () => {
   return (
     <div
       className={`fullscreen-container ${
-        temperatureStatus === "danger" ? "danger-bg" : ""
+        temperatureStatus === 'danger' ? 'danger-bg' : ''
       }`}
     >
       <div className="content-grid">
@@ -106,6 +106,10 @@ const Detail = () => {
           <div className="timeline-info">
             <p className="entry-date">입관일 : {currentPerson.entry_date}</p>
             <p className="exit-date">출관일 : {currentPerson.exit_date}</p>
+            <ExitDateChecker
+              refrigerator_number={currentPerson.refrigerator_number}
+              exit_date={currentPerson.exit_date}
+            ></ExitDateChecker>
           </div>
 
           <div className="resident-info">
@@ -137,11 +141,11 @@ const Detail = () => {
               상태:
               <span
                 style={{
-                  color: currentPerson.check_defrost ? "red" : "green",
-                  fontWeight: "bold",
+                  color: currentPerson.check_defrost ? 'red' : 'green',
+                  fontWeight: 'bold',
                 }}
               >
-                {currentPerson.check_defrost ? " 제상중" : " 냉장중"}
+                {currentPerson.check_defrost ? ' 제상중' : ' 냉장중'}
               </span>
             </p>
           </div>
