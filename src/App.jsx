@@ -14,6 +14,8 @@ import DetailPage from './pages/DetailPage';
 import { jwtDecode } from 'jwt-decode';
 import BistechChartPage from './pages/BistechChartPage';
 import BistechHourPage from './pages/BistechHourPage';
+import KioskRedirect from "./components/\brasvi";
+
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -47,6 +49,10 @@ const App = () => {
 
   return (
     <Routes>
+      <Route
+        path="/kiosk/:check_refrigerator/:refrigerator_number"
+        element={<KioskRedirect isAuthenticated={isAuthenticated} userType={userType} />}
+      />
       <Route
         path="/"
         element={

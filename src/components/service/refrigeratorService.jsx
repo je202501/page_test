@@ -1,9 +1,9 @@
-export const getAdmin = async () => {
+export const getRefrigerator = async (check_refrigerator) => {
     try {
         const token = localStorage.getItem('token');
 
         const response = await fetch(
-            `${import.meta.env.VITE_SERVER_URL}:9999/api/admin`,
+            `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/raspi/{check_refrigerator}?check_refrigerator=${check_refrigerator}`,
             {
                 method: 'GET',
                 headers: {

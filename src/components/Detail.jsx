@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Image from './Image.jsx';
 import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
 import './Detail.css';
@@ -10,8 +10,7 @@ import ExitDateChecker from './ExitDateChecker.jsx';
 const Detail = () => {
   const [person, setPerson] = useState([]);
   const [primaryResidents, setPrimaryResidents] = useState([]);
-  const location = useLocation();
-  const refrigerator_id = location.state?.refrigerator_id || null;
+  const { refrigerator_id } = useParams(); // ← URL에서 refrigerator_id 추출
   const navigate = useNavigate();
 
   const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
@@ -36,6 +35,7 @@ const Detail = () => {
         exit_date: item.exit_date,
         management_number: item.management_number,
         setting_temp_value: item.setting_temp_value,
+        check_defrost: item.check_defrost,
       }));
       setPerson(formattedData);
     } catch (err) {
@@ -44,30 +44,32 @@ const Detail = () => {
   };
   //대표 상주 정보 가져오기기
   const fetchResidents = async () => {
-    const response = await axios
-      .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
-      .then((res) => {
-        const filteredData = res.data.data.filter(
-          (item) => item.primary_resident == 1
-        );
-        setPrimaryResidents(filteredData);
-      });
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}:9999/api/resident`
+      );
+      const filteredData = res.data.data.filter(
+        (item) => item.primary_resident === 1
+      );
+      setPrimaryResidents(filteredData);
+    } catch (err) {
+      console.error("상주 정보 불러오기 실패", err);
+    }
   };
 
-  // 데이터 초기 로딩 및 10초마다 갱신
   useEffect(() => {
     const loadData = async () => {
       await fetchPerson();
       await fetchResidents();
     };
 
-    loadData(); // 첫 로딩
+    loadData();
 
     const interval = setInterval(() => {
-      loadData(); // 10초마다 새로고침
+      loadData();
     }, 10000);
 
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
+    return () => clearInterval(interval);
   }, [refrigerator_id]);
 
   //현재 냉장고 id

@@ -27,14 +27,15 @@ const Modalperson = ({ person, onClose }) => {
     });
   };
 
-  //수정한 정보 put
   const handleSave = async () => {
     try {
       await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/${
-          person.refrigerator_id
+        `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/${person.refrigerator_id
         }`,
-        updatedPerson
+        {
+          ...updatedPerson,
+          entry_date: updatedPerson.entry_date.replace("T", " ")
+        }
       );
       alert("수정이 완료되었습니다.");
       window.location.reload();
