@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import ModalRes from "./ModalRes.jsx";
-import QRcode from "./qrcode/QRcode";
-import ImageUpload from "./ImageUpload.jsx";
-import Image from "./Image.jsx";
-import RefTempAndMessage from "./RefTempAndMessage.jsx";
-import ModalRef from "./ModalRef.jsx";
-import ExitConfirmation from "./ExitConfirmation.jsx";
-import Modalperson from "./Modalperson.jsx";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import ModalRes from './ModalRes.jsx';
+import QRcode from './qrcode/QRcode';
+import ImageUpload from './ImageUpload.jsx';
+import Image from './Image.jsx';
+import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
+import ModalRef from './ModalRef.jsx';
+import ExitConfirmation from './ExitConfirmation.jsx';
+import Modalperson from './Modalperson.jsx';
 
 //설정페이지
 const ManageSetting = () => {
@@ -20,16 +20,16 @@ const ManageSetting = () => {
   const [modalres, setModalres] = useState(false);
   const [modalref, setModalref] = useState(false);
   const [residents, setResidents] = useState([]);
-  const [temperatureStatus, setTemperatureStatus] = useState("normal"); // 추가: 온도 상태
+  const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
   const location = useLocation();
   const navigate = useNavigate();
   const refrigerator_id = location.state?.refrigerator_id || null;
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const admin_id = jwtDecode(token).admin_id;
 
   // 배경색 결정 함수
   const getBackgroundColor = () => {
-    return temperatureStatus === "danger" ? "bg-red-200" : "bg-white";
+    return temperatureStatus === 'danger' ? 'bg-red-200' : 'bg-white';
   };
 
   console.log(refrigerator_id);
@@ -50,7 +50,7 @@ const ManageSetting = () => {
         setLoading(true);
         await fetchPerson();
       } catch (err) {
-        console.log("실패함");
+        console.log('실패함');
       } finally {
         setLoading(false);
       }
@@ -131,7 +131,7 @@ const ManageSetting = () => {
   return (
     <div
       className={`refrigerator-detail ${
-        temperatureStatus === "danger" ? "danger-mode" : ""
+        temperatureStatus === 'danger' ? 'danger-mode' : ''
       }`}
     >
       <div className="refrigerator-card">
@@ -178,7 +178,7 @@ const ManageSetting = () => {
               </div>
             </div>
             <div>
-              <RefTempAndMessage
+              <RefrigeratorTemperature
                 refrigerator_number={currentPerson.refrigerator_number}
                 refrigerator_id={currentPerson.refrigerator_id}
                 setting_temp_value={currentPerson.setting_temp_value}
@@ -186,10 +186,10 @@ const ManageSetting = () => {
               />
               <span
                 className={`status ${
-                  currentPerson.check_defrost ? "defrosting" : "cooling"
+                  currentPerson.check_defrost ? 'defrosting' : 'cooling'
                 }`}
               >
-                {currentPerson.check_defrost ? "제상중" : "냉장중"}
+                {currentPerson.check_defrost ? '제상중' : '냉장중'}
               </span>
             </div>
           </div>
