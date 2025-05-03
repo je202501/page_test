@@ -12,10 +12,13 @@ import {
 } from "recharts";
 import DropdownSelector from "./DropdownSelector";
 
-// 날짜를 'YYYY.M.D' 형식으로 포맷팅
-const formatDate = (date) => {
+// 모든 날짜를 전월로 표시하는 포맷팅 함수
+const formatAsPreviousMonth = (date) => {
   if (!date) return "";
-  return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+
+  const prevMonth = new Date(date);
+  prevMonth.setMonth(prevMonth.getMonth() - 1);
+  return `${prevMonth.getMonth() + 1}월`;
 };
 
 // 날짜 입력 필드 형식 (YYYY-MM-DDTHH:MM)
@@ -27,9 +30,16 @@ const formatDateForInput = (date) => {
   )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
 
-// 커스텀 툴팁 (선택된 날짜 범위 표시)
+// 커스텀 툴팁 (모든 날짜를 전월로 표시)
 const CustomTooltip = ({ active, payload, dateRange }) => {
   if (!active || !payload || !payload.length) return null;
+
+  const formatForDisplay = (date) => {
+    if (!date) return "";
+    const prevMonth = new Date(date);
+    prevMonth.setMonth(prevMonth.getMonth() - 1);
+    return `${prevMonth.getFullYear()}.${prevMonth.getMonth() + 1}`;
+  };
 
   return (
     <div
@@ -41,7 +51,7 @@ const CustomTooltip = ({ active, payload, dateRange }) => {
       }}
     >
       <p style={{ fontWeight: "bold" }}>
-        {`기간: ${formatDate(dateRange.start)} ~ ${formatDate(dateRange.end)}`}
+        {` ${formatForDisplay(dateRange.end)}`}
       </p>
       {payload.map((item, index) => (
         <p key={index} style={{ color: item.color }}>
@@ -52,7 +62,7 @@ const CustomTooltip = ({ active, payload, dateRange }) => {
   );
 };
 
-const DashboardHour = () => {
+const DashboardWeek = () => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -69,7 +79,7 @@ const DashboardHour = () => {
     setEndDate(formatDateForInput(now));
   }, []);
 
-  // 날짜 유효성 검사 (최대 7일 차이)
+  // 날짜 유효성 검사 (최대 60일 차이)
   const validateDates = (start, end) => {
     const startTime = new Date(start);
     const endTime = new Date(end);
@@ -111,7 +121,7 @@ const DashboardHour = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/yeartemp/day`,
+        `${import.meta.env.VITE_SERVER_URL}:9999/api/yeartemp/month`,
         {
           params: {
             refrigerator_id: selectedRefrigeratorId,
@@ -128,10 +138,10 @@ const DashboardHour = () => {
 
       const formattedData = sortedData.map((entry) => ({
         time: new Date(entry.createdAt),
-        temperature: parseFloat(entry.day_temp_value) || 0,
-        outTemperature: parseFloat(entry.out_day_temp_value) || 0,
-        settingTemp: parseFloat(entry.setting_day_temp_value) || 0,
-        current: parseFloat(entry.day_current_value) || 0,
+        temperature: parseFloat(entry.month_temp_value) || 0,
+        outTemperature: parseFloat(entry.out_month_temp_value) || 0,
+        settingTemp: parseFloat(entry.setting_month_temp_value) || 0,
+        current: parseFloat(entry.month_current_value) || 0,
       }));
 
       setData(formattedData);
@@ -182,7 +192,15 @@ const DashboardHour = () => {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tickFormatter={(date) => formatDate(date)} />
+            <XAxis
+              dataKey="time"
+              tickFormatter={(date) => {
+                const d = new Date(date);
+                const prevMonth = new Date(d);
+                prevMonth.setMonth(prevMonth.getMonth() - 1);
+                return `${prevMonth.getMonth() + 1}월`;
+              }}
+            />
             <YAxis
               yAxisId="left"
               orientation="left"
@@ -238,4 +256,4 @@ const DashboardHour = () => {
   );
 };
 
-export default DashboardHour;
+export default DashboardWeek;

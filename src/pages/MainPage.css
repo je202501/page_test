@@ -147,8 +147,8 @@
   flex-direction: column;
   gap: 15px;
   min-width: 200px;
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .person-details {
@@ -473,6 +473,7 @@
 
 .temperature-form input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* 반응형 디자인 */

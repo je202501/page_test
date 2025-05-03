@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import RefrigeratorDeleter from './RefrigeratorDeleter';
-import RefCreate from './RefCreate';
-import SignupForm from './SignupForm'; // SignupForm 컴포넌트 추가
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import RefrigeratorDeleter from "./RefrigeratorDeleter";
+import RefCreate from "./RefCreate";
+import SignupForm from "./SignupForm"; // SignupForm 컴포넌트 추가
 
 //bistech Navbar
 const AdminNavbar = ({ setAuth, currentPage }) => {
@@ -18,13 +18,14 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
 
   // 네비게이션 함수들
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setAuth(false);
-    navigate('/');
+    navigate("/");
   };
-  const goToMainPage = () => navigate('/bistechmain');
-  const goToRealtimeChart = () => navigate('/bistech/chart');
-  const goToHourPage = () => navigate('/bistech/hour');
+  const goToMainPage = () => navigate("/bistechmain");
+  const goToRealtimeChart = () => navigate("/bistech/chart");
+  const goToHourPage = () => navigate("/bistech/hour");
+  const goToWeekPage = () => navigate("/bistech/week");
 
   return (
     <>
@@ -32,29 +33,36 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
         <div className="navbar-brand">Bistech 관리자</div>
         <div className="navbar-menu">
           {/*버튼*/}
-          <button className="nav-btn" onClick={() => setModalSignup(true)}>
-            <i className="fas fa-user-plus"></i> 업체 ID 생성
-          </button>
 
           <button
-            className={`nav-btn ${currentPage === 'main' ? 'active' : ''}`}
+            className={`nav-btn ${currentPage === "main" ? "active" : ""}`}
             onClick={goToMainPage}
           >
             <i className="fas fa-chart-bar"></i> 일간 차트 조회
           </button>
 
           <button
-            className={`nav-btn ${currentPage === 'hour' ? 'active' : ''}`}
+            className={`nav-btn ${currentPage === "hour" ? "active" : ""}`}
             onClick={goToHourPage}
           >
             <i className="fas fa-chart-bar"></i> 시간 평균 차트 조회
           </button>
 
           <button
-            className={`nav-btn ${currentPage === 'realtime' ? 'active' : ''}`}
+            className={`nav-btn ${currentPage === "week" ? "active" : ""}`}
+            onClick={goToWeekPage}
+          >
+            <i className="fas fa-chart-bar"></i> 주간 평균 차트 조회
+          </button>
+
+          <button
+            className={`nav-btn ${currentPage === "realtime" ? "active" : ""}`}
             onClick={goToRealtimeChart}
           >
             <i className="fas fa-chart-line"></i> 실시간 차트
+          </button>
+          <button className="nav-btn" onClick={() => setModalSignup(true)}>
+            <i className="fas fa-user-plus"></i> 업체 ID 생성
           </button>
 
           <button className="nav-btn" onClick={() => setModalCreateRef(true)}>
