@@ -14,7 +14,7 @@ import DetailPage from './pages/DetailPage';
 import { jwtDecode } from 'jwt-decode';
 import BistechChartPage from './pages/BistechChartPage';
 import BistechHourPage from './pages/BistechHourPage';
-import KioskRedirect from "./components/\brasvi";
+import KioskRedirect from "./components/rasvi";
 
 
 const App = () => {
