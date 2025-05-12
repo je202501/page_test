@@ -59,6 +59,8 @@ const App = () => {
           <KioskRedirect
             isAuthenticated={isAuthenticated}
             userType={userType}
+            setIsAuthenticated={setIsAuthenticated}
+            setUserType={setUserType} 
           />
         }
       />

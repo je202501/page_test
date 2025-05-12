@@ -80,7 +80,7 @@ const Detail = () => {
   );
 
   if (loading) {
-    return <p>로딩 중입니다...</p>;
+    return <p>인증 확인 중입니다...</p>;
   }
 
   if (!currentPerson) {

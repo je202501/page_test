@@ -2,6 +2,8 @@ import { useParams, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import { getRefrigerator } from './service/refrigeratorService';
 import { useEffect, useState } from 'react';
+import { jwtDecode } from "jwt-decode";
+
 import axios from 'axios';
 
 const KioskRedirect = ({
@@ -47,8 +49,11 @@ const KioskRedirect = ({
           kioskrequest
         );
         const token = response.data.data;
-        localStorage.setItem('token', token);
-        window.location.reload();
+        localStorage.setItem("token", token);
+    
+        const decoded = jwtDecode(token);
+        setIsAuthenticated(true);
+        setUserType(decoded.admin_id ? "admin" : "bistech");
       } catch (e) {
         console.error(e);
       }
