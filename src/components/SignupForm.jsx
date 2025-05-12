@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 
 //업체 ID 생성
 const SignupForm = ({ onClose }) => {
   const [form, setForm] = useState({
-    admin_name: "",
-    admin_account: "",
-    password: "",
-    email: "",
+    admin_name: '',
+    admin_account: '',
+    password: '',
+    email: '',
   });
 
   const handleChange = (e) => {
@@ -22,11 +22,11 @@ const SignupForm = ({ onClose }) => {
         `${import.meta.env.VITE_SERVER_URL}:9999/api/admin`,
         form
       );
-      alert("✅ 업체 ID 생성 성공");
+      alert('✅ 업체 ID 생성 성공');
       onClose();
     } catch (error) {
       console.error(error);
-      alert("❌ 업체 ID 생성 실패. 다시 시도하세요.");
+      alert('❌ 업체 ID 생성 실패. 다시 시도하세요.');
     }
   };
 
@@ -85,10 +85,10 @@ const SignupForm = ({ onClose }) => {
 
         <div className="modal-button-group">
           <button type="button" className="cancel-btn" onClick={onClose}>
-            취소
+            닫기
           </button>
           <button type="submit" className="submit-btn">
-            가입하기
+            생성
           </button>
         </div>
       </form>
