@@ -79,9 +79,7 @@ const Detail = () => {
     (item) => item.refrigerator_id === parseInt(refrigerator_id, 10)
   );
 
-  if (loading) {
-    return <p>인증 확인 중입니다...</p>;
-  }
+  
 
   if (!currentPerson) {
     return <p>데이터를 불러올 수 없습니다.</p>;
