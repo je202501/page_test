@@ -10,6 +10,7 @@ import ExitDateChecker from "./ExitDateChecker.jsx";
 const Detail = () => {
   const [person, setPerson] = useState([]);
   const [primaryResidents, setPrimaryResidents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { refrigerator_id } = useParams(); // ← URL에서 refrigerator_id 추출
   const navigate = useNavigate();
 
@@ -59,23 +60,28 @@ const Detail = () => {
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
       await fetchPerson();
       await fetchResidents();
+      setLoading(false);
     };
 
     loadData();
-
     const interval = setInterval(() => {
       loadData();
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [refrigerator_id]);
+  }, []);
 
   //현재 냉장고 id
   const currentPerson = person.find(
     (item) => item.refrigerator_id === parseInt(refrigerator_id, 10)
   );
+
+  if (loading) {
+    return <p>로딩 중입니다...</p>;
+  }
 
   if (!currentPerson) {
     return <p>데이터를 불러올 수 없습니다.</p>;
@@ -83,9 +89,8 @@ const Detail = () => {
 
   return (
     <div
-      className={`fullscreen-container ${
-        temperatureStatus === "danger" ? "danger-bg" : ""
-      }`}
+      className={`fullscreen-container ${temperatureStatus === "danger" ? "danger-bg" : ""
+        }`}
     >
       <div className="content-grid">
         {/* 왼쪽 정보 영역 */}

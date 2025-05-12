@@ -47,6 +47,10 @@ const App = () => {
     return () => window.removeEventListener("storage", checkAuth);
   }, []);
 
+  if (isAuthenticated && userType === null) {
+    return <p>로딩 중...</p>;
+  }
+
   return (
     <Routes>
       <Route

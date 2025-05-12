@@ -12,7 +12,6 @@ const KioskRedirect = ({
 }) => {
   const { check_refrigerator, refrigerator_number } = useParams();
   const [findRefrigerater, setFindRefrigerator] = useState(null);
-  const [checkKiosk, setCheckKiosk] = useState(false);
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   /**
@@ -55,37 +54,28 @@ const KioskRedirect = ({
       }
     };
 
-    if (checkKiosk) {
-      loginKiosk();
-      setCheckKiosk(false);
-    }
-  }, [checkKiosk]);
-
-  // userType이 null일 때 kiosk 로그인 시도 (useEffect 내에서 처리)
-  useEffect(() => {
     if (userType === null) {
-      setCheckKiosk(true);
+      loginKiosk();
     }
   }, [userType]);
+
+  // userType이 null일 때 kiosk 로그인 시도 (useEffect 내에서 처리)
+//   useEffect(() => {
+//     if (userType === null) {
+//       setCheckKiosk(true);
+//     }
+//   }, [userType]);
 
   // 로딩 중일 때 표시
   if (loading) {
     return <div>로딩 중...</div>;
   }
 
-  if (!isAuthenticated) {
-    return <LoginPage setAuth={setIsAuthenticated} setUserType={setUserType} />;
-  }
-
-  if (userType === 'admin') {
     if (findRefrigerater) {
       return <Navigate to={`/detail/${findRefrigerater.refrigerator_id}`} />;
     } else {
       return <div>냉장고 정보를 찾을 수 없습니다.</div>;
     }
-  } else {
-    return <Navigate to="/bistechmain" />;
-  }
 };
 
 export default KioskRedirect;
