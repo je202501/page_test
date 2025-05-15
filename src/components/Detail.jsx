@@ -7,13 +7,11 @@ import "./Detail.css";
 import ExitDateChecker from "./ExitDateChecker.jsx";
 
 //상세정보(모니터 GUI)
-const Detail = () => {
+const Detail = ({refrigerator_id}) => {
   const [person, setPerson] = useState([]);
   const [primaryResidents, setPrimaryResidents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { refrigerator_id } = useParams(); // ← URL에서 refrigerator_id 추출
   const navigate = useNavigate();
-
   const [temperatureStatus, setTemperatureStatus] = useState("normal"); // 추가: 온도 상태
 
   // 배경색 결정 함수

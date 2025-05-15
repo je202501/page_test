@@ -3,6 +3,7 @@ import LoginPage from '../pages/LoginPage';
 import { getRefrigerator } from './service/refrigeratorService';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
+import { encryptId } from '../utils/cryptoUtil';
 
 import axios from 'axios';
 
@@ -77,7 +78,7 @@ const KioskRedirect = ({
   }
 
     if (findRefrigerater) {
-      return <Navigate to={`/detail/${findRefrigerater.refrigerator_id}`} />;
+      return <Navigate to={`/detail/${encryptId(findRefrigerater.refrigerator_id)}`} />;
     } else {
       return <div>냉장고 정보를 찾을 수 없습니다.</div>;
     }

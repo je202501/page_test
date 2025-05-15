@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { encryptId } from './utils/cryptoUtil'
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import MainPage from "./pages/MainPage";
@@ -16,6 +17,7 @@ import BistechChartPage from "./pages/BistechChartPage";
 import BistechHourPage from "./pages/BistechHourPage";
 import KioskRedirect from "./components/rasvi";
 import BistechWeekPage from "./pages/BistechWeekPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -60,7 +62,7 @@ const App = () => {
             isAuthenticated={isAuthenticated}
             userType={userType}
             setIsAuthenticated={setIsAuthenticated}
-            setUserType={setUserType} 
+            setUserType={setUserType}
           />
         }
       />
@@ -102,7 +104,7 @@ const App = () => {
         }
       />
       <Route
-        path="/detail/:refrigerator_id"
+        path="/detail/:encId"
         element={
           isAuthenticated && userType === "admin" ? (
             <DetailPage />
@@ -166,6 +168,10 @@ const App = () => {
           )
         }
       />
+      <Route
+        path="*" element={<NotFoundPage />}
+      />
+
     </Routes>
   );
 };

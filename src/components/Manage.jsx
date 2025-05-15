@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import './Manage.css';
 import RefTempAndMessage from './RefTempAndMessage.jsx';
 import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
+import { encryptId } from '../utils/cryptoUtil.jsx';
 
 //MainPage 냉장고 정보 보여주기
 const Manage = () => {
@@ -111,7 +112,7 @@ const Manage = () => {
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: '87px',
-        justifyContent: 'flex-start', 
+        justifyContent: 'flex-start',
         maxWidth: '100%',
         overflowX: 'hidden',
       }}
@@ -200,11 +201,11 @@ const Manage = () => {
                 설정
               </button>
               <button
-                onClick={() =>
-                  navigate(`/detail/${personData.refrigerator_id}`, {
-                    state: { refrigerator_id: personData.refrigerator_id },
-                  })
-                }
+                onClick={() => {
+                  navigate(`/detail/${encryptId(personData.refrigerator_id)}`,
+                    // { state: { refrigerator_id: encryptId }, }
+                  )
+                }}
               >
                 상세정보
               </button>
