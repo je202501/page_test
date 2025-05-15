@@ -7,7 +7,7 @@
 }
 
 .main-page .main-container {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   margin: 0 auto;
   padding: 20px;
@@ -147,8 +147,8 @@
   flex-direction: column;
   gap: 15px;
   min-width: 200px;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 800px;
+  max-height: 800px;
 }
 
 .person-details {
@@ -351,7 +351,7 @@
   cursor: pointer;
 }
 
-.checkbox-group input[type="checkbox"] {
+.checkbox-group input[type='checkbox'] {
   width: auto;
   margin: 0;
 }
@@ -370,7 +370,7 @@
     flex-direction: column;
   }
 
-  input[type="datetime-local"] {
+  input[type='datetime-local'] {
     width: 100%;
   }
 }
@@ -465,13 +465,13 @@
 }
 
 /* 숫자 입력 필드 화살표 제거 */
-.temperature-form input[type="number"]::-webkit-inner-spin-button,
-.temperature-form input[type="number"]::-webkit-outer-spin-button {
+.temperature-form input[type='number']::-webkit-inner-spin-button,
+.temperature-form input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.temperature-form input[type="number"] {
+.temperature-form input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
