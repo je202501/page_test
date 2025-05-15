@@ -7,15 +7,23 @@ import { QRCodeCanvas } from 'qrcode.react';
 const QRcode = (props) => {
   const [residentData, setResidentData] = useState();
   const { open, onClose, value } = props;
+  console.log(value);
   if (!open) return;
   useEffect(() => {
     if (value) {
       const fetchResident = async () => {
         try {
           const res = await getResident(value.refrigerator_id);
-          const resData = res.data.find((resident) => resident.primary_resident === true)
-          const data = `이름 : ${value.person_name}\n생년월일 : ${value.person_birthday}\n대표상주 : ${resData?.resident_name ?? "대표 상주 등록 안 됨"}\n전화번호 : ${resData?.phone_number ?? "대표 상주 등록 안 됨"}`;
-          setResidentData(data)
+          const resData = res.data.find(
+            (resident) => resident.primary_resident === true
+          );
+          console.log(resData);
+          const data = `이름 : ${value.person_name}\n생년월일 : ${
+            value.person_birthday
+          }\n대표상주 : ${
+            resData?.resident_name ?? '대표 상주 등록 안 됨'
+          }\n전화번호 : ${resData?.phone_number ?? '대표 상주 등록 안 됨'}`;
+          setResidentData(data);
         } catch (err) {
           console.error('상주 정보 가져오기 실패:', err);
         }
@@ -23,7 +31,7 @@ const QRcode = (props) => {
 
       fetchResident();
     }
-  }, [value])
+  }, [value]);
   return (
     <>
       <Modal open={open} width={821}>

@@ -32,7 +32,8 @@ const Manage = () => {
   const fetchPerson = async () => {
     const response = await axios
       .get(
-        `${import.meta.env.VITE_SERVER_URL
+        `${
+          import.meta.env.VITE_SERVER_URL
         }:9999/api/refrigerator/?admin_id=${admin_id}`
       )
       .then((res) => {
@@ -142,6 +143,7 @@ const Manage = () => {
                 border: '1px solid #ccc',
                 padding: '10px',
                 borderRadius: '5px',
+                height: '500px',
                 backgroundColor:
                   temperatureStatus[personData.refrigerator_id] === 'danger'
                     ? '#fee2e2'
@@ -202,9 +204,10 @@ const Manage = () => {
               </button>
               <button
                 onClick={() => {
-                  navigate(`/detail/${encryptId(personData.refrigerator_id)}`,
+                  navigate(
+                    `/detail/${encryptId(personData.refrigerator_id)}`
                     // { state: { refrigerator_id: encryptId }, }
-                  )
+                  );
                 }}
               >
                 상세정보
