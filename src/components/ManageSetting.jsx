@@ -68,8 +68,7 @@ const ManageSetting = () => {
   const fetchPerson = async () => {
     const response = await axios
       .get(
-        `${
-          import.meta.env.VITE_SERVER_URL
+        `${import.meta.env.VITE_SERVER_URL
         }:9999/api/refrigerator/?admin=${admin_id}`
       )
       .then((res) => {
@@ -130,9 +129,8 @@ const ManageSetting = () => {
 
   return (
     <div
-      className={`refrigerator-detail ${
-        temperatureStatus === "danger" ? "danger-mode" : ""
-      }`}
+      className={`refrigerator-detail ${temperatureStatus === "danger" ? "danger-mode" : ""
+        }`}
     >
       <div className="refrigerator-card">
         <div className="refrigerator-header">
@@ -190,7 +188,7 @@ const ManageSetting = () => {
               </div>
               <div>
                 <span className="label">제상주기:</span>
-                <span>{currentPerson.defrost_term}</span>
+                <span>{Number(currentPerson.defrost_term) / 60}</span>
                 <span className="label">시간 마다</span>
               </div>
               <div>
@@ -206,9 +204,8 @@ const ManageSetting = () => {
                 onTemperatureChange={setTemperatureStatus}
               />
               <span
-                className={`status ${
-                  currentPerson.check_defrost ? "defrosting" : "cooling"
-                }`}
+                className={`status ${currentPerson.check_defrost ? "defrosting" : "cooling"
+                  }`}
               >
                 {currentPerson.check_defrost ? "제상중" : "냉장중"}
               </span>

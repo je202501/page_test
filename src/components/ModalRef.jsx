@@ -68,7 +68,7 @@ const ModalRef = ({ person, onClose }) => {
             <input
               type="number"
               name="defrost_term"
-              value={updatedRef.defrost_term}
+              value={Number(updatedRef.defrost_term)/60}
               onChange={handleChange}
               className="form-input"
               placeholder="예: 24"
