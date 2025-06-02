@@ -6,7 +6,7 @@ const ModalRef = ({ person, onClose }) => {
   const [updatedRef, setUpdatedRef] = useState({
     setting_temp_value: person?.setting_temp_value || "",
     defrost_value: person?.defrost_value || "",
-    defrost_term: person?.defrost_term || "",
+    defrost_term: Number(person?.defrost_term / 60) || "",
     defrost_time: person?.defrost_time || "",
   });
 
@@ -20,8 +20,7 @@ const ModalRef = ({ person, onClose }) => {
   const handleSave = async () => {
     try {
       await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/${
-          person.refrigerator_id
+        `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/${person.refrigerator_id
         }`,
         updatedRef
       );
@@ -68,7 +67,7 @@ const ModalRef = ({ person, onClose }) => {
             <input
               type="number"
               name="defrost_term"
-              value={Number(updatedRef.defrost_term)/60}
+              value={updatedRef.defrost_term}
               onChange={handleChange}
               className="form-input"
               placeholder="예: 24"
