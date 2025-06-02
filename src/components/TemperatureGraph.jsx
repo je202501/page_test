@@ -161,13 +161,13 @@ const TemperatureGraph = () => {
      * 그래프 그리기
      */
     return (
-        <div style={{ width: "100%", margin: 30 }}>
+        <div style={{ width: "100%", margin: 10 }}>
             <h2>실시간 온도 그래프</h2>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "80px" }}>
                 {Object.entries(groupedData).map(([refrigerator_id, group]) => (
                     <div key={refrigerator_id} style={{ width: "30%" }}>
                         <h3>{`${group.info.admin_name} ${group.info.refrigerator_number}`}</h3>
-                        <ResponsiveContainer width="150%" height={300}>
+                        <ResponsiveContainer width="130%" height={300}>
                             <LineChart data={group.data}>
                                 <XAxis
                                     dataKey="time"
@@ -184,7 +184,7 @@ const TemperatureGraph = () => {
                                     yAxisId="right"
                                     orientation="right"
                                     domain={[-5, 5]}
-                                    label={{ value: "전류", angle: -90, position: "insideRight" }}
+                                    // label={{ value: "전류", angle: -90, position: "insideRight" }}
                                 />
 
                                 <Tooltip
