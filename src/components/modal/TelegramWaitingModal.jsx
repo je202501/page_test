@@ -67,7 +67,7 @@ const TelegramWaitingModal = ({ open, onClose }) => {
     };
 
     const handleTrueTelegram = async () => {
-        if (telegramInfo) {
+        if (telegramInfo|| !trueTelegram) {
             const adminId = jwtDecode(token).admin_id;
             const message = await messageTelegram(adminId, token, "텔레그램 설정이 완료되었습니다.");
             setTrueTelegram(message.ok);
