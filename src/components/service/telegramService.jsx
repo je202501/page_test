@@ -90,6 +90,7 @@ export const messageTelegram = async (adminId, token, error_message) => {
         }),
       }
     );
+    return response;
   } catch (e) {
     alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
   }
