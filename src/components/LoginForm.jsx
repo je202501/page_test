@@ -90,6 +90,13 @@ const LoginForm = ({ setAuth, loginType, setUserType }) => {
         required
       />
       <button type="submit">로그인</button>
+      {loginType === "Bistech" ? (
+        <button style={{ backgroundColor: "#1e5020", marginTop: "3px" }}>
+          Bistech 계정 생성
+        </button>
+      ) : (
+        <br></br>
+      )}
     </form>
   );
 };
