@@ -39,7 +39,7 @@ const LoginForm = ({ setAuth, loginType, setUserType }) => {
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("서버 응답:", response.data);
+      // console.log("서버 응답:", response.data);
       if (
         response.data.status === 200 &&
         response.data.message === "success" &&

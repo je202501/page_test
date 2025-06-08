@@ -7,7 +7,7 @@ import { QRCodeCanvas } from 'qrcode.react';
 const QRcode = (props) => {
   const [residentData, setResidentData] = useState();
   const { open, onClose, value } = props;
-  console.log(value);
+  // console.log(value);
   if (!open) return;
   useEffect(() => {
     if (value) {
@@ -17,7 +17,7 @@ const QRcode = (props) => {
           const resData = res.data.find(
             (resident) => resident.primary_resident === true
           );
-          console.log(resData);
+          // console.log(resData);
           const data = `이름 : ${value.person_name}\n생년월일 : ${
             value.person_birthday
           }\n대표상주 : ${

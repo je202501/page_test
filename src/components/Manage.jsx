@@ -22,7 +22,7 @@ const Manage = () => {
       fetchPerson();
       fetchResidents();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
     }
@@ -37,7 +37,7 @@ const Manage = () => {
         }:9999/api/refrigerator/?admin_id=${admin_id}`
       )
       .then((res) => {
-        console.log(`데이터:${res.data}`);
+        // console.log(`데이터:${res.data}`);
         const formattedData = res.data.data.map((item) => ({
           refrigerator_id: item.refrigerator_id,
           refrigerator_number: item.refrigerator_number,
@@ -65,7 +65,7 @@ const Manage = () => {
         });
 
         setPerson(formattedData);
-        console.log('정렬된 데이터:', formattedData);
+        // console.log('정렬된 데이터:', formattedData);
       });
   };
 
@@ -74,7 +74,7 @@ const Manage = () => {
     const response = await axios
       .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
       .then((res) => {
-        console.log(`상주:${res.data.data}`);
+        // console.log(`상주:${res.data.data}`);
         //대표상주만
         const filteredData = res.data.data.filter(
           (item) => item.primary_resident == 1

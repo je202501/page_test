@@ -32,7 +32,7 @@ const ManageSetting = () => {
     return temperatureStatus === "danger" ? "bg-red-200" : "bg-white";
   };
 
-  console.log(refrigerator_id);
+  // console.log(refrigerator_id);
   //모달 핸들 함수
   const handleModalresClose = () => {
     setModalres(false);
@@ -50,7 +50,7 @@ const ManageSetting = () => {
         setLoading(true);
         await fetchPerson();
       } catch (err) {
-        console.log("실패함");
+        // console.log("실패함");
       } finally {
         setLoading(false);
       }
@@ -72,7 +72,7 @@ const ManageSetting = () => {
         }:9999/api/refrigerator/?admin=${admin_id}`
       )
       .then((res) => {
-        console.log(`데이터:${res.data}`);
+        // console.log(`데이터:${res.data}`);
         const formattedData = res.data.data.map((item) => ({
           refrigerator_id: item.refrigerator_id,
           refrigerator_number: item.refrigerator_number,
@@ -98,7 +98,7 @@ const ManageSetting = () => {
     const response = await axios
       .get(`${import.meta.env.VITE_SERVER_URL}:9999/api/resident`)
       .then((res) => {
-        console.log(`상주:${res.data.data}`);
+        // console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(
           (item) => item.refrigerator_id === parseInt(refrigerator_id, 10)
         );

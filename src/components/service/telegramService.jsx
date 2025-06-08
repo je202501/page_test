@@ -72,8 +72,8 @@ export const messageTelegram = async (adminId, token, error_message) => {
     if (!token) throw new Error('토큰이 없습니다.');
 
     const getTelegramData = await getTelegram(adminId);
-    console.log('텔레그램 유저 정보:', getTelegramData.data.telegram_user_id);
-    console.log('전송할 메시지:', error_message);
+    // console.log('텔레그램 유저 정보:', getTelegramData.data.telegram_user_id);
+    // console.log('전송할 메시지:', error_message);
     const telegram_user_id = getTelegramData.data.telegram_user_id;
 
     const response = await fetch(

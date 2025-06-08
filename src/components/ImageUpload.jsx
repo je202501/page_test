@@ -22,7 +22,7 @@ const ImageUpload = ({ refrigerator_id }) => {
 
       formData.append("image", file);
       formData.append("refrigerator_id", refrigerator_id);
-      console.log("유저 이미지 교체 중");
+      // console.log("유저 이미지 교체 중");
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}:9999/api/image`,
         formData,
