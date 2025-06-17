@@ -90,7 +90,7 @@ const LoginForm = ({ setAuth, loginType, setUserType }) => {
         required
       />
       <button type="submit">로그인</button>
-      {loginType === "Bistech" ? (
+      {/* {loginType === "Bistech" ? (
         <button
           type="button"
           style={{ backgroundColor: "#1e5020", marginTop: "3px" }}
@@ -99,7 +99,7 @@ const LoginForm = ({ setAuth, loginType, setUserType }) => {
         </button>
       ) : (
         <br></br>
-      )}
+      )} */}
     </form>
   );
 };
