@@ -103,7 +103,7 @@ const Container = styled.div`
   gap: 20px;
 `;
 const ContentText = styled.pre`
-  font-size: 45px;
+  font-size: 40px;
   white-space: pre-wrap;
   word-wrap: break-word;
   font-weight: 600;

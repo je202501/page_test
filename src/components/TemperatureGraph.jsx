@@ -163,7 +163,7 @@ const TemperatureGraph = () => {
     return (
         <div style={{ width: "100%", margin: 10 }}>
             <h2>실시간 온도 그래프</h2>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "80px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "150px" }}>
                 {Object.entries(groupedData).map(([refrigerator_id, group]) => (
                     <div key={refrigerator_id} style={{ width: "30%" }}>
                         <h3>{`${group.info.admin_name} ${group.info.refrigerator_number}`}</h3>
