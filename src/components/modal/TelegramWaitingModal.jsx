@@ -38,6 +38,7 @@ const TelegramWaitingModal = ({ open, onClose }) => {
                 }
             };
             fetchTelegram();
+            setTrueTelegram(true);
         }
     }, [token, open]);
 
