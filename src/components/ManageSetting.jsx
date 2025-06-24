@@ -149,7 +149,7 @@ const ManageSetting = () => {
           </div>
           <br />
           <div className="person-details">
-            <h2>{currentPerson.person_name}</h2>
+            <h2 style={{ fontSize: "40px" }}>{currentPerson.person_name}</h2>
             <br />
             <div className="date-info">
               <div>
