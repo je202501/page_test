@@ -5,11 +5,11 @@ import DropdownSelectorAdmin from "./DropdownSelectorAdmin";
 //Bistech 계정 수정
 const BistechEdit = ({ onClose }) => {
   const [form, setForm] = useState({
-    manager_name: "",
+    // manager_name: "",
     manager_account: "",
     password: "",
     newpassword: "",
-    email: "",
+    // email: "",
   });
 
   const handleChange = (e) => {
@@ -51,7 +51,7 @@ const BistechEdit = ({ onClose }) => {
       <h2 className="modal-title">Bistech 계정 수정</h2>
 
       <form onSubmit={handleSubmit} className="signup-modal-form">
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>관리자</label>
           <input
             type="text"
@@ -61,7 +61,7 @@ const BistechEdit = ({ onClose }) => {
             onChange={handleChange}
             required
           />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label>아이디</label>
@@ -99,7 +99,7 @@ const BistechEdit = ({ onClose }) => {
           />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>이메일</label>
           <input
             type="email"
@@ -109,7 +109,7 @@ const BistechEdit = ({ onClose }) => {
             onChange={handleChange}
             required
           />
-        </div>
+        </div> */}
 
         <div className="modal-button-group">
           <button type="button" className="cancel-btn" onClick={onClose}>
