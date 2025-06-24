@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import RefrigeratorDeleter from "./RefrigeratorDeleter";
 import RefCreate from "./RefCreate";
 import SignupForm from "./SignupForm"; // SignupForm 컴포넌트 추가
+import AdminEdit from "./AdminEdit";
+import BistechEdit from "./BistechEdit";
 
 //bistech Navbar
 const AdminNavbar = ({ setAuth, currentPage }) => {
@@ -10,11 +12,15 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
   const [modalDeleteRef, setModalDeleteRef] = useState(false);
   const [modalCreateRef, setModalCreateRef] = useState(false);
   const [modalSignup, setModalSignup] = useState(false); // 업체 ID 생성 모달 상태 추가
+  const [modalAdminEdit, setModalAdminEdit] = useState(false);
+  const [modalBistechEdit, setModalBistechEdit] = useState(false);
 
   // 모달 핸들링 함수들
   const handleModalDeleteRefClose = () => setModalDeleteRef(false);
   const handleModalCreateRefClose = () => setModalCreateRef(false);
   const handleModalSignupClose = () => setModalSignup(false);
+  const handleModalAdminEditClose = () => setModalAdminEdit(false);
+  const handleModalBistechEditClose = () => setModalBistechEdit(false);
 
   // 네비게이션 함수들
   const handleLogout = () => {
@@ -61,8 +67,17 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
           >
             <i className="fas fa-chart-line"></i> 실시간 차트
           </button>
+
+          <button className="nav-btn" onClick={() => setModalBistechEdit(true)}>
+            <i className="fas fa-user-plus"></i> Bistech 수정
+          </button>
+
           <button className="nav-btn" onClick={() => setModalSignup(true)}>
             <i className="fas fa-user-plus"></i> 업체 ID 생성
+          </button>
+
+          <button className="nav-btn" onClick={() => setModalAdminEdit(true)}>
+            <i className="fas fa-user-plus"></i> 업체 수정
           </button>
 
           <button className="nav-btn" onClick={() => setModalCreateRef(true)}>
@@ -102,6 +117,24 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
         <div className="modal-overlay">
           <div className="modal-content">
             <SignupForm onClose={handleModalSignupClose} />
+          </div>
+        </div>
+      )}
+
+      {/* 업체 수정 모달 */}
+      {modalAdminEdit && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <AdminEdit onClose={handleModalAdminEditClose} />
+          </div>
+        </div>
+      )}
+
+      {/* 업체 수정 모달 */}
+      {modalBistechEdit && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <BistechEdit onClose={handleModalBistechEditClose} />
           </div>
         </div>
       )}

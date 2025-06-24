@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import Image from "./Image.jsx";
+import DetailImage from "./DetailImage.jsx";
 import RefrigeratorTemperature from "./RefrigeratorTemperature.jsx";
 import "./Detail.css";
 import ExitDateChecker from "./ExitDateChecker.jsx";
 
 //상세정보(모니터 GUI)
-const Detail = ({refrigerator_id}) => {
+const Detail = ({ refrigerator_id }) => {
   const [person, setPerson] = useState([]);
   const [primaryResidents, setPrimaryResidents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -77,16 +77,15 @@ const Detail = ({refrigerator_id}) => {
     (item) => item.refrigerator_id === parseInt(refrigerator_id, 10)
   );
 
-  
-
   if (!currentPerson) {
     return <p>데이터를 불러올 수 없습니다.</p>;
   }
 
   return (
     <div
-      className={`fullscreen-container ${temperatureStatus === "danger" ? "danger-bg" : ""
-        }`}
+      className={`fullscreen-container ${
+        temperatureStatus === "danger" ? "danger-bg" : ""
+      }`}
     >
       <div className="content-grid">
         {/* 왼쪽 정보 영역 */}
@@ -157,7 +156,7 @@ const Detail = ({refrigerator_id}) => {
         {/* 오른쪽 이미지 영역 */}
         <div className="image-section">
           <div className="image-wrapper">
-            <Image refrigerator_id={refrigerator_id} />
+            <DetailImage refrigerator_id={refrigerator_id} />
           </div>
         </div>
       </div>

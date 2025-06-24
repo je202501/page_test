@@ -7,12 +7,13 @@ const RefrigeratorTemperature = ({
   setting_temp_value,
   onTemperatureChange,
   className,
+  temp_gap,
 }) => {
   const [temperatureData, setTemperatureData] = useState(null);
 
-  //현재 온도의 상태 평가(설정온도보다 7도 높으면 danger)
+  //현재 온도의 상태 평가(설정온도보다 temp_gap 이상 높으면 danger)
   const evaluateTemperatureStatus = (currentTemp) => {
-    const threshold = Number(setting_temp_value) + 7;
+    const threshold = Number(setting_temp_value) + temp_gap;
     const isDanger = currentTemp >= threshold;
 
     return isDanger ? "danger" : "normal";

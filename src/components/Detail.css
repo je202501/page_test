@@ -69,17 +69,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding-right: 2rem;
+  padding-bottom: 2rem;
 }
 
 .image-wrapper {
+  aspect-ratio: 7 / 9;
   width: 100%;
-  max-width: 400px;
-  height: auto;
-  max-width: 800px;
-  margin-right: 200px;
-  border: none;
-  border-radius: 0;
+  max-height: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  background-color: #f0f0f0; /* 이미지 없을 때 대비 */
 }
 
 /* 반응형 디자인 */

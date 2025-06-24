@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 //이미지 불러오기
-const Image = ({ refrigerator_id }) => {
+const DetailImage = ({ refrigerator_id }) => {
   const [imageSrc, setImageSrc] = useState("");
 
   //냉장고 id로 이미지 가져오기
@@ -42,10 +42,10 @@ const Image = ({ refrigerator_id }) => {
           alt="냉장고 이미지"
           style={{
             maxWidth: "100%",
-            width: "450px",
-            height: "auto",
+            width: "700px",
+            height: "900px",
             maxheight: "100%",
-            objectFit: "contain",
+            objectFit: "cover",
           }}
         />
       ) : (
@@ -55,4 +55,4 @@ const Image = ({ refrigerator_id }) => {
   );
 };
 
-export default Image;
+export default DetailImage;
