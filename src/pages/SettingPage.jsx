@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MainNavbar from "../components/MainNavbar";
 import ManageSetting from "../components/ManageSetting";
 import TelegramWaitingModal from "../components/modal/TelegramWaitingModal";
+import ModalTelegram from "../components/modal/ModalTelegram";
 import "./MainPage.css";
 
 const SettingPage = ({ setAuth }) => {
@@ -19,7 +20,7 @@ const SettingPage = ({ setAuth }) => {
           <ManageSetting />
         </main>
 
-        <TelegramWaitingModal
+        <ModalTelegram
           open={telegramModal}
           onClose={() => setTelegramModal(false)}
         />
