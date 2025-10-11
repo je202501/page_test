@@ -24,7 +24,7 @@ const ModalTelegram = ({ open, onClose }) => {
           const res = await axios.get(
             `${
               import.meta.env.VITE_SERVER_URL
-            }:9999/api/telegram/?admin_id=${adminId}`
+            }:51766/api/telegram/?admin_id=${adminId}`
           );
           const fetched = res.data.data || [];
 
@@ -66,7 +66,7 @@ const ModalTelegram = ({ open, onClose }) => {
         .filter((t) => t.deleteChecked && t.telegram_id)
         .map((t) =>
           axios.delete(
-            `${import.meta.env.VITE_SERVER_URL}:9999/api/telegram/${
+            `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram/${
               t.telegram_id
             }`
           )
@@ -77,7 +77,7 @@ const ModalTelegram = ({ open, onClose }) => {
         .map((t) => {
           if (t.telegram_id) {
             return axios.put(
-              `${import.meta.env.VITE_SERVER_URL}:9999/api/telegram/${
+              `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram/${
                 t.telegram_id
               }`,
               {
@@ -88,7 +88,7 @@ const ModalTelegram = ({ open, onClose }) => {
             );
           } else {
             return axios.post(
-              `${import.meta.env.VITE_SERVER_URL}:9999/api/telegram`,
+              `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram`,
               { telegram_user_id: t.telegram_user_id, admin_id: adminId }
             );
           }

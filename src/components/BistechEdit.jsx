@@ -29,7 +29,7 @@ const BistechEdit = ({ onClose }) => {
     }
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/manager/1`,
+        `${import.meta.env.VITE_SERVER_URL}:51766/api/manager/1`,
         form,
         { headers: { Authorization: `Bearer ${token}` } }
       );

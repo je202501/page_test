@@ -22,8 +22,8 @@ const LoginForm = ({ setAuth, loginType, setUserType }) => {
     // Bistech 로그인 시 manager API 사용, 기본적으로 admin API 사용
     const apiUrl =
       loginType === "Bistech"
-        ? `${import.meta.env.VITE_SERVER_URL}:9999/api/manager/manager_login`
-        : `${import.meta.env.VITE_SERVER_URL}:9999/api/admin/admin_login`;
+        ? `${import.meta.env.VITE_SERVER_URL}:51766/api/manager/manager_login`
+        : `${import.meta.env.VITE_SERVER_URL}:51766/api/admin/admin_login`;
 
     // API에 맞게 필드명 수정
     const requestData =

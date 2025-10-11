@@ -3,7 +3,7 @@ export const getRefrigerator = async (check_refrigerator) => {
         const token = localStorage.getItem('token');
 
         const response = await fetch(
-            `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator/raspi/{check_refrigerator}?check_refrigerator=${check_refrigerator}`,
+            `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator/raspi/{check_refrigerator}?check_refrigerator=${check_refrigerator}`,
             {
                 method: 'GET',
                 headers: {
