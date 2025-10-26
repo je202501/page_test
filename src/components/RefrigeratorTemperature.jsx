@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 //현재 온도 표시(상세페이지 용)
 const RefrigeratorTemperature = ({
@@ -15,7 +15,7 @@ const RefrigeratorTemperature = ({
     const threshold = Number(setting_temp_value) + 7;
     const isDanger = currentTemp >= threshold;
 
-    return isDanger ? "danger" : "normal";
+    return isDanger ? 'danger' : 'normal';
   };
 
   //가장 최근 온도 가져오기
@@ -28,7 +28,7 @@ const RefrigeratorTemperature = ({
       const response = await fetch(
         `${
           import.meta.env.VITE_SERVER_URL
-        }:9999/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
+        }:51766/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
       );
       const data = await response.json();
 
@@ -39,11 +39,11 @@ const RefrigeratorTemperature = ({
         onTemperatureChange(evaluateTemperatureStatus(currentTemp));
       } else {
         setTemperatureData(null);
-        onTemperatureChange("normal");
+        onTemperatureChange('normal');
       }
     } catch (error) {
-      console.error("데이터 가져오기 오류:", error);
-      onTemperatureChange("normal");
+      console.error('데이터 가져오기 오류:', error);
+      onTemperatureChange('normal');
     }
   };
 
@@ -55,7 +55,7 @@ const RefrigeratorTemperature = ({
   }, [refrigerator_id, setting_temp_value]);
 
   return (
-    <div className={`temperature-display ${className || ""}`}>
+    <div className={`temperature-display ${className || ''}`}>
       {temperatureData ? (
         <p className="current-temperature">
           현재 온도: {Number(temperatureData.temperature_value)}°C

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 //상주 정보 수정, 삭제
 const ModalRes = ({ person, residents: initialResidents, onClose }) => {
   const [residents, setResidents] = useState(
     Array.from({ length: 9 }, (_, index) => ({
       resident_id: null,
-      refrigerator_id: person?.refrigerator_id || "",
-      resident_name: "",
-      phone_number: "",
+      refrigerator_id: person?.refrigerator_id || '',
+      resident_name: '',
+      phone_number: '',
       primary_resident: index === 0,
       deleteChecked: false,
     }))
@@ -33,7 +33,7 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
         i === index
           ? {
               ...resident,
-              [key]: key === "primary_resident" ? value === "true" : value,
+              [key]: key === 'primary_resident' ? value === 'true' : value,
             }
           : resident
       )
@@ -47,7 +47,7 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
         .filter((resident) => resident.deleteChecked && resident.resident_id)
         .map((resident) =>
           axios.delete(
-            `${import.meta.env.VITE_SERVER_URL}:9999/api/resident/${
+            `${import.meta.env.VITE_SERVER_URL}:51766/api/resident/${
               resident.resident_id
             }`
           )
@@ -58,14 +58,14 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
         .map(async (resident) => {
           if (resident.resident_id) {
             return axios.put(
-              `${import.meta.env.VITE_SERVER_URL}:9999/api/resident/${
+              `${import.meta.env.VITE_SERVER_URL}:51766/api/resident/${
                 resident.resident_id
               }`,
               resident
             );
           } else if (resident.resident_name) {
             return axios.post(
-              `${import.meta.env.VITE_SERVER_URL}:9999/api/resident`,
+              `${import.meta.env.VITE_SERVER_URL}:51766/api/resident`,
               resident
             );
           }
@@ -73,17 +73,17 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
         });
 
       await Promise.all([...deletePromises, ...updatePromises]);
-      alert("상주 정보가 저장되었습니다.");
+      alert('상주 정보가 저장되었습니다.');
       window.location.reload();
     } catch (error) {
-      console.error("저장 실패:", error);
-      alert("저장에 실패했습니다.");
+      console.error('저장 실패:', error);
+      alert('저장에 실패했습니다.');
     }
   };
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content" style={{ maxWidth: "600px" }}>
+      <div className="modal-content" style={{ maxWidth: '600px' }}>
         <h2 className="modal-title">상주 정보 관리</h2>
 
         <div className="residents-form">
@@ -101,7 +101,7 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
                       onChange={(e) =>
                         handleResidentChange(
                           index,
-                          "deleteChecked",
+                          'deleteChecked',
                           e.target.checked
                         )
                       }
@@ -121,7 +121,7 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
                     onChange={(e) =>
                       handleResidentChange(
                         index,
-                        "resident_name",
+                        'resident_name',
                         e.target.value
                       )
                     }
@@ -138,7 +138,7 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
                     onChange={(e) =>
                       handleResidentChange(
                         index,
-                        "phone_number",
+                        'phone_number',
                         e.target.value
                       )
                     }

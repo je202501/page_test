@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import Image from "./Image.jsx";
-import RefrigeratorTemperature from "./RefrigeratorTemperature.jsx";
-import "./Detail.css";
-import ExitDateChecker from "./ExitDateChecker.jsx";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import Image from './Image.jsx';
+import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
+import './Detail.css';
+import ExitDateChecker from './ExitDateChecker.jsx';
 
 //상세정보(모니터 GUI)
-const Detail = ({refrigerator_id}) => {
+const Detail = ({ refrigerator_id }) => {
   const [person, setPerson] = useState([]);
   const [primaryResidents, setPrimaryResidents] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const [temperatureStatus, setTemperatureStatus] = useState("normal"); // 추가: 온도 상태
+  const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
 
   // 배경색 결정 함수
   const getBackgroundColor = () => {
-    return temperatureStatus === "danger" ? "bg-red-200" : "bg-white";
+    return temperatureStatus === 'danger' ? 'bg-red-200' : 'bg-white';
   };
 
   //냉장고 정보 가져오기기
   const fetchPerson = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/refrigerator`
+        `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator`
       );
       const formattedData = res.data.data.map((item) => ({
         refrigerator_id: item.refrigerator_id,
@@ -38,21 +38,21 @@ const Detail = ({refrigerator_id}) => {
       }));
       setPerson(formattedData);
     } catch (err) {
-      console.error("사람 정보 불러오기 실패", err);
+      console.error('사람 정보 불러오기 실패', err);
     }
   };
   //대표 상주 정보 가져오기기
   const fetchResidents = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/resident`
+        `${import.meta.env.VITE_SERVER_URL}:51766/api/resident`
       );
       const filteredData = res.data.data.filter(
         (item) => item.primary_resident === 1
       );
       setPrimaryResidents(filteredData);
     } catch (err) {
-      console.error("상주 정보 불러오기 실패", err);
+      console.error('상주 정보 불러오기 실패', err);
     }
   };
 
@@ -77,16 +77,15 @@ const Detail = ({refrigerator_id}) => {
     (item) => item.refrigerator_id === parseInt(refrigerator_id, 10)
   );
 
-  
-
   if (!currentPerson) {
     return <p>데이터를 불러올 수 없습니다.</p>;
   }
 
   return (
     <div
-      className={`fullscreen-container ${temperatureStatus === "danger" ? "danger-bg" : ""
-        }`}
+      className={`fullscreen-container ${
+        temperatureStatus === 'danger' ? 'danger-bg' : ''
+      }`}
     >
       <div className="content-grid">
         {/* 왼쪽 정보 영역 */}
@@ -144,11 +143,11 @@ const Detail = ({refrigerator_id}) => {
               상태:
               <span
                 style={{
-                  color: currentPerson.check_defrost ? "red" : "green",
-                  fontWeight: "bold",
+                  color: currentPerson.check_defrost ? 'red' : 'green',
+                  fontWeight: 'bold',
                 }}
               >
-                {currentPerson.check_defrost ? " 제상중" : " 냉장중"}
+                {currentPerson.check_defrost ? ' 제상중' : ' 냉장중'}
               </span>
             </p>
           </div>

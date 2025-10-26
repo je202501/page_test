@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   LineChart,
   Line,
@@ -9,12 +9,12 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts";
-import DropdownSelector from "./DropdownSelector";
+} from 'recharts';
+import DropdownSelector from './DropdownSelector';
 
 // 모든 날짜를 전월로 표시하는 포맷팅 함수
 const formatAsPreviousMonth = (date) => {
-  if (!date) return "";
+  if (!date) return '';
 
   const prevMonth = new Date(date);
   prevMonth.setMonth(prevMonth.getMonth() - 1);
@@ -23,8 +23,8 @@ const formatAsPreviousMonth = (date) => {
 
 // 날짜 입력 필드 형식 (YYYY-MM-DDTHH:MM)
 const formatDateForInput = (date) => {
-  if (!(date instanceof Date)) return "";
-  const pad = (num) => num.toString().padStart(2, "0");
+  if (!(date instanceof Date)) return '';
+  const pad = (num) => num.toString().padStart(2, '0');
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
     date.getDate()
   )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
@@ -35,7 +35,7 @@ const CustomTooltip = ({ active, payload, dateRange }) => {
   if (!active || !payload || !payload.length) return null;
 
   const formatForDisplay = (date) => {
-    if (!date) return "";
+    if (!date) return '';
     const prevMonth = new Date(date);
     prevMonth.setMonth(prevMonth.getMonth() - 1);
     return `${prevMonth.getFullYear()}.${prevMonth.getMonth() + 1}`;
@@ -44,13 +44,13 @@ const CustomTooltip = ({ active, payload, dateRange }) => {
   return (
     <div
       style={{
-        background: "white",
-        padding: "10px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
+        background: 'white',
+        padding: '10px',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
       }}
     >
-      <p style={{ fontWeight: "bold" }}>
+      <p style={{ fontWeight: 'bold' }}>
         {` ${formatForDisplay(dateRange.end)}`}
       </p>
       {payload.map((item, index) => (
@@ -64,9 +64,9 @@ const CustomTooltip = ({ active, payload, dateRange }) => {
 
 const DashboardWeek = () => {
   const [data, setData] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [error, setError] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRefrigeratorId, setSelectedRefrigeratorId] = useState(null);
   const [dateRange, setDateRange] = useState({ start: null, end: null });
@@ -85,34 +85,34 @@ const DashboardWeek = () => {
     const endTime = new Date(end);
 
     if (isNaN(startTime.getTime())) {
-      setError("시작 날짜가 유효하지 않습니다.");
+      setError('시작 날짜가 유효하지 않습니다.');
       return false;
     }
 
     if (isNaN(endTime.getTime())) {
-      setError("종료 날짜가 유효하지 않습니다.");
+      setError('종료 날짜가 유효하지 않습니다.');
       return false;
     }
 
     if (startTime >= endTime) {
-      setError("종료 날짜는 시작 날짜보다 뒤여야 합니다.");
+      setError('종료 날짜는 시작 날짜보다 뒤여야 합니다.');
       return false;
     }
 
     const diffInDays = (endTime - startTime) / (1000 * 60 * 60 * 24);
     if (diffInDays > 60) {
-      setError("최대 60일까지 조회 가능합니다.");
+      setError('최대 60일까지 조회 가능합니다.');
       return false;
     }
 
-    setError("");
+    setError('');
     return true;
   };
 
   // 데이터 조회 함수
   const fetchData = async () => {
     if (!selectedRefrigeratorId) {
-      setError("냉장고를 선택해주세요.");
+      setError('냉장고를 선택해주세요.');
       return;
     }
 
@@ -121,7 +121,7 @@ const DashboardWeek = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/yeartemp/month`,
+        `${import.meta.env.VITE_SERVER_URL}:51766/api/yeartemp/month`,
         {
           params: {
             refrigerator_id: selectedRefrigeratorId,
@@ -162,8 +162,8 @@ const DashboardWeek = () => {
   };
 
   return (
-    <div style={{ width: "80%", height: 400, margin: "auto" }}>
-      <div style={{ marginBottom: "20px" }}>
+    <div style={{ width: '80%', height: 400, margin: 'auto' }}>
+      <div style={{ marginBottom: '20px' }}>
         <DropdownSelector onSelectRefrigerator={setSelectedRefrigeratorId} />
         <label>시작 날짜: </label>
         <input
@@ -180,14 +180,14 @@ const DashboardWeek = () => {
           disabled={isLoading}
         />
         <button onClick={handleFetch} disabled={isLoading}>
-          {isLoading ? "로딩 중..." : "조회"}
+          {isLoading ? '로딩 중...' : '조회'}
         </button>
       </div>
 
-      {error && <div style={{ color: "red", margin: "10px 0" }}>{error}</div>}
+      {error && <div style={{ color: 'red', margin: '10px 0' }}>{error}</div>}
 
       {isLoading ? (
-        <div style={{ textAlign: "center", padding: "50px" }}>로딩 중...</div>
+        <div style={{ textAlign: 'center', padding: '50px' }}>로딩 중...</div>
       ) : data.length > 0 ? (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
@@ -204,12 +204,12 @@ const DashboardWeek = () => {
             <YAxis
               yAxisId="left"
               orientation="left"
-              label={{ value: "전류 (A)", angle: -90, position: "insideLeft" }}
+              label={{ value: '전류 (A)', angle: -90, position: 'insideLeft' }}
             />
             <YAxis
               yAxisId="right"
               orientation="right"
-              label={{ value: "온도 (℃)", angle: 90, position: "insideRight" }}
+              label={{ value: '온도 (℃)', angle: 90, position: 'insideRight' }}
             />
             <Tooltip content={<CustomTooltip dateRange={dateRange} />} />
             <Legend />
@@ -248,8 +248,8 @@ const DashboardWeek = () => {
           </LineChart>
         </ResponsiveContainer>
       ) : (
-        <div style={{ textAlign: "center", padding: "50px" }}>
-          {!error && "데이터가 없습니다. 날짜와 냉장고를 선택해주세요."}
+        <div style={{ textAlign: 'center', padding: '50px' }}>
+          {!error && '데이터가 없습니다. 날짜와 냉장고를 선택해주세요.'}
         </div>
       )}
     </div>

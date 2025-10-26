@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 
 //이미지 변경하기
 const ImageUpload = ({ refrigerator_id }) => {
@@ -20,20 +20,20 @@ const ImageUpload = ({ refrigerator_id }) => {
     try {
       const formData = new FormData();
 
-      formData.append("image", file);
-      formData.append("refrigerator_id", refrigerator_id);
+      formData.append('image', file);
+      formData.append('refrigerator_id', refrigerator_id);
       // console.log("유저 이미지 교체 중");
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}:9999/api/image`,
+        `${import.meta.env.VITE_SERVER_URL}:51766/api/image`,
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -46,7 +46,7 @@ const ImageUpload = ({ refrigerator_id }) => {
         type="file"
         accept="image/*"
         onChange={handleFileChange}
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         ref={inputRef}
       />
     </div>
