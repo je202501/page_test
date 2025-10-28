@@ -1,30 +1,19 @@
 export const getAdmin = async () => {
   try {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
-<<<<<<< HEAD
-        const response = await fetch(
-            `${import.meta.env.VITE_SERVER_URL}:51766/api/admin`,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
-=======
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}:57166/api/admin`,
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/admin`,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       }
     );
->>>>>>> feature/seokho
 
     if (!response.ok) {
       throw new Error(`서버 요청 실패: ${response.status}`);
@@ -33,7 +22,7 @@ export const getAdmin = async () => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('관리자 데이터 가져오기 실패:', error);
+    console.error("관리자 데이터 가져오기 실패:", error);
     throw error;
   }
 };

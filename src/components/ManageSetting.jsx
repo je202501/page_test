@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import ModalRes from './ModalRes.jsx';
-import QRcode from './qrcode/QRcode';
-import ImageUpload from './ImageUpload.jsx';
-import Image from './Image.jsx';
-import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
-import ModalRef from './ModalRef.jsx';
-import ExitConfirmation from './ExitConfirmation.jsx';
-import Modalperson from './Modalperson.jsx';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import ModalRes from "./ModalRes.jsx";
+import QRcode from "./qrcode/QRcode";
+import ImageUpload from "./ImageUpload.jsx";
+import Image from "./Image.jsx";
+import RefrigeratorTemperature from "./RefrigeratorTemperature.jsx";
+import ModalRef from "./ModalRef.jsx";
+import ExitConfirmation from "./ExitConfirmation.jsx";
+import Modalperson from "./Modalperson.jsx";
 
 //설정페이지
 const ManageSetting = () => {
@@ -20,16 +20,16 @@ const ManageSetting = () => {
   const [modalres, setModalres] = useState(false);
   const [modalref, setModalref] = useState(false);
   const [residents, setResidents] = useState([]);
-  const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
+  const [temperatureStatus, setTemperatureStatus] = useState("normal"); // 추가: 온도 상태
   const location = useLocation();
   const navigate = useNavigate();
   const refrigerator_id = location.state?.refrigerator_id || null;
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const admin_id = jwtDecode(token).admin_id;
 
   // 배경색 결정 함수
   const getBackgroundColor = () => {
-    return temperatureStatus === 'danger' ? 'bg-red-200' : 'bg-white';
+    return temperatureStatus === "danger" ? "bg-red-200" : "bg-white";
   };
 
   // console.log(refrigerator_id);
@@ -68,13 +68,9 @@ const ManageSetting = () => {
   const fetchPerson = async () => {
     const response = await axios
       .get(
-        `${
-          import.meta.env.VITE_SERVER_URL
-<<<<<<< HEAD
-        }:51766/api/refrigerator/?admin=${admin_id}`
-=======
-        }:57166/api/refrigerator/?admin=${admin_id}`
->>>>>>> feature/seokho
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/refrigerator/?admin=${admin_id}`
       )
       .then((res) => {
         // console.log(`데이터:${res.data}`);
@@ -102,11 +98,11 @@ const ManageSetting = () => {
   //냉장고 id가 같은 상주 데이터 가져오기기
   const fetchResidents = async () => {
     const response = await axios
-<<<<<<< HEAD
-      .get(`${import.meta.env.VITE_SERVER_URL}:51766/api/resident`)
-=======
-      .get(`${import.meta.env.VITE_SERVER_URL}:57166/api/resident`)
->>>>>>> feature/seokho
+      .get(
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/resident`
+      )
       .then((res) => {
         // console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(
@@ -140,11 +136,7 @@ const ManageSetting = () => {
   return (
     <div
       className={`refrigerator-detail ${
-<<<<<<< HEAD
         temperatureStatus === "danger" ? "danger-mode" : ""
-=======
-        temperatureStatus === 'danger' ? 'danger-mode' : ''
->>>>>>> feature/seokho
       }`}
     >
       <div className="refrigerator-card">
@@ -224,14 +216,10 @@ const ManageSetting = () => {
               />
               <span
                 className={`status ${
-<<<<<<< HEAD
                   currentPerson.check_defrost ? "defrosting" : "cooling"
-=======
-                  currentPerson.check_defrost ? 'defrosting' : 'cooling'
->>>>>>> feature/seokho
                 }`}
               >
-                {currentPerson.check_defrost ? '제상중' : '냉장중'}
+                {currentPerson.check_defrost ? "제상중" : "냉장중"}
               </span>
             </div>
           </div>

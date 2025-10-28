@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 //출관확인
 const ExitConfirmation = ({
@@ -15,26 +15,22 @@ const ExitConfirmation = ({
 
   // NO. 접두사 처리 함수
   const formatRefNumber = (num, withPrefix = true) => {
-    return withPrefix ? `NO.${num.replace('NO.', '')}` : num.replace('NO.', '');
+    return withPrefix ? `NO.${num.replace("NO.", "")}` : num.replace("NO.", "");
   };
 
   // 연관 냉장고 번호 추출
   const getPairedRefNumber = (num) => {
     const cleanNum = formatRefNumber(num, false);
-    const [prefix, suffix] = cleanNum.split('-');
-    return `NO.${prefix}-${suffix === '1' ? '2' : '1'}`;
+    const [prefix, suffix] = cleanNum.split("-");
+    return `NO.${prefix}-${suffix === "1" ? "2" : "1"}`;
   };
 
   // 이미지 삭제
   const deleteImage = async () => {
     await axios.delete(
-<<<<<<< HEAD
-      `${import.meta.env.VITE_SERVER_URL}:51766/api/image/ref/${refrigerator_id}`
-=======
-      `${
-        import.meta.env.VITE_SERVER_URL
-      }:57166/api/image/ref/${refrigerator_id}`
->>>>>>> feature/seokho
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/image/ref/${refrigerator_id}`
     );
   };
 
@@ -44,22 +40,20 @@ const ExitConfirmation = ({
     const { preserveTemp = false, preserveDefrost = false } = options;
 
     const data = {
-      person_name: '',
-      person_birthday: '',
-      entry_date: '',
-      exit_date: '',
-      ...(preserveTemp ? {} : { setting_temp_value: '30' }),
-      ...(preserveDefrost ? {} : { defrost_value: '0' }),
+      person_name: "",
+      person_birthday: "",
+      entry_date: "",
+      exit_date: "",
+      ...(preserveTemp ? {} : { setting_temp_value: "30" }),
+      ...(preserveDefrost ? {} : { defrost_value: "0" }),
     };
 
     await axios.put(
-<<<<<<< HEAD
-      `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator/${fridgeId}`,
-=======
-      `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator/${fridgeId}`,
->>>>>>> feature/seokho
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/refrigerator/${fridgeId}`,
       data,
-      { headers: { 'Content-Type': 'application/json' } }
+      { headers: { "Content-Type": "application/json" } }
     );
   };
 
@@ -67,7 +61,7 @@ const ExitConfirmation = ({
   const handleExitConfirm = async () => {
     if (
       !window.confirm(
-        '출관 확인을 하시겠습니까? (고인 정보, 상주 정보, 이미지가 모두 삭제됩니다)'
+        "출관 확인을 하시겠습니까? (고인 정보, 상주 정보, 이미지가 모두 삭제됩니다)"
       )
     ) {
       return;
@@ -86,7 +80,7 @@ const ExitConfirmation = ({
       };
 
       // 3. 타입 A인 경우 연관 냉장고 확인
-      if (currentPerson.refrigerator_type === 'A') {
+      if (currentPerson.refrigerator_type === "A") {
         const pairedNumber = getPairedRefNumber(
           currentPerson.refrigerator_number
         );
@@ -111,21 +105,17 @@ const ExitConfirmation = ({
       // 5. 상주 정보 삭제
       for (const resident of residents) {
         await axios.delete(
-<<<<<<< HEAD
-          `${import.meta.env.VITE_SERVER_URL}:51766/api/resident/${
-=======
-          `${import.meta.env.VITE_SERVER_URL}:57166/api/resident/${
->>>>>>> feature/seokho
-            resident.resident_id
-          }`
+          `${import.meta.env.VITE_SERVER_URL}:${
+            import.meta.env.VITE_SERVER_PORT
+          }/api/resident/${resident.resident_id}`
         );
       }
 
-      alert('출관 처리 완료');
+      alert("출관 처리 완료");
       onExitSuccess();
-      navigate('/main');
+      navigate("/main");
     } catch (error) {
-      console.error('출관 실패:', error);
+      console.error("출관 실패:", error);
       alert(`출관 실패: ${error.response?.data?.message || error.message}`);
     } finally {
       setIsProcessing(false);
@@ -138,7 +128,7 @@ const ExitConfirmation = ({
       disabled={isProcessing}
       className="action-btn"
     >
-      {isProcessing ? '처리 중...' : '출관 확인'}
+      {isProcessing ? "처리 중..." : "출관 확인"}
     </button>
   );
 };

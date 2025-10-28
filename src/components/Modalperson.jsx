@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 //고인 정보 수정
 const Modalperson = ({ person, onClose }) => {
   const [updatedPerson, setUpdatedPerson] = useState({
-    refrigerator_id: person?.refrigerator_id || '',
-    person_name: person?.person_name || '',
-    person_birthday: person?.person_birthday || '',
-    entry_date: person?.entry_date || '',
-    exit_date: person?.exit_date || '',
-    refrigerator_number: person?.refrigerator_number || '',
+    refrigerator_id: person?.refrigerator_id || "",
+    person_name: person?.person_name || "",
+    person_birthday: person?.person_birthday || "",
+    entry_date: person?.entry_date || "",
+    exit_date: person?.exit_date || "",
+    refrigerator_number: person?.refrigerator_number || "",
     entry_reservation: person?.entry_reservation || false,
   });
 
   const handleChange = (e) => {
     setUpdatedPerson({
       ...updatedPerson,
-      [e.target.name]: e.target.value.replace(/(\s*)/g, ''),
+      [e.target.name]: e.target.value.replace(/(\s*)/g, ""),
     });
   };
 
@@ -30,23 +30,19 @@ const Modalperson = ({ person, onClose }) => {
   const handleSave = async () => {
     try {
       await axios.put(
-<<<<<<< HEAD
-        `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator/${person.refrigerator_id
-=======
-        `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator/${
-          person.refrigerator_id
->>>>>>> feature/seokho
-        }`,
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/refrigerator/${person.refrigerator_id}`,
         {
           ...updatedPerson,
-          entry_date: updatedPerson.entry_date.replace('T', ' '),
+          entry_date: updatedPerson.entry_date.replace("T", " "),
         }
       );
-      alert('수정이 완료되었습니다.');
+      alert("수정이 완료되었습니다.");
       window.location.reload();
     } catch (error) {
-      console.error('수정 실패:', error);
-      alert('수정에 실패했습니다.');
+      console.error("수정 실패:", error);
+      alert("수정에 실패했습니다.");
     }
   };
 

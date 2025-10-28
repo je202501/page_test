@@ -1,11 +1,11 @@
-import { useParams, Navigate } from 'react-router-dom';
-import LoginPage from '../pages/LoginPage';
-import { getRefrigerator } from './service/refrigeratorService';
-import { useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
-import { encryptId } from '../utils/cryptoUtil';
+import { useParams, Navigate } from "react-router-dom";
+import LoginPage from "../pages/LoginPage";
+import { getRefrigerator } from "./service/refrigeratorService";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { encryptId } from "../utils/cryptoUtil";
 
-import axios from 'axios';
+import axios from "axios";
 
 const KioskRedirect = ({
   isAuthenticated,
@@ -46,19 +46,17 @@ const KioskRedirect = ({
       try {
         const kioskrequest = { admin_account: check_refrigerator, kiosk: true };
         const response = await axios.post(
-<<<<<<< HEAD
-          `${import.meta.env.VITE_SERVER_URL}:51766/api/admin/admin_login`,
-=======
-          `${import.meta.env.VITE_SERVER_URL}:57166/api/admin/admin_login`,
->>>>>>> feature/seokho
+          `${import.meta.env.VITE_SERVER_URL}:${
+            import.meta.env.VITE_SERVER_PORT
+          }/api/admin/admin_login`,
           kioskrequest
         );
         const token = response.data.data;
-        localStorage.setItem('token', token);
+        localStorage.setItem("token", token);
 
         const decoded = jwtDecode(token);
         setIsAuthenticated(true);
-        setUserType(decoded.admin_id ? 'admin' : 'bistech');
+        setUserType(decoded.admin_id ? "admin" : "bistech");
       } catch (e) {
         console.error(e);
       }

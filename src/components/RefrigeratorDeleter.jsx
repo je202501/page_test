@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import DropdownSelector from './DropdownSelector';
+import React, { useState } from "react";
+import DropdownSelector from "./DropdownSelector";
 
 //냉장고 삭제
 const RefrigeratorDeleter = ({ onClose }) => {
@@ -7,21 +7,17 @@ const RefrigeratorDeleter = ({ onClose }) => {
 
   const handleDelete = () => {
     if (!selectedRefrigeratorId) {
-      alert('냉장고를 선택하세요.');
+      alert("냉장고를 선택하세요.");
       return;
     }
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     fetch(
-<<<<<<< HEAD
-      `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator/${Number(
-=======
-      `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator/${Number(
->>>>>>> feature/seokho
-        selectedRefrigeratorId
-      )}`,
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/refrigerator/${Number(selectedRefrigeratorId)}`,
       {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -30,16 +26,16 @@ const RefrigeratorDeleter = ({ onClose }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          alert('냉장고가 삭제되었습니다.');
+          alert("냉장고가 삭제되었습니다.");
           setSelectedRefrigeratorId(null);
           onClose(); // 삭제 성공 시 모달 닫기
         } else {
-          alert('삭제에 실패했습니다.');
+          alert("삭제에 실패했습니다.");
         }
       })
       .catch((err) => {
-        console.error('삭제 에러:', err);
-        alert('삭제 중 오류가 발생했습니다.');
+        console.error("삭제 에러:", err);
+        alert("삭제 중 오류가 발생했습니다.");
       });
   };
 
@@ -63,7 +59,7 @@ const RefrigeratorDeleter = ({ onClose }) => {
           <button
             type="button"
             className={`submit-btn ${
-              !selectedRefrigeratorId ? 'disabled' : ''
+              !selectedRefrigeratorId ? "disabled" : ""
             }`}
             onClick={handleDelete}
             disabled={!selectedRefrigeratorId}

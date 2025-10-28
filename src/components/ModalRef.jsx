@@ -1,53 +1,41 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 //냉장,제상 설정
 const ModalRef = ({ person, onClose }) => {
   const [updatedRef, setUpdatedRef] = useState({
-<<<<<<< HEAD
     setting_temp_value: person?.setting_temp_value || "",
     defrost_value: person?.defrost_value || "",
     defrost_term: Number(person?.defrost_term / 60) || "",
     defrost_time: person?.defrost_time || "",
-    temp_gap: person?.temp_gap || "",
-=======
-    setting_temp_value: person?.setting_temp_value || '',
-    defrost_value: person?.defrost_value || '',
-    defrost_term: Number(person?.defrost_term / 60) || '',
-    defrost_time: person?.defrost_time || '',
->>>>>>> feature/seokho
   });
 
   const handleChange = (e) => {
     setUpdatedRef({
       ...updatedRef,
-      [e.target.name]: e.target.value.replace(/(\s*)/g, ''),
+      [e.target.name]: e.target.value.replace(/(\s*)/g, ""),
     });
   };
 
   const handleSave = async () => {
     try {
       await axios.put(
-<<<<<<< HEAD
-        `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator/${
-=======
-        `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator/${
->>>>>>> feature/seokho
-          person.refrigerator_id
-        }`,
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/refrigerator/${person.refrigerator_id}`,
         updatedRef
       );
-      alert('온도 설정이 완료되었습니다.');
+      alert("온도 설정이 완료되었습니다.");
       window.location.reload();
     } catch (error) {
-      console.error('수정 실패:', error);
-      alert('온도 설정에 실패했습니다.');
+      console.error("수정 실패:", error);
+      alert("온도 설정에 실패했습니다.");
     }
   };
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content" style={{ maxWidth: '500px' }}>
+      <div className="modal-content" style={{ maxWidth: "500px" }}>
         <h2 className="modal-title">냉장/제상 설정</h2>
 
         <div className="temperature-form">
