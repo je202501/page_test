@@ -30,9 +30,7 @@ const AdminEdit = ({ onClose }) => {
     }
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}:${
-          import.meta.env.VITE_SERVER_PORT
-        }/api/admin/${selectedAdminId}`,
+        `${import.meta.env.VITE_SERVER_URL}:51766/api/admin/${selectedAdminId}`,
         form,
         { headers: { Authorization: `Bearer ${token}` } }
       );

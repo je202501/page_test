@@ -5,16 +5,14 @@
  */
 export const getTelegram = async (admin_id) => {
   try {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}:${
-        import.meta.env.VITE_SERVER_PORT
-      }/api/telegram/${admin_id}`,
+      `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram/${admin_id}`,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       }
@@ -27,7 +25,7 @@ export const getTelegram = async (admin_id) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("텔레그램 데이터 가져오기 실패:");
+    console.error('텔레그램 데이터 가져오기 실패:');
     throw error;
   }
 };
@@ -37,16 +35,14 @@ export const getTelegram = async (admin_id) => {
  */
 export const postTelgram = async (telegramUserId, adminId, token) => {
   try {
-    if (!token) throw new Error("토큰이 없습니다.");
+    if (!token) throw new Error('토큰이 없습니다.');
 
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}:${
-        import.meta.env.VITE_SERVER_PORT
-      }/api/telegram`,
+      `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
@@ -58,13 +54,13 @@ export const postTelgram = async (telegramUserId, adminId, token) => {
 
     const data = await response.json();
     if (response.ok) {
-      alert("텔레그램 아이디가 설정되었습니다.");
+      alert('텔레그램 아이디가 설정되었습니다.');
     } else {
-      alert(`실패: ${data.message || "알 수 없는 오류"}`);
+      alert(`실패: ${data.message || '알 수 없는 오류'}`);
     }
   } catch (error) {
-    console.error("Error:", error);
-    alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+    console.error('Error:', error);
+    alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
   }
 };
 /**
@@ -73,7 +69,7 @@ export const postTelgram = async (telegramUserId, adminId, token) => {
  */
 export const messageTelegram = async (adminId, token, error_message) => {
   try {
-    if (!token) throw new Error("토큰이 없습니다.");
+    if (!token) throw new Error('토큰이 없습니다.');
 
     const getTelegramData = await getTelegram(adminId);
     // console.log('텔레그램 유저 정보:', getTelegramData.data.telegram_user_id);
@@ -81,13 +77,11 @@ export const messageTelegram = async (adminId, token, error_message) => {
     const telegram_user_id = getTelegramData.data.telegram_user_id;
 
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}:${
-        import.meta.env.VITE_SERVER_PORT
-      }/api/telegram/telegram_message`,
+      `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram/telegram_message`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
@@ -98,6 +92,6 @@ export const messageTelegram = async (adminId, token, error_message) => {
     );
     return response;
   } catch (e) {
-    alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+    alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
   }
 };

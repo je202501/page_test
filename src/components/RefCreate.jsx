@@ -1,24 +1,23 @@
-import React, { useState } from "react";
-import axios from "axios";
-import DropdownSelectorAdmin from "./DropdownSelectorAdmin";
-import TypeSelector from "./TypeSelector";
+import React, { useState } from 'react';
+import axios from 'axios';
+import DropdownSelectorAdmin from './DropdownSelectorAdmin';
+import TypeSelector from './TypeSelector';
 
 //냉장고 생성
 const RefCreate = ({ onClose }) => {
   const [newref, setNewref] = useState({
-    refrigerator_number: "",
+    refrigerator_number: '',
     setting_temp_value: 0,
     admin_id: null,
   });
-  const [selectedType, setSelectedType] = useState("");
-  const [error, setError] = useState("");
+  const [selectedType, setSelectedType] = useState('');
+  const [error, setError] = useState('');
 
   // axios 인스턴스 생성 (토큰 설정)
   const authAxios = axios.create({
-    baseURL:
-      import.meta.env.VITE_SERVER_URL + ":${import.meta.env.VITE_SERVER_PORT}",
+    baseURL: import.meta.env.VITE_SERVER_URL + ':51766',
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
 
@@ -38,17 +37,17 @@ const RefCreate = ({ onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "refrigerator_number") {
+    if (name === 'refrigerator_number') {
       //냉장고 번호 규칙 위반 시 에러메시지
       if (!validateRefrigeratorNumber(value)) {
         setError("냉장고 번호는 '1-1' ~ '20-2' 형식이어야 합니다.");
       } else {
-        setError("");
+        setError('');
       }
     }
     setNewref({
       ...newref,
-      [name]: value.replace(/\s*/g, ""),
+      [name]: value.replace(/\s*/g, ''),
     });
   };
 
@@ -71,8 +70,8 @@ const RefCreate = ({ onClose }) => {
         (ref) => ref.refrigerator_number === formattedRefNumber
       );
     } catch (error) {
-      console.error("냉장고 목록 조회 실패:", error);
-      alert("냉장고 목록을 불러오는 데 실패했습니다.");
+      console.error('냉장고 목록 조회 실패:', error);
+      alert('냉장고 목록을 불러오는 데 실패했습니다.');
       return true; // 에러 발생 시 생성 방지
     }
   };
@@ -84,11 +83,11 @@ const RefCreate = ({ onClose }) => {
       return;
     }
     if (!newref.admin_id) {
-      alert("업체를 선택해주세요.");
+      alert('업체를 선택해주세요.');
       return;
     }
     if (!selectedType) {
-      alert("냉장고 타입을 선택해주세요.");
+      alert('냉장고 타입을 선택해주세요.');
       return;
     }
 
@@ -100,7 +99,7 @@ const RefCreate = ({ onClose }) => {
       );
 
       if (isDuplicate) {
-        alert("해당 업체에 이미 동일한 번호의 냉장고가 존재합니다.");
+        alert('해당 업체에 이미 동일한 번호의 냉장고가 존재합니다.');
         return;
       }
 
@@ -112,15 +111,15 @@ const RefCreate = ({ onClose }) => {
         refrigerator_type: selectedType,
       };
 
-      await authAxios.post("/api/refrigerator/", modifiedRef);
-      alert("생성이 완료되었습니다.");
+      await authAxios.post('/api/refrigerator/', modifiedRef);
+      alert('생성이 완료되었습니다.');
       window.location.reload();
     } catch (error) {
-      console.error("생성 실패:", error);
+      console.error('생성 실패:', error);
       const errorMessage =
         error.response?.data?.message ||
         error.message ||
-        "생성 중 오류가 발생했습니다.";
+        '생성 중 오류가 발생했습니다.';
       alert(`생성에 실패했습니다. 오류 메시지: ${errorMessage}`);
     }
   };

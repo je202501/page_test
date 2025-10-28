@@ -21,9 +21,9 @@ const ModalRef = ({ person, onClose }) => {
   const handleSave = async () => {
     try {
       await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}:${
-          import.meta.env.VITE_SERVER_PORT
-        }/api/refrigerator/${person.refrigerator_id}`,
+        `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator/${
+          person.refrigerator_id
+        }`,
         updatedRef
       );
       alert("온도 설정이 완료되었습니다.");

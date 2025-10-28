@@ -121,9 +121,7 @@ const DashboardWeek = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:${
-          import.meta.env.VITE_SERVER_PORT
-        }/api/yeartemp/month`,
+        `${import.meta.env.VITE_SERVER_URL}:51766/api/yeartemp/month`,
         {
           params: {
             refrigerator_id: selectedRefrigeratorId,

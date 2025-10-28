@@ -68,9 +68,9 @@ const ManageSetting = () => {
   const fetchPerson = async () => {
     const response = await axios
       .get(
-        `${import.meta.env.VITE_SERVER_URL}:${
-          import.meta.env.VITE_SERVER_PORT
-        }/api/refrigerator/?admin=${admin_id}`
+        `${
+          import.meta.env.VITE_SERVER_URL
+        }:51766/api/refrigerator/?admin=${admin_id}`
       )
       .then((res) => {
         // console.log(`데이터:${res.data}`);
@@ -98,11 +98,7 @@ const ManageSetting = () => {
   //냉장고 id가 같은 상주 데이터 가져오기기
   const fetchResidents = async () => {
     const response = await axios
-      .get(
-        `${import.meta.env.VITE_SERVER_URL}:${
-          import.meta.env.VITE_SERVER_PORT
-        }/api/resident`
-      )
+      .get(`${import.meta.env.VITE_SERVER_URL}:51766/api/resident`)
       .then((res) => {
         // console.log(`상주:${res.data.data}`);
         const filteredData = res.data.data.filter(

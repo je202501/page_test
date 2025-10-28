@@ -10,9 +10,9 @@ const DetailImage = ({ refrigerator_id }) => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_URL}:${
-            import.meta.env.VITE_SERVER_PORT
-          }/api/image/?refrigerator_id=${refrigerator_id}`,
+          `${
+            import.meta.env.VITE_SERVER_URL
+          }:51766/api/image/?refrigerator_id=${refrigerator_id}`,
           {
             responseType: "blob",
           }

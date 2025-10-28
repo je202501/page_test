@@ -5,7 +5,6 @@ import RefCreate from "./RefCreate";
 import SignupForm from "./SignupForm"; // SignupForm 컴포넌트 추가
 import AdminEdit from "./AdminEdit";
 import BistechEdit from "./BistechEdit";
-import AdminDeleter from "./AdminDeleter";
 
 //bistech Navbar
 const AdminNavbar = ({ setAuth, currentPage }) => {
@@ -14,7 +13,6 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
   const [modalCreateRef, setModalCreateRef] = useState(false);
   const [modalSignup, setModalSignup] = useState(false); // 업체 ID 생성 모달 상태 추가
   const [modalAdminEdit, setModalAdminEdit] = useState(false);
-  const [modalAdminDeleter, setModalAdminDeleter] = useState(false);
   const [modalBistechEdit, setModalBistechEdit] = useState(false);
 
   // 모달 핸들링 함수들
@@ -22,7 +20,6 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
   const handleModalCreateRefClose = () => setModalCreateRef(false);
   const handleModalSignupClose = () => setModalSignup(false);
   const handleModalAdminEditClose = () => setModalAdminEdit(false);
-  const handleModalAdminDeleterClose = () => setModalAdminDeleter(false);
   const handleModalBistechEditClose = () => setModalBistechEdit(false);
 
   // 네비게이션 함수들
@@ -83,13 +80,6 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
             <i className="fas fa-user-plus"></i> 업체 수정
           </button>
 
-          <button
-            className="nav-btn"
-            onClick={() => setModalAdminDeleter(true)}
-          >
-            <i className="fas fa-user-plus"></i> 업체 삭제
-          </button>
-
           <button className="nav-btn" onClick={() => setModalCreateRef(true)}>
             <i className="fas fa-plus"></i> 냉장고 생성
           </button>
@@ -140,16 +130,7 @@ const AdminNavbar = ({ setAuth, currentPage }) => {
         </div>
       )}
 
-      {/* 업체 삭제 모달 */}
-      {modalAdminDeleter && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <AdminDeleter onClose={handleModalAdminDeleterClose} />
-          </div>
-        </div>
-      )}
-
-      {/* 비스테크 수정 모달 */}
+      {/* 업체 수정 모달 */}
       {modalBistechEdit && (
         <div className="modal-overlay">
           <div className="modal-content">
