@@ -14,7 +14,7 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
       return;
     }
 
-    fetch(`${import.meta.env.VITE_SERVER_URL}:51766/api/admin/`, {
+    fetch(`${import.meta.env.VITE_SERVER_URL}:57166/api/admin/`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,

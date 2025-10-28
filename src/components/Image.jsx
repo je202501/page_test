@@ -12,7 +12,7 @@ const Image = ({ refrigerator_id }) => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_URL
-          }:51766/api/image/?refrigerator_id=${refrigerator_id}`,
+          }:57166/api/image/?refrigerator_id=${refrigerator_id}`,
           {
             responseType: 'blob',
           }

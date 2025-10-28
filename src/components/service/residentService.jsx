@@ -9,7 +9,7 @@ export const getResident = async (Info) => {
     const response = await fetch(
       `${
         import.meta.env.VITE_SERVER_URL
-      }:51766/api/resident/?refrigerator_id=${Info}`,
+      }:57166/api/resident/?refrigerator_id=${Info}`,
       {
         method: 'GET',
         headers: {

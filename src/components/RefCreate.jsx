@@ -15,7 +15,7 @@ const RefCreate = ({ onClose }) => {
 
   // axios 인스턴스 생성 (토큰 설정)
   const authAxios = axios.create({
-    baseURL: import.meta.env.VITE_SERVER_URL + ':51766',
+    baseURL: import.meta.env.VITE_SERVER_URL + ':57166',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },

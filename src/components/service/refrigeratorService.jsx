@@ -5,7 +5,7 @@ export const getRefrigerator = async (check_refrigerator) => {
     const response = await fetch(
       `${
         import.meta.env.VITE_SERVER_URL
-      }:51766/api/refrigerator/raspi/{check_refrigerator}?check_refrigerator=${check_refrigerator}`,
+      }:57166/api/refrigerator/raspi/{check_refrigerator}?check_refrigerator=${check_refrigerator}`,
       {
         method: 'GET',
         headers: {

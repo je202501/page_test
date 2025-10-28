@@ -23,7 +23,7 @@ const Detail = ({ refrigerator_id }) => {
   const fetchPerson = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator`
+        `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator`
       );
       const formattedData = res.data.data.map((item) => ({
         refrigerator_id: item.refrigerator_id,
@@ -45,7 +45,7 @@ const Detail = ({ refrigerator_id }) => {
   const fetchResidents = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:51766/api/resident`
+        `${import.meta.env.VITE_SERVER_URL}:57166/api/resident`
       );
       const filteredData = res.data.data.filter(
         (item) => item.primary_resident === 1

@@ -20,7 +20,7 @@ const ModalRef = ({ person, onClose }) => {
   const handleSave = async () => {
     try {
       await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}:51766/api/refrigerator/${
+        `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator/${
           person.refrigerator_id
         }`,
         updatedRef

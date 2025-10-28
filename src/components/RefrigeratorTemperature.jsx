@@ -28,7 +28,7 @@ const RefrigeratorTemperature = ({
       const response = await fetch(
         `${
           import.meta.env.VITE_SERVER_URL
-        }:51766/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
+        }:57166/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
       );
       const data = await response.json();
 

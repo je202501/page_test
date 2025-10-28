@@ -47,7 +47,7 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
         .filter((resident) => resident.deleteChecked && resident.resident_id)
         .map((resident) =>
           axios.delete(
-            `${import.meta.env.VITE_SERVER_URL}:51766/api/resident/${
+            `${import.meta.env.VITE_SERVER_URL}:57166/api/resident/${
               resident.resident_id
             }`
           )
@@ -58,14 +58,14 @@ const ModalRes = ({ person, residents: initialResidents, onClose }) => {
         .map(async (resident) => {
           if (resident.resident_id) {
             return axios.put(
-              `${import.meta.env.VITE_SERVER_URL}:51766/api/resident/${
+              `${import.meta.env.VITE_SERVER_URL}:57166/api/resident/${
                 resident.resident_id
               }`,
               resident
             );
           } else if (resident.resident_name) {
             return axios.post(
-              `${import.meta.env.VITE_SERVER_URL}:51766/api/resident`,
+              `${import.meta.env.VITE_SERVER_URL}:57166/api/resident`,
               resident
             );
           }

@@ -3,7 +3,7 @@ export const getAdmin = async () => {
     const token = localStorage.getItem('token');
 
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}:51766/api/admin`,
+      `${import.meta.env.VITE_SERVER_URL}:57166/api/admin`,
       {
         method: 'GET',
         headers: {
