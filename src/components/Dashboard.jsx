@@ -89,7 +89,9 @@ const TemperatureDashboard = () => {
       const formattedEndDate = endTime.toISOString();
 
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:51766/api/temperature/`,
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/temperature/`,
         {
           params: {
             refrigerator_id: refrigeratorId,

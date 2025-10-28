@@ -27,8 +27,9 @@ const RefrigeratorTemperature = ({
       const endTime = now;
 
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER_URL
-        }:51766/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
       );
       const data = await response.json();
 
@@ -58,11 +59,12 @@ const RefrigeratorTemperature = ({
     <div className={`temperature-display ${className || ""}`}>
       {temperatureData ? (
         <p className="current-temperature">
-          현재 온도: {
-            temperatureData.temperature_value != null
-              ? Number(temperatureData.temperature_value).toFixed(1)
-              : "error"
-          }°C        </p>
+          현재 온도:{" "}
+          {temperatureData.temperature_value != null
+            ? Number(temperatureData.temperature_value).toFixed(1)
+            : "error"}
+          °C{" "}
+        </p>
       ) : (
         <p>온도 데이터를 불러오지 못했습니다.</p>
       )}

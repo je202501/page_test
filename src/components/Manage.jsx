@@ -32,9 +32,9 @@ const Manage = () => {
   const fetchPerson = async () => {
     const response = await axios
       .get(
-        `${
-          import.meta.env.VITE_SERVER_URL
-        }:51766/api/refrigerator/?admin_id=${admin_id}`
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/refrigerator/?admin_id=${admin_id}`
       )
       .then((res) => {
         // console.log(`데이터:${res.data}`);
@@ -73,7 +73,11 @@ const Manage = () => {
   //상주 데이터 불러오기
   const fetchResidents = async () => {
     const response = await axios
-      .get(`${import.meta.env.VITE_SERVER_URL}:51766/api/resident`)
+      .get(
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/resident`
+      )
       .then((res) => {
         // console.log(`상주:${res.data.data}`);
         //대표상주만

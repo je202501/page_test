@@ -22,9 +22,9 @@ const ModalTelegram = ({ open, onClose }) => {
       const fetchTelegrams = async () => {
         try {
           const res = await axios.get(
-            `${
-              import.meta.env.VITE_SERVER_URL
-            }:51766/api/telegram/?admin_id=${adminId}`
+            `${import.meta.env.VITE_SERVER_URL}:${
+              import.meta.env.VITE_SERVER_PORT
+            }/api/telegram/?admin_id=${adminId}`
           );
           const fetched = res.data.data || [];
 
@@ -66,9 +66,9 @@ const ModalTelegram = ({ open, onClose }) => {
         .filter((t) => t.deleteChecked && t.telegram_id)
         .map((t) =>
           axios.delete(
-            `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram/${
-              t.telegram_id
-            }`
+            `${import.meta.env.VITE_SERVER_URL}:${
+              import.meta.env.VITE_SERVER_PORT
+            }/api/telegram/${t.telegram_id}`
           )
         );
 
@@ -77,9 +77,9 @@ const ModalTelegram = ({ open, onClose }) => {
         .map((t) => {
           if (t.telegram_id) {
             return axios.put(
-              `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram/${
-                t.telegram_id
-              }`,
+              `${import.meta.env.VITE_SERVER_URL}:${
+                import.meta.env.VITE_SERVER_PORT
+              }/api/telegram/${t.telegram_id}`,
               {
                 telegram_id: t.telegram_id,
                 telegram_user_id: t.telegram_user_id,
@@ -88,7 +88,9 @@ const ModalTelegram = ({ open, onClose }) => {
             );
           } else {
             return axios.post(
-              `${import.meta.env.VITE_SERVER_URL}:51766/api/telegram`,
+              `${import.meta.env.VITE_SERVER_URL}:${
+                import.meta.env.VITE_SERVER_PORT
+              }/api/telegram`,
               { telegram_user_id: t.telegram_user_id, admin_id: adminId }
             );
           }
