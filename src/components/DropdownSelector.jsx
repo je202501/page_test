@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 //업체, 냉장고 번호 selector
 const DropdownSelector = ({ onSelectRefrigerator }) => {
@@ -8,17 +8,22 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
 
   //업체 정보 가져오기
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) {
-      console.error("No token found");
+      console.error('No token found');
       return;
     }
 
+<<<<<<< HEAD
     fetch(`${import.meta.env.VITE_SERVER_URL}:51766/api/admin/`, {
       method: "GET",
+=======
+    fetch(`${import.meta.env.VITE_SERVER_URL}:57166/api/admin/`, {
+      method: 'GET',
+>>>>>>> feature/seokho
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
       .then((res) => res.json())
@@ -27,7 +32,7 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
           setAdmins(data.data);
         }
       })
-      .catch((error) => console.error("Error fetching admins:", error));
+      .catch((error) => console.error('Error fetching admins:', error));
   }, []);
 
   const selectedAdmin = admins.find(

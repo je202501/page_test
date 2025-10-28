@@ -2,7 +2,7 @@ import { useParams, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import { getRefrigerator } from './service/refrigeratorService';
 import { useEffect, useState } from 'react';
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 import { encryptId } from '../utils/cryptoUtil';
 
 import axios from 'axios';
@@ -46,15 +46,19 @@ const KioskRedirect = ({
       try {
         const kioskrequest = { admin_account: check_refrigerator, kiosk: true };
         const response = await axios.post(
+<<<<<<< HEAD
           `${import.meta.env.VITE_SERVER_URL}:51766/api/admin/admin_login`,
+=======
+          `${import.meta.env.VITE_SERVER_URL}:57166/api/admin/admin_login`,
+>>>>>>> feature/seokho
           kioskrequest
         );
         const token = response.data.data;
-        localStorage.setItem("token", token);
-    
+        localStorage.setItem('token', token);
+
         const decoded = jwtDecode(token);
         setIsAuthenticated(true);
-        setUserType(decoded.admin_id ? "admin" : "bistech");
+        setUserType(decoded.admin_id ? 'admin' : 'bistech');
       } catch (e) {
         console.error(e);
       }
@@ -66,22 +70,24 @@ const KioskRedirect = ({
   }, [userType]);
 
   // userType이 null일 때 kiosk 로그인 시도 (useEffect 내에서 처리)
-//   useEffect(() => {
-//     if (userType === null) {
-//       setCheckKiosk(true);
-//     }
-//   }, [userType]);
+  //   useEffect(() => {
+  //     if (userType === null) {
+  //       setCheckKiosk(true);
+  //     }
+  //   }, [userType]);
 
   // 로딩 중일 때 표시
   if (loading) {
     return <div>로딩 중...</div>;
   }
 
-    if (findRefrigerater) {
-      return <Navigate to={`/detail/${encryptId(findRefrigerater.refrigerator_id)}`} />;
-    } else {
-      return <div>냉장고 정보를 찾을 수 없습니다.</div>;
-    }
+  if (findRefrigerater) {
+    return (
+      <Navigate to={`/detail/${encryptId(findRefrigerater.refrigerator_id)}`} />
+    );
+  } else {
+    return <div>냉장고 정보를 찾을 수 없습니다.</div>;
+  }
 };
 
 export default KioskRedirect;

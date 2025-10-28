@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { messageTelegram } from "./service/telegramService";
-import { jwtDecode } from "jwt-decode";
+import React, { useState, useEffect, useRef } from 'react';
+import { messageTelegram } from './service/telegramService';
+import { jwtDecode } from 'jwt-decode';
 
 //현재온도 보여주기+에러메시지 발송
 const RefTempAndMessage = ({
@@ -19,7 +19,7 @@ const RefTempAndMessage = ({
 
     //현재 온도의 상태가 danger이면 텔레그램 메시지 발송
     if (isDanger && !alertSentRef.current) {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const decoded = jwtDecode(token);
       const adminId = decoded.admin_id;
       messageTelegram(adminId, token, refrigerator_number);
@@ -28,7 +28,7 @@ const RefTempAndMessage = ({
       alertSentRef.current = false;
     }
 
-    return isDanger ? "danger" : "normal";
+    return isDanger ? 'danger' : 'normal';
   };
 
   //가장 최근 온도 가져오기
@@ -39,8 +39,14 @@ const RefTempAndMessage = ({
       const endTime = now;
 
       const response = await fetch(
+<<<<<<< HEAD
         `${import.meta.env.VITE_SERVER_URL
         }:51766/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
+=======
+        `${
+          import.meta.env.VITE_SERVER_URL
+        }:57166/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
+>>>>>>> feature/seokho
       );
       const data = await response.json();
 
@@ -51,11 +57,11 @@ const RefTempAndMessage = ({
         onTemperatureChange(evaluateTemperatureStatus(currentTemp));
       } else {
         setTemperatureData(null);
-        onTemperatureChange("normal");
+        onTemperatureChange('normal');
       }
     } catch (error) {
-      console.error("데이터 가져오기 오류:", error);
-      onTemperatureChange("normal");
+      console.error('데이터 가져오기 오류:', error);
+      onTemperatureChange('normal');
     }
   };
 
