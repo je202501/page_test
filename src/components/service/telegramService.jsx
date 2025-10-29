@@ -8,7 +8,9 @@ export const getTelegram = async (admin_id) => {
     const token = localStorage.getItem('token');
 
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}:57166/api/telegram/${admin_id}`,
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/telegram/${admin_id}`,
       {
         method: 'GET',
         headers: {
@@ -38,7 +40,9 @@ export const postTelgram = async (telegramUserId, adminId, token) => {
     if (!token) throw new Error('토큰이 없습니다.');
 
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}:57166/api/telegram`,
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/telegram`,
       {
         method: 'POST',
         headers: {
@@ -77,7 +81,9 @@ export const messageTelegram = async (adminId, token, error_message) => {
     const telegram_user_id = getTelegramData.data.telegram_user_id;
 
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}:57166/api/telegram/telegram_message`,
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/telegram/telegram_message`,
       {
         method: 'POST',
         headers: {

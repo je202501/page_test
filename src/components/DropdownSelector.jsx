@@ -14,13 +14,18 @@ const DropdownSelector = ({ onSelectRefrigerator }) => {
       return;
     }
 
-    fetch(`${import.meta.env.VITE_SERVER_URL}:57166/api/admin/`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    fetch(
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/admin/`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {

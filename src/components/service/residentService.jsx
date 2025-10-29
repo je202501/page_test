@@ -7,9 +7,9 @@ export const getResident = async (Info) => {
     const token = localStorage.getItem('token');
 
     const response = await fetch(
-      `${
-        import.meta.env.VITE_SERVER_URL
-      }:57166/api/resident/?refrigerator_id=${Info}`,
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/resident/?refrigerator_id=${Info}`,
       {
         method: 'GET',
         headers: {

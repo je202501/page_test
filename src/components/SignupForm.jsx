@@ -19,7 +19,9 @@ const SignupForm = ({ onClose }) => {
     e.preventDefault();
     try {
       await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}:57166/api/admin`,
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/admin`,
         form
       );
       alert('✅ 업체 ID 생성 성공');

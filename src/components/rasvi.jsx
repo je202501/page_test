@@ -46,7 +46,9 @@ const KioskRedirect = ({
       try {
         const kioskrequest = { admin_account: check_refrigerator, kiosk: true };
         const response = await axios.post(
-          `${import.meta.env.VITE_SERVER_URL}:57166/api/admin/admin_login`,
+          `${import.meta.env.VITE_SERVER_URL}:${
+            import.meta.env.VITE_SERVER_PORT
+          }/api/admin/admin_login`,
           kioskrequest
         );
         const token = response.data.data;

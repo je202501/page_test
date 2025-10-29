@@ -118,7 +118,9 @@ const DashboardHour = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:57166/api/yeartemp/day`,
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/yeartemp/day`,
         {
           params: {
             refrigerator_id: selectedRefrigeratorId,

@@ -13,9 +13,9 @@ const RefrigeratorDeleter = ({ onClose }) => {
 
     const token = localStorage.getItem('token');
     fetch(
-      `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator/${Number(
-        selectedRefrigeratorId
-      )}`,
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/refrigerator/${Number(selectedRefrigeratorId)}`,
       {
         method: 'DELETE',
         headers: {

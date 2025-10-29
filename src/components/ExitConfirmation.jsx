@@ -28,9 +28,9 @@ const ExitConfirmation = ({
   // 이미지 삭제
   const deleteImage = async () => {
     await axios.delete(
-      `${
-        import.meta.env.VITE_SERVER_URL
-      }:57166/api/image/ref/${refrigerator_id}`
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/image/ref/${refrigerator_id}`
     );
   };
 
@@ -49,7 +49,9 @@ const ExitConfirmation = ({
     };
 
     await axios.put(
-      `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator/${fridgeId}`,
+      `${import.meta.env.VITE_SERVER_URL}:${
+        import.meta.env.VITE_SERVER_PORT
+      }/api/refrigerator/${fridgeId}`,
       data,
       { headers: { 'Content-Type': 'application/json' } }
     );
@@ -103,9 +105,9 @@ const ExitConfirmation = ({
       // 5. 상주 정보 삭제
       for (const resident of residents) {
         await axios.delete(
-          `${import.meta.env.VITE_SERVER_URL}:57166/api/resident/${
-            resident.resident_id
-          }`
+          `${import.meta.env.VITE_SERVER_URL}:${
+            import.meta.env.VITE_SERVER_PORT
+          }/api/resident/${resident.resident_id}`
         );
       }
 

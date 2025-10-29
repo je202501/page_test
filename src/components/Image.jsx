@@ -10,9 +10,9 @@ const Image = ({ refrigerator_id }) => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_SERVER_URL
-          }:57166/api/image/?refrigerator_id=${refrigerator_id}`,
+          `${import.meta.env.VITE_SERVER_URL}:${
+            import.meta.env.VITE_SERVER_PORT
+          }/api/image/?refrigerator_id=${refrigerator_id}`,
           {
             responseType: 'blob',
           }
@@ -42,7 +42,7 @@ const Image = ({ refrigerator_id }) => {
           alt="냉장고 이미지"
           style={{
             maxWidth: '100%',
-            width: '450px',
+            width: '100%',
             height: 'auto',
             maxheight: '100%',
             objectFit: 'contain',

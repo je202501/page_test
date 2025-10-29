@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import DetailImage from './DetailImage.jsx';
+import Image from './Image.jsx';
 import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
 import './Detail.css';
 import ExitDateChecker from './ExitDateChecker.jsx';
@@ -23,7 +23,9 @@ const Detail = ({ refrigerator_id }) => {
   const fetchPerson = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:57166/api/refrigerator`
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/refrigerator`
       );
       const formattedData = res.data.data.map((item) => ({
         refrigerator_id: item.refrigerator_id,
@@ -45,7 +47,9 @@ const Detail = ({ refrigerator_id }) => {
   const fetchResidents = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}:57166/api/resident`
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/resident`
       );
       const filteredData = res.data.data.filter(
         (item) => item.primary_resident === 1

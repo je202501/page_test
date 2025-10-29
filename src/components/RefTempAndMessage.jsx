@@ -39,9 +39,9 @@ const RefTempAndMessage = ({
       const endTime = now;
 
       const response = await fetch(
-        `${
-          import.meta.env.VITE_SERVER_URL
-        }:57166/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
+        `${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/api/temperature/?refrigerator_id=${refrigerator_id}&start_date=${startTime.toISOString()}&end_date=${endTime.toISOString()}`
       );
       const data = await response.json();
 
