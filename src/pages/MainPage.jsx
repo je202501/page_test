@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Manage from "../components/Manage";
 import TelegramWaitingModal from "../components/modal/TelegramWaitingModal";
+import ModalTelegram from "../components/modal/ModalTelegram";
 import "./MainPage.css"; // 새로 생성할 CSS 파일
 
 const MainPage = ({ setAuth }) => {
@@ -39,7 +40,7 @@ const MainPage = ({ setAuth }) => {
         </main>
 
         {/* 텔레그램 설정 모달 */}
-        <TelegramWaitingModal
+        <ModalTelegram
           open={telegramModal}
           onClose={() => setTelegramModal(false)}
         />

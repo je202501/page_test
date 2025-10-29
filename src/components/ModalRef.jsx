@@ -50,6 +50,17 @@ const ModalRef = ({ person, onClose }) => {
               placeholder="예: -20"
             />
           </div>
+          <div className="form-group">
+            <label>온도차 (°C)</label>
+            <input
+              type="number"
+              name="temp_gap"
+              value={updatedRef.temp_gap}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="예: 5"
+            />
+          </div>
 
           <div className="form-group">
             <label>제상 온도 (°C)</label>
@@ -59,7 +70,7 @@ const ModalRef = ({ person, onClose }) => {
               value={updatedRef.defrost_value}
               onChange={handleChange}
               className="form-input"
-              placeholder="예: 5"
+              placeholder="예: 30"
             />
           </div>
 

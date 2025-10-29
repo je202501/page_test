@@ -90,6 +90,7 @@ const ManageSetting = () => {
           defrost_time: item.defrost_time,
           entry_reservation: item.entry_reservation,
           check_defrost: item.check_defrost,
+          temp_gap: item.temp_gap,
         }));
         setPerson(formattedData);
       });
@@ -148,7 +149,7 @@ const ManageSetting = () => {
           </div>
           <br />
           <div className="person-details">
-            <h2>{currentPerson.person_name}</h2>
+            <h2 style={{ fontSize: '40px' }}>{currentPerson.person_name}</h2>
             <br />
             <div className="date-info">
               <div>
@@ -181,6 +182,10 @@ const ManageSetting = () => {
               <div>
                 <span className="label">냉장온도:</span>
                 <span>{currentPerson.setting_temp_value}</span>
+              </div>
+              <div>
+                <span className="label">온도차:</span>
+                <span>{currentPerson.temp_gap}</span>
               </div>
             </div>
             <div className="date-info">

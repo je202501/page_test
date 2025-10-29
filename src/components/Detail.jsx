@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import Image from './Image.jsx';
+import DetailImage from './DetailImage.jsx';
 import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
 import './Detail.css';
 import ExitDateChecker from './ExitDateChecker.jsx';
@@ -156,7 +156,7 @@ const Detail = ({ refrigerator_id }) => {
         {/* 오른쪽 이미지 영역 */}
         <div className="image-section">
           <div className="image-wrapper">
-            <Image refrigerator_id={refrigerator_id} />
+            <DetailImage refrigerator_id={refrigerator_id} />
           </div>
         </div>
       </div>

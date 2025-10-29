@@ -70,7 +70,13 @@ const RefTempAndMessage = ({
   return (
     <div>
       {temperatureData ? (
-        <p>현재 온도: {Number(temperatureData.temperature_value)}°C</p>
+        <p>
+          현재 온도:{' '}
+          {temperatureData.temperature_value != null
+            ? Number(temperatureData.temperature_value).toFixed(1)
+            : 'error'}
+          °C
+        </p>
       ) : (
         <p>온도 데이터를 불러오지 못했습니다.</p>
       )}

@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 //이미지 불러오기
-const Image = ({ refrigerator_id }) => {
-  const [imageSrc, setImageSrc] = useState('');
+const DetailImage = ({ refrigerator_id }) => {
+  const [imageSrc, setImageSrc] = useState("");
 
   //냉장고 id로 이미지 가져오기
   useEffect(() => {
@@ -12,16 +12,16 @@ const Image = ({ refrigerator_id }) => {
         const response = await axios.get(
           `${
             import.meta.env.VITE_SERVER_URL
-          }:57166/api/image/?refrigerator_id=${refrigerator_id}`,
+          }:51766/api/image/?refrigerator_id=${refrigerator_id}`,
           {
-            responseType: 'blob',
+            responseType: "blob",
           }
         );
 
         const imageUrl = URL.createObjectURL(response.data);
         setImageSrc(encodeURI(imageUrl));
       } catch (error) {
-        console.error('이미지 가져오기 실패:', error);
+        console.error("이미지 가져오기 실패:", error);
       }
     };
 
@@ -35,17 +35,17 @@ const Image = ({ refrigerator_id }) => {
   }, [refrigerator_id]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+    <div style={{ display: "flex", justifyContent: "flex-end" }}>
       {imageSrc ? (
         <img
           src={imageSrc}
           alt="냉장고 이미지"
           style={{
-            maxWidth: '100%',
-            width: '450px',
-            height: 'auto',
-            maxheight: '100%',
-            objectFit: 'contain',
+            maxWidth: "100%",
+            width: "700px",
+            height: "900px",
+            maxheight: "100%",
+            objectFit: "cover",
           }}
         />
       ) : (
@@ -55,4 +55,4 @@ const Image = ({ refrigerator_id }) => {
   );
 };
 
-export default Image;
+export default DetailImage;

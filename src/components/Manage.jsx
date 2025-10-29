@@ -53,6 +53,7 @@ const Manage = () => {
           defrost_value: item.defrost_value, //제상온도
           refrigerator_type: item.refrigerator_type, //냉장고 타입 A = 일체형 B = 분리형
           entry_reservation: item.entry_reservation,
+          temp_gap: item.temp_gap,
         }));
         //냉장고 번호 순서대로 정렬
         formattedData.sort((a, b) => {
@@ -161,7 +162,11 @@ const Manage = () => {
               </p>
               <p>출관일: {personData.exit_date}</p>
               <p>관리번호: {personData.management_number}</p>
-              <p>설정 온도: {personData.setting_temp_value}°C</p>
+              <p>
+                설정 온도: {personData.setting_temp_value}°C {'( '}온도차:{' '}
+                {personData.temp_gap}
+                {'°C )'}
+              </p>
               <p>
                 냉장고 타입 :{' '}
                 {personData.refrigerator_type === 'A' ? '일체형' : '분리형'}
@@ -178,6 +183,7 @@ const Manage = () => {
                 refrigerator_number={personData.refrigerator_number}
                 refrigerator_id={personData.refrigerator_id}
                 setting_temp_value={personData.setting_temp_value}
+                temp_gap={personData.temp_gap}
                 onTemperatureChange={(status) =>
                   handleTemperatureChange(personData.refrigerator_id, status)
                 }
