@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import axios from "axios";
-import DropdownSelectorAdmin from "./DropdownSelectorAdmin";
+import React, { useState } from 'react';
+import axios from 'axios';
+import DropdownSelectorAdmin from './DropdownSelectorAdmin';
 
 //Bistech 계정 수정
 const BistechEdit = ({ onClose }) => {
   const [form, setForm] = useState({
     // manager_name: "",
-    manager_account: "",
-    password: "",
-    newpassword: "",
+    manager_account: '',
+    password: '',
+    newpassword: '',
     // email: "",
   });
 
@@ -16,33 +16,33 @@ const BistechEdit = ({ onClose }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   //Bistech 계정 수정
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!token) {
-      console.error("No token found");
-      alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
+      console.error('No token found');
+      alert('로그인 정보가 없습니다. 다시 로그인해주세요.');
       return;
     }
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}:51766/api/manager/1`,
+        `${import.meta.env.VITE_SERVER_URL}:57166/api/manager/1`,
         form,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       // ⚠️ 서버 응답이 성공이지만 message나 data로 실패 여부를 판단해야 하는 경우
-      if (res.data.message === "sever error") {
-        alert("❌ " + res.data.data); // 예: 비밀번호가 일치하지 않습니다.
+      if (res.data.message === 'sever error') {
+        alert('❌ ' + res.data.data); // 예: 비밀번호가 일치하지 않습니다.
         return;
       }
-      alert("✅ Bistech 계정 수정 성공");
+      alert('✅ Bistech 계정 수정 성공');
       onClose();
     } catch (error) {
       console.error(error);
-      alert("❌ Bistech 계정 수정 실패. 다시 시도하세요.");
+      alert('❌ Bistech 계정 수정 실패. 다시 시도하세요.');
     }
   };
 
