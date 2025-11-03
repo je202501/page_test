@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import Image from './Image.jsx';
-import RefrigeratorTemperature from './RefrigeratorTemperature.jsx';
-import './Detail.css';
-import ExitDateChecker from './ExitDateChecker.jsx';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import DetailImage from "./DetailImage.jsx";
+import RefrigeratorTemperature from "./RefrigeratorTemperature.jsx";
+import "./Detail.css";
+import ExitDateChecker from "./ExitDateChecker.jsx";
 
 //상세정보(모니터 GUI)
 const Detail = ({ refrigerator_id }) => {
@@ -12,11 +12,11 @@ const Detail = ({ refrigerator_id }) => {
   const [primaryResidents, setPrimaryResidents] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const [temperatureStatus, setTemperatureStatus] = useState('normal'); // 추가: 온도 상태
+  const [temperatureStatus, setTemperatureStatus] = useState("normal"); // 추가: 온도 상태
 
   // 배경색 결정 함수
   const getBackgroundColor = () => {
-    return temperatureStatus === 'danger' ? 'bg-red-200' : 'bg-white';
+    return temperatureStatus === "danger" ? "bg-red-200" : "bg-white";
   };
 
   //냉장고 정보 가져오기기
@@ -40,7 +40,7 @@ const Detail = ({ refrigerator_id }) => {
       }));
       setPerson(formattedData);
     } catch (err) {
-      console.error('사람 정보 불러오기 실패', err);
+      console.error("사람 정보 불러오기 실패", err);
     }
   };
   //대표 상주 정보 가져오기기
@@ -56,7 +56,7 @@ const Detail = ({ refrigerator_id }) => {
       );
       setPrimaryResidents(filteredData);
     } catch (err) {
-      console.error('상주 정보 불러오기 실패', err);
+      console.error("상주 정보 불러오기 실패", err);
     }
   };
 
@@ -88,7 +88,7 @@ const Detail = ({ refrigerator_id }) => {
   return (
     <div
       className={`fullscreen-container ${
-        temperatureStatus === 'danger' ? 'danger-bg' : ''
+        temperatureStatus === "danger" ? "danger-bg" : ""
       }`}
     >
       <div className="content-grid">
@@ -147,11 +147,11 @@ const Detail = ({ refrigerator_id }) => {
               상태:
               <span
                 style={{
-                  color: currentPerson.check_defrost ? 'red' : 'green',
-                  fontWeight: 'bold',
+                  color: currentPerson.check_defrost ? "red" : "green",
+                  fontWeight: "bold",
                 }}
               >
-                {currentPerson.check_defrost ? ' 제상중' : ' 냉장중'}
+                {currentPerson.check_defrost ? " 제상중" : " 냉장중"}
               </span>
             </p>
           </div>
