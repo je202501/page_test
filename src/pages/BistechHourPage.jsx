@@ -2,6 +2,7 @@ import React from 'react';
 import AdminNavbar from '../components/AdminNavbar';
 import DashboardHour from '../components/DashboardHour';
 import './BistechMainPage.css';
+import DashBoard from '../components/DashBoards';
 
 const BistechHourPage = ({ setAuth }) => {
   return (
@@ -10,7 +11,8 @@ const BistechHourPage = ({ setAuth }) => {
 
       <main className="admin-content">
         <h1>시간당 평균 온도 및 전류 조회 대시보드</h1>
-        <DashboardHour />
+        {/* <DashboardHour /> */}
+        <DashBoard type={'hour'} />
       </main>
     </div>
   );

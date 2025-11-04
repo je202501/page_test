@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import { encryptId } from './utils/cryptoUtil'
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import MainPage from "./pages/MainPage";
-import SettingPage from "./pages/SettingPage";
-import BistechMainPage from "./pages/BistechMainPage";
-import DetailPage from "./pages/DetailPage";
-import { jwtDecode } from "jwt-decode";
-import BistechChartPage from "./pages/BistechChartPage";
-import BistechHourPage from "./pages/BistechHourPage";
-import KioskRedirect from "./components/rasvi";
-import BistechWeekPage from "./pages/BistechWeekPage";
-import NotFoundPage from "./pages/NotFoundPage";
+} from 'react-router-dom';
+import { encryptId } from './utils/cryptoUtil';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import MainPage from './pages/MainPage';
+import SettingPage from './pages/SettingPage';
+import BistechMainPage from './pages/BistechMainPage';
+import DetailPage from './pages/DetailPage';
+import { jwtDecode } from 'jwt-decode';
+import BistechChartPage from './pages/BistechChartPage';
+import BistechHourPage from './pages/BistechHourPage';
+import KioskRedirect from './components/rasvi';
+import BistechWeekPage from './pages/BistechWeekPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token")
+    !!localStorage.getItem('token')
   );
   const [userType, setUserType] = useState(null); // 'admin' 또는 'bistech'
 
   useEffect(() => {
     const checkAuth = () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       setIsAuthenticated(!!token);
 
       // 토큰이 있으면 사용자 유형 확인
@@ -35,9 +35,9 @@ const App = () => {
         try {
           const decoded = jwtDecode(token);
           // 토큰에 따라 사용자 유형 설정 (admin_id가 있으면 일반 관리자)
-          setUserType(decoded.admin_id ? "admin" : "bistech");
+          setUserType(decoded.admin_id ? 'admin' : 'bistech');
         } catch (error) {
-          console.error("토큰 디코딩 오류:", error);
+          console.error('토큰 디코딩 오류:', error);
         }
       } else {
         setUserType(null);
@@ -45,13 +45,9 @@ const App = () => {
     };
 
     checkAuth();
-    window.addEventListener("storage", checkAuth);
-    return () => window.removeEventListener("storage", checkAuth);
+    window.addEventListener('storage', checkAuth);
+    return () => window.removeEventListener('storage', checkAuth);
   }, []);
-
-  if (isAuthenticated && userType === null) {
-    return <p>로딩 중...</p>;
-  }
 
   return (
     <Routes>
@@ -70,7 +66,7 @@ const App = () => {
         path="/"
         element={
           isAuthenticated ? (
-            userType === "admin" ? (
+            userType === 'admin' ? (
               <Navigate to="/main" />
             ) : (
               <Navigate to="/bistechmain" />
@@ -86,7 +82,7 @@ const App = () => {
       <Route
         path="/main"
         element={
-          isAuthenticated && userType === "admin" ? (
+          isAuthenticated && userType === 'admin' ? (
             <MainPage setAuth={setIsAuthenticated} />
           ) : (
             <Navigate to="/" />
@@ -96,7 +92,7 @@ const App = () => {
       <Route
         path="/setting/:refrigerator_id"
         element={
-          isAuthenticated && userType === "admin" ? (
+          isAuthenticated && userType === 'admin' ? (
             <SettingPage setAuth={setIsAuthenticated} />
           ) : (
             <Navigate to="/" />
@@ -106,7 +102,7 @@ const App = () => {
       <Route
         path="/detail/:encId"
         element={
-          isAuthenticated && userType === "admin" ? (
+          isAuthenticated && userType === 'admin' ? (
             <DetailPage />
           ) : (
             <Navigate to="/" />
@@ -118,7 +114,7 @@ const App = () => {
       <Route
         path="/bistechmain"
         element={
-          isAuthenticated && userType === "bistech" ? (
+          isAuthenticated && userType === 'bistech' ? (
             <BistechMainPage setAuth={setIsAuthenticated} />
           ) : (
             <Navigate to="/" />
@@ -131,7 +127,7 @@ const App = () => {
       <Route
         path="/bistechmain"
         element={
-          isAuthenticated && userType === "bistech" ? (
+          isAuthenticated && userType === 'bistech' ? (
             <BistechMainPage setAuth={setIsAuthenticated} />
           ) : (
             <Navigate to="/" />
@@ -141,7 +137,7 @@ const App = () => {
       <Route
         path="/bistech/chart"
         element={
-          isAuthenticated && userType === "bistech" ? (
+          isAuthenticated && userType === 'bistech' ? (
             <BistechChartPage setAuth={setIsAuthenticated} />
           ) : (
             <Navigate to="/" />
@@ -151,7 +147,7 @@ const App = () => {
       <Route
         path="/bistech/hour"
         element={
-          isAuthenticated && userType === "bistech" ? (
+          isAuthenticated && userType === 'bistech' ? (
             <BistechHourPage setAuth={setIsAuthenticated} />
           ) : (
             <Navigate to="/" />
@@ -161,17 +157,14 @@ const App = () => {
       <Route
         path="/bistech/week"
         element={
-          isAuthenticated && userType === "bistech" ? (
+          isAuthenticated && userType === 'bistech' ? (
             <BistechWeekPage setAuth={setIsAuthenticated} />
           ) : (
             <Navigate to="/" />
           )
         }
       />
-      <Route
-        path="*" element={<NotFoundPage />}
-      />
-
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

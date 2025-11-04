@@ -1,7 +1,8 @@
-import React from "react";
-import AdminNavbar from "../components/AdminNavbar";
-import DashboardWeek from "../components/DashboardWeek";
-import "./BistechMainPage.css";
+import React from 'react';
+import AdminNavbar from '../components/AdminNavbar';
+import DashboardWeek from '../components/DashboardWeek';
+import './BistechMainPage.css';
+import DashBoards from '../components/DashBoards';
 
 const BistechWeekPage = ({ setAuth }) => {
   return (
@@ -10,7 +11,7 @@ const BistechWeekPage = ({ setAuth }) => {
 
       <main className="admin-content">
         <h1>주당 평균 온도 및 전류 조회 대시보드</h1>
-        <DashboardWeek />
+        <DashBoards type="month" />
       </main>
     </div>
   );
