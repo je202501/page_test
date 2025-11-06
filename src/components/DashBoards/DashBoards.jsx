@@ -202,13 +202,35 @@ const DashBoards = (props) => {
       const sortedData = [...response.data.data].sort(
         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
       );
+      // 컬럼명을 type별로 매핑
+      const columnMapping = {
+        day: {
+          temperature: 'temperature_value',
+          outTemperature: 'out_temperature_value',
+          settingTemp: 'setting_temp_value',
+          current: 'current_value',
+        },
+        hour: {
+          temperature: 'day_temp_value', // 예시, 실제 컬럼명에 맞게
+          outTemperature: 'out_day_temp_value',
+          settingTemp: 'setting_day_temp_value',
+          current: 'day_current_value',
+        },
+        month: {
+          temperature: 'month_temp_value',
+          outTemperature: 'out_month_temp_value',
+          settingTemp: 'setting_month_temp_value',
+          current: 'month_current_value',
+        },
+      };
+      const mapping = columnMapping[type] || columnMapping['day'];
 
       const formattedData = sortedData.map((entry) => ({
         time: new Date(entry.createdAt).toLocaleString(),
-        temperature: parseFloat(entry.temperature_value),
-        outTemperature: parseFloat(entry.out_temperature_value),
-        settingTemp: parseFloat(entry.setting_temp_value),
-        current: parseFloat(entry.current_value),
+        temperature: parseFloat(entry[mapping.temperature]),
+        outTemperature: parseFloat(entry[mapping.outTemperature]),
+        settingTemp: parseFloat(entry[mapping.settingTemp]),
+        current: parseFloat(entry[mapping.current]),
         fridgeId: entry.refrigerator_id,
       }));
 
@@ -445,12 +467,7 @@ const DashBoards = (props) => {
                             <ResponsiveContainer width={1000} height={400}>
                               <LineChart data={chartData}>
                                 <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis
-                                  dataKey="time"
-                                  // tickFormatter={(date) =>
-                                  //   formatDate(new Date(date))
-                                  // }
-                                />
+                                <XAxis dataKey="time" />
                                 <YAxis
                                   yAxisId="left"
                                   orientation="left"
