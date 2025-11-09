@@ -178,7 +178,7 @@ const DashBoards = (props) => {
         : type === 'hour'
         ? 'yeartemp/day'
         : type === 'month'
-        ? 'yeartemp/month'
+        ? 'yeartemp/year'
         : 'temperature';
 
     setStartDate(start);
@@ -198,7 +198,6 @@ const DashBoards = (props) => {
           },
         }
       );
-
       const sortedData = [...response.data.data].sort(
         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
       );
@@ -217,14 +216,14 @@ const DashBoards = (props) => {
           current: 'day_current_value',
         },
         month: {
-          temperature: 'month_temp_value',
-          outTemperature: 'out_month_temp_value',
-          settingTemp: 'setting_month_temp_value',
-          current: 'month_current_value',
+          temperature: 'year_temp_value',
+          outTemperature: 'out_year_temp_value',
+          settingTemp: 'setting_year_temp_value',
+          current: 'year_current_value',
         },
       };
       const mapping = columnMapping[type] || columnMapping['day'];
-
+      console.log(mapping);
       const formattedData = sortedData.map((entry) => ({
         time: new Date(entry.createdAt).toLocaleString(),
         temperature: parseFloat(entry[mapping.temperature]),
@@ -306,7 +305,7 @@ const DashBoards = (props) => {
                           alignItems: 'center',
                         }}
                       >
-                        <Empty description="가입된 현장이 없습니다" />
+                        <Empty description="가입된 업체가 없습니다" />
                       </div>
                     ) : (
                       adminList?.map((item, index) => {
