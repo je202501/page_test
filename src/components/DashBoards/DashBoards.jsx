@@ -280,7 +280,7 @@ const DashBoards = (props) => {
                   <TitleWrapper>
                     <Title>업체목록({adminList.length})</Title>
                     <AddButton onClick={handleClickAppendArea}>
-                      업체검색 <SearchOutlined />
+                      {/* 업체검색 <SearchOutlined /> */}
                     </AddButton>
                   </TitleWrapper>
 
@@ -466,7 +466,7 @@ const DashBoards = (props) => {
                             <ResponsiveContainer width={1000} height={400}>
                               <LineChart data={chartData}>
                                 <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="time" />
+                                {/* <XAxis dataKey="time" /> */}
                                 <YAxis
                                   yAxisId="left"
                                   orientation="left"
