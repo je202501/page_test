@@ -64,6 +64,10 @@ const RefrigeratorTemperature = ({
             ? Number(temperatureData.temperature_value).toFixed(1)
             : 'error'}
           °C{' '}
+          <>
+            <div>ip: {temperatureData?.raspi_ip}</div>
+            <div>serial: {temperatureData?.raspi_serial}</div>
+          </>
         </p>
       ) : (
         <p>온도 데이터를 불러오지 못했습니다.</p>

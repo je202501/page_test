@@ -27,7 +27,7 @@ const KioskRedirect = ({
         const match = res.data.find(
           (item) => item.refrigerator_number === refrigerator_number
         );
-        setFindRefrigerator(match || null);
+        setFindRefrigerator(encryptId(match.refrigerator_id) || null);
       } catch (err) {
         setFindRefrigerator(null);
       } finally {
@@ -80,9 +80,7 @@ const KioskRedirect = ({
   }
 
   if (findRefrigerater) {
-    return (
-      <Navigate to={`/detail/${encryptId(findRefrigerater.refrigerator_id)}`} />
-    );
+    return <Navigate to={`/detail/${findRefrigerater}`} />;
   } else {
     return <div>냉장고 정보를 찾을 수 없습니다.</div>;
   }

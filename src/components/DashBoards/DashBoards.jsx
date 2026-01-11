@@ -156,9 +156,15 @@ const DashBoards = (props) => {
    */
   const fetchData = async (item) => {
     const now = new Date();
-    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    const twentyFourHoursAgo = formatDateForInput(
+      new Date(now.getTime() - 24 * 60 * 60 * 1000)
+    );
+    const oneWeekAgo = formatDateForInput(
+      new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+    );
+    const oneMonthAgo = formatDateForInput(
+      new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+    );
 
     if (!chooseAdmin) return;
 
@@ -223,7 +229,6 @@ const DashBoards = (props) => {
         },
       };
       const mapping = columnMapping[type] || columnMapping['day'];
-      console.log(mapping);
       const formattedData = sortedData.map((entry) => ({
         time: new Date(entry.createdAt).toLocaleString(),
         temperature: parseFloat(entry[mapping.temperature]),
