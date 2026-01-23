@@ -28,21 +28,21 @@
 }
 
 .refrigerator-info {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .refrigerator-number {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #333;
 }
 
 .deceased-info {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .deceased-name {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   color: #111;
   /* 아래 줄 제거 */
@@ -51,7 +51,7 @@
 }
 
 .deceased-birth {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   color: #555;
 }
 
@@ -60,7 +60,7 @@
 .management-info p,
 .temperature-text {
   font-size: 1.1rem;
-  margin: 0.8rem 0;
+  margin: 0.2rem 0;
   color: #444;
 }
 
@@ -77,7 +77,7 @@
 .image-wrapper {
   aspect-ratio: 7 / 9;
   width: 100%;
-  max-height: 100%;
+  max-height: 95%;
   max-width: 100%;
   display: flex;
   align-items: center;
